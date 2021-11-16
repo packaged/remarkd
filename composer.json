@@ -1,0 +1,8 @@
+{
+  "name": "packaged/remarkd",
+  "autoload": {
+    "psr-4": {
+      "Packaged\\Remarkd\\": "src"
+    }
+  }
+}
