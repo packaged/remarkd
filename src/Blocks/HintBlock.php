@@ -46,7 +46,7 @@ class HintBlock implements BlockInterface, BlockLineMatcher
   public function match(string $line, bool $nested): ?BlockInterface
   {
     $matches = [];
-    if(preg_match('/\(?(SUCCESS|WARNING|NOTE|NOTICE|IMPORTANT|DANGER)([:|]?\)?)/', $line, $matches))
+    if(preg_match('/\(?(SUCCESS|WARNING|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|]?\)?)/', $line, $matches))
     {
       return new static($matches[1], $matches[2]);
     }
