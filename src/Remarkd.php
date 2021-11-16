@@ -11,6 +11,7 @@ use Packaged\Remarkd\Blocks\TableBlock;
 use Packaged\Remarkd\Blocks\TabsBlock;
 use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Blocks\VideoBlock;
+use Packaged\Remarkd\Blocks\WellBlock;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CheckboxRule;
 use Packaged\Remarkd\Rules\DeletedText;
@@ -76,6 +77,7 @@ class Remarkd
     $engine->registerBlock(new OrderedListBlock());
     $engine->registerBlock(new BlockQuote());
     $engine->registerBlock(new HeadingBlock());
+    $engine->registerBlock(new WellBlock());
     $engine->registerBlock(new HintBlock());
     $engine->registerBlock(new VideoBlock());
     $engine->registerBlock(new TabsBlock());
