@@ -13,7 +13,7 @@ class WellBlock implements BlockInterface, BlockStartCodes
     {
       return false;
     }
-    $this->_lines[] = substr($line, 2);
+    $this->_lines[] = trim(substr($line, 2));
     return true;
   }
 

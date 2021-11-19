@@ -33,10 +33,35 @@ class Remarkd
   /** @var \Packaged\Remarkd\Blocks\BlockEngine */
   protected $_blockEngine;
 
-  public function __construct()
+  public function __construct(bool $defaultBlocks = true, bool $defaultRules = true)
   {
-    $this->_ruleEngine = $this->createRuleEngine();
-    $this->_blockEngine = $this->createBlockEngine($this->_ruleEngine);
+    $this->_ruleEngine = new RuleEngine();
+    if($defaultRules)
+    {
+      $this->applyDefaultRules($this->_ruleEngine);
+    }
+
+    $this->_blockEngine = new BlockEngine($this->_ruleEngine);
+    if($defaultBlocks)
+    {
+      $this->applyDefaultBlocks($this->_blockEngine);
+    }
+  }
+
+  /**
+   * @return \Packaged\Remarkd\Rules\RuleEngine
+   */
+  public function ruleEngine(): RuleEngine
+  {
+    return $this->_ruleEngine;
+  }
+
+  /**
+   * @return \Packaged\Remarkd\Blocks\BlockEngine
+   */
+  public function blockEngine(): BlockEngine
+  {
+    return $this->_blockEngine;
   }
 
   public function parse($text)
@@ -46,9 +71,8 @@ class Remarkd
     return $this->_ruleEngine->parse(implode("", $blocks));
   }
 
-  public function createRuleEngine(): RuleEngine
+  public function applyDefaultRules(RuleEngine $engine)
   {
-    $engine = new RuleEngine();
     $engine->registerRule(new MonospacedText());
     $engine->registerRule(new UnderlinedText());//must be before bold
 
@@ -68,10 +92,8 @@ class Remarkd
     return $engine;
   }
 
-  public function createBlockEngine(RuleEngine $ruleEngine): BlockEngine
+  public function applyDefaultBlocks(BlockEngine $engine): BlockEngine
   {
-    $engine = new BlockEngine($ruleEngine);
-
     $engine->registerBlock(new TableBlock());
     $engine->registerBlock(new UnorderedListBlock());
     $engine->registerBlock(new OrderedListBlock());

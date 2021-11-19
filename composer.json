@@ -4,5 +4,11 @@
     "psr-4": {
       "Packaged\\Remarkd\\": "src"
     }
+  },
+  "autoload-dev": {
+    "Packaged\\Tests\\Remarkd\\": "tests"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.0"
   }
 }
