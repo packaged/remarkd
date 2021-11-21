@@ -20,18 +20,13 @@ class HintBlock implements BlockInterface, BlockLineMatcher
   public function addNewLine(string $line)
   {
     $line = BlockEngine::trimLine($line);
-    if(empty($line) || ($this->_style !== '|' && !empty($this->_lines)))
+    if(empty($line) || ($this->_style === '|' && substr($line, 0, $this->_levelLen) !== $this->_level))
     {
       return false;
     }
 
-    if($this->_style === '|' && substr($line, 0, $this->_levelLen) !== $this->_level)
-    {
-      return false;
-    }
-
-    $this->_lines[] = substr($line, $this->_levelLen + ($this->_style === ')' ? 2 : 1));
-    return true;
+    $this->_lines[] = trim(substr($line, $this->_levelLen + ($this->_style === ')' ? 2 : 1)));
+    return $this->_style === '|';
   }
 
   public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
@@ -46,7 +41,7 @@ class HintBlock implements BlockInterface, BlockLineMatcher
   public function match(string $line, bool $nested): ?BlockInterface
   {
     $matches = [];
-    if(preg_match('/\(?(SUCCESS|WARNING|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|]?\)?)/', $line, $matches))
+    if(preg_match('/\(?(SUCCESS|WARNING|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])/', $line, $matches))
     {
       return new static($matches[1], $matches[2]);
     }

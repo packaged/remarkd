@@ -62,6 +62,24 @@ class BlockEngine
 
       if($currentBlock !== null)
       {
+        if(!$currentBlock->addNewLine($line))
+        {
+          $blocks[] = $currentBlock;
+          $currentBlock = null;
+        }
+        else
+        {
+          continue;
+        }
+      }
+
+      if($currentBlock === null)
+      {
+        $currentBlock = $this->_detectBlock($line, $subBlock);
+      }
+
+      if($currentBlock !== null)
+      {
         //Attempt to add the line to the current block
         if($currentBlock->addNewLine($line))
         {
@@ -71,25 +89,12 @@ class BlockEngine
         else
         {
           $blocks[] = $currentBlock;
-          $currentBlock = false;
+          $currentBlock = null;
         }
       }
-
-      if($currentBlock === null)
+      else
       {
-        $currentBlock = $this->_detectBlock($line, $subBlock);
-        if($currentBlock !== null)
-        {
-          $currentBlock->addNewLine($line);
-        }
-        else
-        {
-          $blocks[] = $line;
-        }
-      }
-      else if($currentBlock === false)
-      {
-        $currentBlock = null;
+        $blocks[] = $line;
       }
     }
     if($currentBlock !== null)
