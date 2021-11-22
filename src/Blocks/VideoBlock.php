@@ -6,7 +6,6 @@ use Packaged\Remarkd\Rules\RuleEngine;
 class VideoBlock implements BlockInterface, BlockLineMatcher
 {
   protected $_properties = [];
-  protected $_tabs = [];
 
   public function __construct($configLine = null)
   {
@@ -17,10 +16,6 @@ class VideoBlock implements BlockInterface, BlockLineMatcher
       {
         foreach($properties[2] as $i => $property)
         {
-          if($i === 0 && $property == 'TABGROUP')
-          {
-            continue;
-          }
           $this->_properties[$property] = $properties[4][$i] ?? true;
         }
       }
