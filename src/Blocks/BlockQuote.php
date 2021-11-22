@@ -10,11 +10,15 @@ class BlockQuote implements BlockInterface, BlockStartCodes
   public function addNewLine(string $line)
   {
     $line = BlockEngine::trimLine($line);
-    if(empty($line) || $line[0] !== '>')
+    if(empty($line))
+    {
+      return null;
+    }
+    if($line[0] !== '>')
     {
       return false;
     }
-    $this->_lines[] = substr($line, 1);
+    $this->_lines[] = trim(substr($line, 1));
     return true;
   }
 
