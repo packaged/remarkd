@@ -5,8 +5,14 @@ use Packaged\Remarkd\Rules\RuleEngine;
 
 class CodeBlock implements BlockInterface, BlockStartCodes
 {
+  private const FENCE = 'f';
+  private const TAB = 't';
+  private const SPACE = 's';
+
+  protected $_trimLen = 0;
   protected $_openStyle;
   protected $_lines = [];
+  protected $_complete = false;
 
   public function addNewLine(string $line)
   {
@@ -14,22 +20,34 @@ class CodeBlock implements BlockInterface, BlockStartCodes
     {
       if($this->_openStyle === null)
       {
-        $this->_openStyle = '```';
+        $this->_openStyle = self::FENCE;
         return true;
       }
-      return false;
+      else
+      {
+        return null;
+      }
     }
-    if($this->_openStyle === null && ($line[0] === "\t" || substr($line, 0, 4) === '    '))
+    if($this->_openStyle === null)
     {
-      $this->_openStyle = '\t';
+      if($line[0] === "\t")
+      {
+        $this->_openStyle = self::TAB;
+        $this->_trimLen = 1;
+      }
+      else if(substr($line, 0, 4) === '    ')
+      {
+        $this->_trimLen = 4;
+        $this->_openStyle = self::SPACE;
+      }
     }
 
-    if($this->_openStyle === '\t' && empty($line))
+    if($this->_openStyle !== self::FENCE && empty($line))
     {
       return false;
     }
 
-    $this->_lines[] = $line;
+    $this->_lines[] = substr($line, $this->_trimLen);
     return true;
   }
 
