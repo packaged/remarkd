@@ -26,7 +26,7 @@ class HintBlock implements BlockInterface, BlockLineMatcher
     }
 
     $this->_lines[] = trim(substr($line, $this->_levelLen + ($this->_style === ')' ? 2 : 1)));
-    return $this->_style === '|';
+    return $this->_style === '|' ? true : null;
   }
 
   public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string

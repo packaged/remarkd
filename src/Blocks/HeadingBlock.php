@@ -5,25 +5,25 @@ use Packaged\Remarkd\Rules\RuleEngine;
 
 class HeadingBlock implements BlockInterface, BlockStartCodes
 {
-  protected $_lines = [];
+  protected $_heading = '';
   protected $_level;
 
   public function addNewLine(string $line)
   {
     $line = BlockEngine::trimLine($line);
-    if(empty($line) || !empty($this->_lines))
+    if(empty($line) || !empty($this->_heading))
     {
       return false;
     }
 
     $this->_level = substr_count($line, '#', 0);
-    $this->_lines[] = substr(trim($line), $this->_level);
-    return true;
+    $this->_heading = trim(substr(trim($line), $this->_level));
+    return null;
   }
 
   public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
   {
-    return $ruleEngine->parse('<h' . $this->_level . '>' . implode("\n", $this->_lines) . '</h' . $this->_level . '>');
+    return $ruleEngine->parse('<h' . $this->_level . '>' . $this->_heading . '</h' . $this->_level . '>');
   }
 
   public function startCodes(): array

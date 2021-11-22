@@ -60,19 +60,6 @@ class BlockEngine
         $line = '<hr/>';
       }
 
-      if($currentBlock !== null)
-      {
-        if(!$currentBlock->addNewLine($line))
-        {
-          $blocks[] = $currentBlock;
-          $currentBlock = null;
-        }
-        else
-        {
-          continue;
-        }
-      }
-
       if($currentBlock === null)
       {
         $currentBlock = $this->_detectBlock($line, $subBlock);
@@ -81,15 +68,23 @@ class BlockEngine
       if($currentBlock !== null)
       {
         //Attempt to add the line to the current block
-        if($currentBlock->addNewLine($line))
+        $lineAccept = $currentBlock->addNewLine($line);
+        if($lineAccept)
         {
-          //line added, continue to the next
           continue;
         }
         else
         {
           $blocks[] = $currentBlock;
           $currentBlock = null;
+          if($lineAccept === false)
+          {
+            $currentBlock = $this->_detectBlock($line, $subBlock);
+            if($currentBlock && !$currentBlock->addNewLine($line))
+            {
+              $currentBlock = null;
+            }
+          }
         }
       }
       else
