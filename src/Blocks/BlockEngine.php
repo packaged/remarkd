@@ -54,8 +54,7 @@ class BlockEngine
     $currentBlock = null;
     foreach($lines as $line)
     {
-      if(isset($line[0]) && ($line === '***' || $line === '___' ||
-          ($line[0] === '-' && preg_match('/^-{3,}$/', $line))))
+      if(isset($line[0]) && preg_match('/^\s*?[- *_]{3,}\s*?$/', $line))
       {
         $line = '<hr/>';
       }
