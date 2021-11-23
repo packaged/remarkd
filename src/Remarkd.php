@@ -66,7 +66,7 @@ class Remarkd
 
   public function parse($text)
   {
-    $lines = explode("\n", $text);
+    $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $text));
     $blocks = $this->_blockEngine->parseLines($lines);
     return $this->_ruleEngine->parse(implode("", $blocks));
   }
