@@ -12,7 +12,7 @@ class ParagraphBlock implements BlockInterface, BlockLineMatcher
     $line = BlockEngine::trimLine($line);
     if(empty($line))
     {
-      return false;
+      return null;
     }
     $this->_lines[] = $line;
     return true;
