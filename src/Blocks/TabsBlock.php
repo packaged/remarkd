@@ -76,7 +76,12 @@ class TabsBlock implements BlockInterface, BlockLineMatcher
     }
 
     $tabHeaders .= '</ul>';
-    return '<div class="tab-group">' . $tabHeaders . '<div class="tabs">' . implode("\n", $content) . '</div></div>';
+    return '<div class="tab-group">'
+      . "\n" . $tabHeaders . "\n"
+      . '<div class="tabs">'
+      . "\n" . implode("\n", $content) . "\n"
+      . '</div>'
+      . "\n" . '</div>';
   }
 
   public function match(string $line, bool $nested): ?BlockInterface

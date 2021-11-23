@@ -62,10 +62,7 @@ class TabBlock implements BlockInterface
   public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
   {
     $lines = $blockEngine->parseLines($this->_lines, true);
-    return '<div class="tab" data-tab-key="' . $this->key() . '">'
-      //. '<h2>' . ($this->_properties['name'] ?? 'NO NAME') . '</h2>'
-      . implode("<br/>", $lines)
-      . '</div>';
+    return '<div class="tab" data-tab-key="' . $this->key() . '">' . implode("<br/>", $lines) . '</div>';
   }
 
 }
