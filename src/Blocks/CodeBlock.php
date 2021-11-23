@@ -42,9 +42,9 @@ class CodeBlock implements BlockInterface, BlockStartCodes
       }
     }
 
-    if($this->_openStyle !== self::FENCE && empty($line))
+    if($this->_openStyle !== self::FENCE && (empty($line) || strlen($line) < $this->_trimLen))
     {
-      return false;
+      return null;
     }
 
     $this->_lines[] = substr($line, $this->_trimLen);
