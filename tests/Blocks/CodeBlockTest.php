@@ -95,7 +95,7 @@ function f() {
 MARKDOWN;
 
     $expect = <<<HTML
-<hr/><code>function f() {
+<hr><code>function f() {
   global $\$variable_variable;
 }</code>
 HTML;

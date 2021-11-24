@@ -9,6 +9,7 @@ class BasicSyntaxTest extends TestCase
 
   /**
    * @dataProvider providerHeaders
+   * @dataProvider providerParagraphs
    *
    * @param $testName
    * @param $markdown
@@ -37,6 +38,27 @@ class BasicSyntaxTest extends TestCase
 
 ...and after a heading.',
         '<p>Try to put a blank line before...</p><h1>Heading</h1><p>...and after a heading.</p>',
+      ],
+    ];
+  }
+
+  public function providerParagraphs()
+  {
+    return [
+      [
+        'Two Paragraphs',
+        'I really like using Markdown.
+
+I think I\'ll use it to format all of my documents from now on .',
+        '<p>I really like using Markdown.</p>'
+        . '<p>I think I\'ll use it to format all of my documents from now on .</p>',
+      ],
+      [
+        'Line Breaks',
+        'This is the first line.
+And this is the second line.',
+        '<p>This is the first line.<br/>'
+        . 'And this is the second line.</p>',
       ],
     ];
   }
