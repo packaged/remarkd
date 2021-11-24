@@ -11,6 +11,8 @@ class BlockEngine
   /** @var array|\Packaged\Remarkd\Blocks\BlockLineMatcher[] */
   protected $_matchers = [];
 
+  protected $_codeBlock;
+
   public function __construct(RuleEngine $engine)
   {
     $this->_engine = $engine;
@@ -34,6 +36,11 @@ class BlockEngine
     if($block instanceof BlockLineMatcher)
     {
       $this->_matchers[] = $block;
+    }
+
+    if(!$this->_codeBlock && $block instanceof CodeBlock)
+    {
+      $this->_codeBlock = get_class($block);
     }
     return $this;
   }
@@ -105,9 +112,9 @@ class BlockEngine
       return null;
     }
 
-    if($line[0] === "\t" || ($line[0] == ' ' && substr($line, 0, 4) == '    '))
+    if($this->_codeBlock && ($line[0] === "\t" || ($line[0] == ' ' && substr($line, 0, 4) == '    ')))
     {
-      return new CodeBlock();
+      return new $this->_codeBlock();
     }
 
     $line = ltrim($line, "\t\r\n\0\x0B ");
