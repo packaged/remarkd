@@ -3,6 +3,7 @@ namespace Packaged\Remarkd;
 
 use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\BlockQuote;
+use Packaged\Remarkd\Blocks\CodeBlock;
 use Packaged\Remarkd\Blocks\HeadingBlock;
 use Packaged\Remarkd\Blocks\HintBlock;
 use Packaged\Remarkd\Blocks\OrderedListBlock;
@@ -112,6 +113,7 @@ class Remarkd
 
   public function applyDefaultBlocks(BlockEngine $engine): BlockEngine
   {
+    $engine->registerBlock(new CodeBlock());
     $engine->registerBlock(new TableBlock());
     $engine->registerBlock(new UnorderedListBlock());
     $engine->registerBlock(new OrderedListBlock());

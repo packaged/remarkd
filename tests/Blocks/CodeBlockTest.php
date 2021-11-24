@@ -80,4 +80,27 @@ HTML;
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
+
+  public function testFencedHr()
+  {
+    $markdown = <<<MARKDOWN
+-------------------
+
+```
+function f() {
+  global $\$variable_variable;
+}
+```
+
+MARKDOWN;
+
+    $expect = <<<HTML
+<hr/><code>function f() {
+  global $\$variable_variable;
+}</code>
+HTML;
+
+    $remarkd = new Remarkd();
+    self::assertEquals($expect, $remarkd->parse($markdown));
+  }
 }
