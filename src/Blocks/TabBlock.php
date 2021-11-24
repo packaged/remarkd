@@ -43,7 +43,7 @@ class TabBlock implements BlockInterface
     $line = BlockEngine::trimLine($line);
     if($line == '{ENDTAB}')
     {
-      return false;
+      return null;
     }
 
     //Dont add initial tab lines

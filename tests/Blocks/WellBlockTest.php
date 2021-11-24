@@ -40,4 +40,21 @@ HTML;
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
+  public function testMultiLineCleanExit()
+  {
+    $markdown = <<<MARKDOWN
+|| Well Content Line 1
+|| Well Content Line 2
+Not Well Content Line 3
+MARKDOWN;
+
+    $expect = <<<HTML
+<div class="well">Well Content Line 1<br/>Well Content Line 2</div>Not Well Content Line 3
+HTML;
+
+    $remarkd = new Remarkd(false, false);
+    $remarkd->blockEngine()->registerBlock(new WellBlock());
+
+    self::assertEquals($expect, $remarkd->parse($markdown));
+  }
 }

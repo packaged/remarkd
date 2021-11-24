@@ -11,10 +11,11 @@ abstract class AbstractListBlock implements BlockInterface, BlockStartCodes
 
   public function addNewLine(string $line)
   {
-    if(empty(trim($line)))
+    if(strlen($line) < 2)
     {
       return false;
     }
+
     $prefix = substr($line, 0, 2);
     if(in_array($prefix, $this->startCodes()))
     {
@@ -22,7 +23,7 @@ abstract class AbstractListBlock implements BlockInterface, BlockStartCodes
     }
     else
     {
-      $this->_appendItem(trim(substr($line, 2)));
+      $this->_appendItem(BlockEngine::trimLeftSpace(substr($line, 2), 2));
     }
     return true;
   }

@@ -110,21 +110,26 @@ kbd {
     border: 1px solid #63b7de;
     border-radius: 3px;
     background: #e7f5f9;
-    padding-left: 50px;
+    padding-left: 40px;
 }
 
 .hint-tip:before {
     content: '';
     position: absolute;
-    background: url("./magic.svg") no-repeat center center;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' viewBox='0 0 352 512'%3E%3Cpath fill='%230a5aa9' d='M96.06 454.35a32.01 32.01 0 005.36 17.69l17.09 25.69a31.99 31.99 0 0026.64 14.28h61.71a31.99 31.99 0 0026.64-14.28l17.09-25.69a31.99 31.99 0 005.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45l.11.78h160.24l.11-.78c9.85-33.22 35.69-72.6 52.21-91.45A175.02 175.02 0 00352 176C352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80a16 16 0 11-32 0c0-61.76 50.24-112 112-112a16 16 0 110 32z'/%3E%3C/svg%3E") no-repeat center center;
     top: 8px;
-    left: 10px;
-    width: 25px;
+    left: 15px;
+    width: 14px;
     height: 100%;
     max-height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.hint-tip, .hint-caption,
+.hint-tip .hint-caption {
+    color: #0a5aa9;
 }
 
 .hint-caption {

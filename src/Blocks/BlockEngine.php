@@ -24,6 +24,21 @@ class BlockEngine
     return ltrim($line, "\t\r\n\0\x0B ");
   }
 
+  public static function trimLeftSpace($line, $max = 2)
+  {
+    $line = ltrim($line, "\t\r\n\0\x0B");
+
+    $parts = str_split($line, $max);
+    if(empty(trim($parts[0])))
+    {
+      return implode("", array_slice($parts, 1));
+    }
+    else
+    {
+      return ltrim($line, " ");
+    }
+  }
+
   public function setDefaultBlock(BlockInterface $block)
   {
     $this->_defaultBlock = get_class($block);
@@ -113,9 +128,16 @@ class BlockEngine
           if($lineAccept === false)
           {
             $currentBlock = $this->_detectBlock($line, $subBlock);
-            if($currentBlock && !$currentBlock->addNewLine($line))
+            if($currentBlock)
             {
-              $currentBlock = null;
+              if(!$currentBlock->addNewLine($line))
+              {
+                $currentBlock = null;
+              }
+            }
+            else
+            {
+              $blocks[] = $line;
             }
           }
         }
