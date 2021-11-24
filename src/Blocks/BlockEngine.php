@@ -21,12 +21,12 @@ class BlockEngine
 
   public static function trimLine($line)
   {
-    return ltrim($line, "\t\r\n\0\x0B ");
+    return ltrim($line, "\r\n\0\x0B ");
   }
 
   public static function trimLeftSpace($line, $max = 2)
   {
-    $line = ltrim($line, "\t\r\n\0\x0B");
+    $line = ltrim($line, "\r\n\0\x0B");
 
     $parts = str_split($line, $max);
     if(empty(trim($parts[0])))
