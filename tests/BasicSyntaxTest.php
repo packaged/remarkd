@@ -10,6 +10,7 @@ class BasicSyntaxTest extends TestCase
   /**
    * @dataProvider providerHeaders
    * @dataProvider providerParagraphs
+   * @dataProvider providerBlockQuotes
    *
    * @param $testName
    * @param $markdown
@@ -59,6 +60,60 @@ I think I\'ll use it to format all of my documents from now on .',
 And this is the second line.',
         '<p>This is the first line.<br/>'
         . 'And this is the second line.</p>',
+      ],
+    ];
+  }
+
+  public function providerBlockQuotes()
+  {
+    return [
+      [
+        'Simple Block Quote',
+        '> Dorothy followed her through many of the beautiful rooms in her castle.',
+        '<blockquote><p>Dorothy followed her through many of the beautiful rooms in her castle.</p></blockquote>',
+      ],
+      [
+        'Multi Line Block Quote',
+        '> Dorothy followed her through many of the beautiful rooms in her castle.
+>
+> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.',
+        '<blockquote>'
+        . '<p>Dorothy followed her through many of the beautiful rooms in her castle.</p>'
+        . "\n"
+        . '<p>The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.</p>'
+        . '</blockquote>',
+      ],
+      [
+        'Nested Blockquotes',
+        '> Dorothy followed her through many of the beautiful rooms in her castle.
+>
+>> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.',
+        '<blockquote>'
+        . '<p>Dorothy followed her through many of the beautiful rooms in her castle.</p>'
+        . "\n"
+        . '<blockquote>'
+        . '<p>The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.</p>'
+        . '</blockquote>'
+        . '</blockquote>',
+      ],
+      [
+        'Blockquotes with Other Elements',
+        '> #### The quarterly results look great!
+>
+> - Revenue was off the chart.
+> - Profits were higher than ever.
+>
+>  *Everything* is going according to **plan**.',
+        '<blockquote>'
+        . '<h4>The quarterly results look great!</h4>'
+        . "\n\n"
+        . '<ul>'
+        . '<li>Revenue was off the chart.</li>'
+        . '<li>Profits were higher than ever.</li>'
+        . '</ul>'
+        . "\n"
+        . '<p><em>Everything</em> is going according to <strong>plan</strong>.</p>'
+        . '</blockquote>',
       ],
     ];
   }

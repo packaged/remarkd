@@ -24,8 +24,8 @@ class BlockQuote implements BlockInterface, BlockStartCodes
 
   public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
   {
-    $lines = $blockEngine->parseLines($this->_lines, true);
-    return '<blockquote>' . implode("<br/>", $lines) . '</blockquote>';
+    $lines = $blockEngine->parseLines($this->_lines);
+    return '<blockquote>' . implode("\n", $lines) . '</blockquote>';
   }
 
   public function startCodes(): array
