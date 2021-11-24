@@ -64,11 +64,24 @@ class Remarkd
     return $this->_blockEngine;
   }
 
-  public function parse($text)
+  public function parse($text, $cssClass = 'remarkd-styled')
   {
     $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $text));
     $blocks = $this->_blockEngine->parseLines($lines);
-    return $this->_ruleEngine->parse(implode("", $blocks));
+    return '<div class="remarkd ' . $cssClass . '">' . $this->_ruleEngine->parse(implode("", $blocks)) . '</div>';
+  }
+
+  /**
+   * For basic implementation of the remarkd, you can use this method to include resources onto your page.
+   * We recommend using https://github.com/packaged/dispatch in vendor mode for including these resources
+   *
+   * @return string
+   */
+  public function resourcesHtml()
+  {
+    return
+      '<style>' . file_get_contents(dirname(__DIR__) . '/resources/css/remarkd.css') . '</style>'
+      . '<script>' . file_get_contents(dirname(__DIR__) . '/resources/js/tabs.js') . '</script>';
   }
 
   public function applyDefaultRules(RuleEngine $engine)
