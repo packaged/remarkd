@@ -123,7 +123,7 @@ class Remarkd
     $engine->registerBlock(new HintBlock());
     $engine->registerBlock(new VideoBlock());
     $engine->registerBlock(new TabsBlock());
-    $engine->registerBlock(new ParagraphBlock());
+    $engine->setDefaultBlock(new ParagraphBlock());
 
     return $engine;
   }

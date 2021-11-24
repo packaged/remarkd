@@ -12,6 +12,7 @@ class BlockEngine
   protected $_matchers = [];
 
   protected $_codeBlock;
+  protected $_defaultBlock;
 
   public function __construct(RuleEngine $engine)
   {
@@ -21,6 +22,12 @@ class BlockEngine
   public static function trimLine($line)
   {
     return ltrim($line, "\t\r\n\0\x0B ");
+  }
+
+  public function setDefaultBlock(BlockInterface $block)
+  {
+    $this->_defaultBlock = get_class($block);
+    return $this;
   }
 
   public function registerBlock(BlockInterface $block)
@@ -139,6 +146,7 @@ class BlockEngine
       }
     }
 
-    return null;
+    $default = $subBlock ? null : $this->_defaultBlock;
+    return !$default || $line[0] === '<' ? null : new $default();
   }
 }

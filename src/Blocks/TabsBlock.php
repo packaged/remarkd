@@ -33,7 +33,7 @@ class TabsBlock implements BlockInterface, BlockLineMatcher
     $line = BlockEngine::trimLine($line);
     if($line == '{ENDTABGROUP}')
     {
-      return false;
+      return null;
     }
 
     //Dont add initial tab lines

@@ -18,7 +18,7 @@ MARKDOWN;
 HTML;
 
     $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new ParagraphBlock());
+    $remarkd->blockEngine()->setDefaultBlock(new ParagraphBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -37,7 +37,7 @@ MARKDOWN;
 HTML;
 
     $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new ParagraphBlock());
+    $remarkd->blockEngine()->setDefaultBlock(new ParagraphBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
