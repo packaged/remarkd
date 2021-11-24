@@ -11,6 +11,7 @@ class BasicSyntaxTest extends TestCase
    * @dataProvider providerHeaders
    * @dataProvider providerParagraphs
    * @dataProvider providerBlockQuotes
+   * @dataProvider providerOrderedLists
    *
    * @param $testName
    * @param $markdown
@@ -106,7 +107,7 @@ And this is the second line.',
 >  *Everything* is going according to **plan**.',
         '<blockquote>'
         . '<h4>The quarterly results look great!</h4>'
-        . "\n\n"
+        . "\n"
         . '<ul>'
         . '<li>Revenue was off the chart.</li>'
         . '<li>Profits were higher than ever.</li>'
@@ -114,6 +115,71 @@ And this is the second line.',
         . "\n"
         . '<p><em>Everything</em> is going according to <strong>plan</strong>.</p>'
         . '</blockquote>',
+      ],
+    ];
+  }
+
+  public function providerOrderedLists()
+  {
+    return [
+      [
+        'Numbered List',
+        '1. First item
+2. Second item
+3. Third item
+4. Fourth item',
+        '<ol>'
+        . '<li>First item</li>'
+        . '<li>Second item</li>'
+        . '<li>Third item</li>'
+        . '<li>Fourth item</li>'
+        . '</ol>',
+      ],
+      [
+        'Same Numbered List',
+        '1. First item
+1. Second item
+1. Third item
+1. Fourth item',
+        '<ol>'
+        . '<li>First item</li>'
+        . '<li>Second item</li>'
+        . '<li>Third item</li>'
+        . '<li>Fourth item</li>'
+        . '</ol>',
+      ],
+      [
+        'Random Numbered List',
+        '1. First item
+8. Second item
+3. Third item
+5. Fourth item',
+        '<ol>'
+        . '<li>First item</li>'
+        . '<li>Second item</li>'
+        . '<li>Third item</li>'
+        . '<li>Fourth item</li>'
+        . '</ol>',
+      ],
+      [
+        'Indented Numbered List',
+        '1. First item
+2. Second item
+3. Third item
+    1. Indented item
+    2. Indented item
+4. Fourth item',
+        '<ol>'
+        . '<li>First item</li>'
+        . '<li>Second item</li>'
+        . '<li>Third item'
+        . '<ol>'
+        . '<li>Indented item</li>'
+        . '<li>Indented item</li>'
+        . '</ol>'
+        . '</li>'
+        . '<li>Fourth item</li>'
+        . '</ol>',
       ],
     ];
   }

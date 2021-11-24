@@ -1,28 +1,9 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
-
-class OrderedListBlock implements BlockInterface, BlockStartCodes
+class OrderedListBlock extends AbstractListBlock
 {
-  protected $_lines = [];
-
-  public function addNewLine(string $line)
-  {
-    $line = BlockEngine::trimLine($line);
-    if(empty($line))
-    {
-      return false;
-    }
-    $this->_lines[] = ltrim(substr($line, 2));
-    return true;
-  }
-
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
-  {
-    $lines = $blockEngine->parseLines($this->_lines, true);
-    return $ruleEngine->parse('<ol><li>' . implode("</li><li>", $lines) . '</li></ol>');
-  }
+  protected $_listType = 'ol';
 
   public function startCodes(): array
   {

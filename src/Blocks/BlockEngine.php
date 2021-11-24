@@ -55,9 +55,29 @@ class BlockEngine
   public function parseLines(array $lines, $subBlock = false)
   {
     $newLines = [];
+    $nlCount = 0;
     foreach($this->parseBlocks($lines, $subBlock) as $block)
     {
-      $newLines[] = $block instanceof BlockInterface ? $block->complete($this, $this->_engine) : $block;
+      if(empty($block))
+      {
+        if($nlCount)
+        {
+          $newLines[] = '<br/>';
+        }
+        $nlCount++;
+      }
+      else
+      {
+        $nlCount = 0;
+        if($block instanceof BlockInterface)
+        {
+          $newLines[] = $block->complete($this, $this->_engine);
+        }
+        else
+        {
+          $newLines[] = $block;
+        }
+      }
     }
     return $newLines;
   }

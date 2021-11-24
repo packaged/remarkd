@@ -11,8 +11,15 @@ class HeadingBlock implements BlockInterface, BlockStartCodes
   public function addNewLine(string $line)
   {
     $line = BlockEngine::trimLine($line);
-    if(empty($line) || !empty($this->_heading))
+    if(empty($line))
     {
+      //Blank lines after a header should be ignored
+      return null;
+    }
+
+    if(!empty($this->_heading))
+    {
+      //force this line to be processed by another block
       return false;
     }
 
