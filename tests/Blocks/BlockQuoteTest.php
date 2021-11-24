@@ -32,7 +32,9 @@ HTML;
 MARKDOWN;
 
     $expect = <<<HTML
-<blockquote>Blockquotes can also be nested...<br/><blockquote>...by using additional greater-than signs right next to each other...<br/><blockquote>...or with spaces between arrows.</blockquote></blockquote></blockquote>
+<blockquote>Blockquotes can also be nested...
+<blockquote>...by using additional greater-than signs right next to each other...
+<blockquote>...or with spaces between arrows.</blockquote></blockquote></blockquote>
 HTML;
 
     $remarkd = new Remarkd(false, false);
