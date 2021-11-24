@@ -64,11 +64,16 @@ class Remarkd
     return $this->_blockEngine;
   }
 
-  public function parse($text, $cssClass = 'remarkd-styled')
+  public function parse($text)
   {
     $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $text));
     $blocks = $this->_blockEngine->parseLines($lines);
-    return '<div class="remarkd ' . $cssClass . '">' . $this->_ruleEngine->parse(implode("", $blocks)) . '</div>';
+    return $this->_ruleEngine->parse(implode("", $blocks));
+  }
+
+  public function render($text, $cssClass = 'remarkd-styled')
+  {
+    return '<div class="remarkd ' . $cssClass . '">' . $this->parse($text) . '</div>';
   }
 
   /**

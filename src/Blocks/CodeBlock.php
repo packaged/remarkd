@@ -12,7 +12,6 @@ class CodeBlock implements BlockInterface, BlockStartCodes
   protected $_trimLen = 0;
   protected $_openStyle;
   protected $_lines = [];
-  protected $_complete = false;
 
   public function addNewLine(string $line)
   {
@@ -20,6 +19,7 @@ class CodeBlock implements BlockInterface, BlockStartCodes
     {
       if($this->_openStyle === null)
       {
+        $this->_trimLen = 0;
         $this->_openStyle = self::FENCE;
         return true;
       }
@@ -28,6 +28,7 @@ class CodeBlock implements BlockInterface, BlockStartCodes
         return null;
       }
     }
+
     if($this->_openStyle === null)
     {
       if($line[0] === "\t")
