@@ -3,6 +3,7 @@ namespace Packaged\Tests\Remarkd\Blocks;
 
 use Packaged\Remarkd\Blocks\WellBlock;
 use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class WellBlockTest extends TestCase
@@ -17,8 +18,9 @@ MARKDOWN;
 <div class="well">Well Content</div>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new WellBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new WellBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -35,11 +37,13 @@ MARKDOWN;
 <div class="well">Well Content Line 1<br/>Well Content Line 2<br/>Well Content Line 3</div>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new WellBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new WellBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
+
   public function testMultiLineCleanExit()
   {
     $markdown = <<<MARKDOWN
@@ -52,8 +56,9 @@ MARKDOWN;
 <div class="well">Well Content Line 1<br/>Well Content Line 2</div>Not Well Content Line 3
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new WellBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new WellBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }

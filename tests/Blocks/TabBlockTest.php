@@ -1,9 +1,8 @@
 <?php
 namespace Blocks;
 
-use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\TabBlock;
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class TabBlockTest extends TestCase
@@ -17,8 +16,8 @@ class TabBlockTest extends TestCase
     $tab->addNewLine('Tab Content');
     $tab->addNewLine('{ENDTAB}');
 
-    $re = new RuleEngine();
-    $content = $tab->complete(new BlockEngine($re), $re);
+    $ctx = new RemarkdContext();
+    $content = $tab->complete($ctx);
     self::assertEquals('<div class="tab" data-tab-key="abc">Tab Content</div>', $content);
   }
 }

@@ -3,6 +3,7 @@ namespace Blocks;
 
 use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class UnorderedListBlockTest extends TestCase
@@ -17,8 +18,9 @@ MARKDOWN;
 <ul><li>Item One</li></ul>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new UnorderedListBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new UnorderedListBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -35,8 +37,9 @@ MARKDOWN;
 <ul><li>Item One</li><li>Item Two</li><li>Item Three</li></ul>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new UnorderedListBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new UnorderedListBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }

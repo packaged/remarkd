@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class TabBlock implements BlockInterface
 {
@@ -59,9 +59,9 @@ class TabBlock implements BlockInterface
     return true;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
-    $lines = $blockEngine->parseLines($this->_lines, true);
+    $lines = $ctx->blockEngine()->parseLines($this->_lines, true);
     return '<div class="tab" data-tab-key="' . $this->key() . '">' . implode("<br/>", $lines) . '</div>';
   }
 

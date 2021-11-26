@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class CodeBlock implements BlockInterface, BlockStartCodes
 {
@@ -52,7 +52,7 @@ class CodeBlock implements BlockInterface, BlockStartCodes
     return true;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
     return '<code>' . htmlentities(implode("\n", $this->_lines)) . '</code>';
   }

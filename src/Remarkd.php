@@ -13,6 +13,7 @@ use Packaged\Remarkd\Blocks\TabsBlock;
 use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Blocks\VideoBlock;
 use Packaged\Remarkd\Blocks\WellBlock;
+use Packaged\Remarkd\Markup\MarkupResource;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CheckboxRule;
 use Packaged\Remarkd\Rules\DeletedText;
@@ -29,65 +30,48 @@ use Packaged\Remarkd\Rules\UnderlinedText;
 
 class Remarkd
 {
-  /** @var \Packaged\Remarkd\Rules\RuleEngine */
-  protected $_ruleEngine;
-  /** @var \Packaged\Remarkd\Blocks\BlockEngine */
-  protected $_blockEngine;
+  protected RemarkdContext $_context;
 
-  public function __construct(bool $defaultBlocks = true, bool $defaultRules = true)
+  public function __construct(RemarkdContext $context = null)
   {
-    $this->_ruleEngine = new RuleEngine();
-    if($defaultRules)
+    if($context === null)
     {
-      $this->applyDefaultRules($this->_ruleEngine);
+      $context = new RemarkdContext();
+      $this->applyDefaultRules($context->ruleEngine());
+      $this->applyDefaultBlocks($context->blockEngine());
     }
-
-    $this->_blockEngine = new BlockEngine($this->_ruleEngine);
-    if($defaultBlocks)
-    {
-      $this->applyDefaultBlocks($this->_blockEngine);
-    }
+    $this->_context = $context;
   }
 
-  /**
-   * @return \Packaged\Remarkd\Rules\RuleEngine
-   */
-  public function ruleEngine(): RuleEngine
+  public function ctx()
   {
-    return $this->_ruleEngine;
-  }
-
-  /**
-   * @return \Packaged\Remarkd\Blocks\BlockEngine
-   */
-  public function blockEngine(): BlockEngine
-  {
-    return $this->_blockEngine;
+    return $this->_context;
   }
 
   public function parse($text)
   {
     $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $text));
-    $blocks = $this->_blockEngine->parseLines($lines);
-    return $this->_ruleEngine->parse(implode("", $blocks));
+    $blocks = $this->ctx()->blockEngine()->parseLines($lines);
+    return $this->ctx()->ruleEngine()->parse(implode("", $blocks));
   }
 
   public function render($text, $cssClass = 'remarkd-styled')
   {
-    return '<div class="remarkd ' . $cssClass . '">' . $this->parse($text) . '</div>';
-  }
+    $return = '';
+    $css = $this->ctx()->resources(MarkupResource::TYPE_CSS);
+    if(!empty($css))
+    {
+      $return .= '<style>' . implode("\n", $css) . '</style>';
+    }
+    $js = $this->ctx()->resources(MarkupResource::TYPE_JS);
+    if(!empty($js))
+    {
+      $return .= '<script>' . implode("\n", $js) . '</script>';
+    }
+    $return .= implode("\n", $this->ctx()->resources(MarkupResource::TYPE_HTML));
 
-  /**
-   * For basic implementation of the remarkd, you can use this method to include resources onto your page.
-   * We recommend using https://github.com/packaged/dispatch in vendor mode for including these resources
-   *
-   * @return string
-   */
-  public function resourcesHtml()
-  {
-    return
-      '<style>' . file_get_contents(dirname(__DIR__) . '/resources/css/remarkd.css') . '</style>'
-      . '<script>' . file_get_contents(dirname(__DIR__) . '/resources/js/tabs.js') . '</script>';
+    $return .= '<div class="remarkd ' . $cssClass . '">' . $this->parse($text) . '</div>';
+    return $return;
   }
 
   public function applyDefaultRules(RuleEngine $engine)

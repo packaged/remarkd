@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class HeadingBlock implements BlockInterface, BlockStartCodes
 {
@@ -16,9 +16,9 @@ class HeadingBlock implements BlockInterface, BlockStartCodes
     return null;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
-    return $ruleEngine->parse('<h' . $this->_level . '>' . $this->_heading . '</h' . $this->_level . '>');
+    return $ctx->ruleEngine()->parse('<h' . $this->_level . '>' . $this->_heading . '</h' . $this->_level . '>');
   }
 
   public function startCodes(): array

@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class TabsBlock implements BlockInterface, BlockLineMatcher
 {
@@ -49,9 +49,9 @@ class TabsBlock implements BlockInterface, BlockLineMatcher
     return true;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
-    $lines = $blockEngine->parseBlocks($this->_lines, true);
+    $lines = $ctx->blockEngine()->parseBlocks($this->_lines, true);
     $content = [];
     $tabHeaders = '<ul class="tab-header">';
     foreach($lines as $block)
@@ -67,7 +67,7 @@ class TabsBlock implements BlockInterface, BlockLineMatcher
         $tabHeaders .= '<li><a href="#" data-tab-focus-key="' . $block->key() . '"' . $append . '>'
           . $block->name() . '</a></li>';
       }
-      $content[] = $block instanceof BlockInterface ? $block->complete($blockEngine, $ruleEngine) : $block;
+      $content[] = $block instanceof BlockInterface ? $block->complete($ctx) : $block;
     }
 
     if(empty($this->_tabs))

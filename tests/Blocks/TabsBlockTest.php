@@ -3,6 +3,7 @@ namespace Blocks;
 
 use Packaged\Remarkd\Blocks\TabsBlock;
 use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class TabsBlockTest extends TestCase
@@ -30,8 +31,9 @@ MARKDOWN;
 </div>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new TabsBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new TabsBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }

@@ -3,6 +3,7 @@ namespace Blocks;
 
 use Packaged\Remarkd\Blocks\HintBlock;
 use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class HintBlockTest extends TestCase
@@ -22,8 +23,9 @@ MARKDOWN;
 <div class="hint-$styleL">Content</div>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new HintBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new HintBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -43,8 +45,9 @@ MARKDOWN;
 <div class="hint-$styleL"><strong class="hint-caption">$style</strong>Content</div>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new HintBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new HintBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -66,8 +69,9 @@ MARKDOWN;
 <br/>Line 2</div>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new HintBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new HintBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -83,8 +87,9 @@ MARKDOWN;
 <div class="hint-warning">Line 1</div><div class="hint-success">Line 2</div>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new HintBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new HintBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -105,8 +110,9 @@ MARKDOWN;
 <div class="hint-$styleL"><strong class="hint-caption">$style</strong>Content</div><div class="hint-$styleL"><strong class="hint-caption">$style</strong>Content 2</div>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new HintBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new HintBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }

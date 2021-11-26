@@ -1,22 +1,24 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class BlockEngine
 {
-  protected $_engine;
-
   protected $_startCodes = [];
   /** @var array|\Packaged\Remarkd\Blocks\BlockLineMatcher[] */
   protected $_matchers = [];
 
   protected $_codeBlock;
   protected $_defaultBlock;
+  /**
+   * @var \Packaged\Remarkd\RemarkdContext
+   */
+  protected RemarkdContext $_context;
 
-  public function __construct(RuleEngine $engine)
+  public function __construct(RemarkdContext $ctx)
   {
-    $this->_engine = $engine;
+    $this->_context = $ctx;
   }
 
   public static function trimLine($line)
@@ -86,7 +88,7 @@ class BlockEngine
         $nlCount = 0;
         if($block instanceof BlockInterface)
         {
-          $newLines[] = $block->complete($this, $this->_engine);
+          $newLines[] = $block->complete($this->_context);
         }
         else
         {

@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class WellBlock implements BlockInterface, BlockStartCodes
 {
@@ -17,9 +17,9 @@ class WellBlock implements BlockInterface, BlockStartCodes
     return true;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
-    return '<div class="well">' . $ruleEngine->parse(implode("<br/>", $this->_lines)) . '</div>';
+    return '<div class="well">' . $ctx->ruleEngine()->parse(implode("<br/>", $this->_lines)) . '</div>';
   }
 
   public function startCodes(): array

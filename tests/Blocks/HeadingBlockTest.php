@@ -3,6 +3,7 @@ namespace Blocks;
 
 use Packaged\Remarkd\Blocks\HeadingBlock;
 use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class HeadingBlockTest extends TestCase
@@ -28,8 +29,9 @@ class HeadingBlockTest extends TestCase
 
     $expect = '<h' . $level . '>Heading ' . $level . '</h' . $level . '>';
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new HeadingBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new HeadingBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }

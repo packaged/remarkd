@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 abstract class AbstractListBlock implements BlockInterface, BlockStartCodes
 {
@@ -40,15 +40,15 @@ abstract class AbstractListBlock implements BlockInterface, BlockStartCodes
     return $this;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
     $output = '<' . $this->_listType . '>';
     foreach($this->_items as $li)
     {
-      $output .= '<li>' . implode("", $blockEngine->parseLines($li, true)) . '</li>';
+      $output .= '<li>' . implode("", $ctx->blockEngine()->parseLines($li, true)) . '</li>';
     }
     $output .= '</' . $this->_listType . '>';
-    return $ruleEngine->parse($output);
+    return $ctx->ruleEngine()->parse($output);
   }
 
 }

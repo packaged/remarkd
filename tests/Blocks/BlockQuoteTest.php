@@ -3,6 +3,7 @@ namespace Blocks;
 
 use Packaged\Remarkd\Blocks\BlockQuote;
 use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class BlockQuoteTest extends TestCase
@@ -17,8 +18,9 @@ MARKDOWN;
 <blockquote>Block Quote</blockquote>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new BlockQuote());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new BlockQuote());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -37,8 +39,9 @@ MARKDOWN;
 <blockquote>...or with spaces between arrows.</blockquote></blockquote></blockquote>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new BlockQuote());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new BlockQuote());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }

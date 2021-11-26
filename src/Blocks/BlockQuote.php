@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class BlockQuote implements BlockInterface, BlockStartCodes
 {
@@ -22,9 +22,9 @@ class BlockQuote implements BlockInterface, BlockStartCodes
     return true;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
-    $lines = $blockEngine->parseLines($this->_lines);
+    $lines = $ctx->blockEngine()->parseLines($this->_lines);
     return '<blockquote>' . implode("\n", $lines) . '</blockquote>';
   }
 

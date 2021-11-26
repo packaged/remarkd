@@ -3,6 +3,7 @@ namespace Blocks;
 
 use Packaged\Remarkd\Blocks\CodeBlock;
 use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class CodeBlockTest extends TestCase
@@ -17,8 +18,9 @@ MARKDOWN;
 <code>&lt;div class=&quot;test&quot;&gt;Code&lt;/div&gt;</code>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new CodeBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new CodeBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -35,8 +37,9 @@ MARKDOWN;
   indented code block</code>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new CodeBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new CodeBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -49,8 +52,9 @@ HTML;
 <code>&lt;div class=&quot;test&quot;&gt;Code&lt;/div&gt;</code>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new CodeBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new CodeBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -75,8 +79,9 @@ code line 3
 code line 4</code>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new CodeBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new CodeBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }

@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class HintBlock implements BlockInterface, BlockLineMatcher
 {
@@ -29,9 +29,9 @@ class HintBlock implements BlockInterface, BlockLineMatcher
     return $this->_style === '|' ? true : null;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
-    return $ruleEngine->parse(
+    return $ctx->ruleEngine()->parse(
       '<div class="hint-' . strtolower($this->_level) . '">'
       . ($this->_style === ':' ? '<strong class="hint-caption">' . $this->_level . '</strong>' : '')
       . implode("\n<br/>", $this->_lines) . '</div>'

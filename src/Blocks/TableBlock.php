@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class TableBlock implements BlockInterface, BlockStartCodes
 {
@@ -37,7 +37,7 @@ class TableBlock implements BlockInterface, BlockStartCodes
     return true;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
     $table = '<table>';
     foreach(['th', 'td'] as $type)
@@ -54,7 +54,7 @@ class TableBlock implements BlockInterface, BlockStartCodes
       }
     }
     $table .= '</table>';
-    return $ruleEngine->parse($table);
+    return $ctx->ruleEngine()->parse($table);
   }
 
   public function startCodes(): array

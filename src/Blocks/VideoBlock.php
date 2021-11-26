@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class VideoBlock implements BlockInterface, BlockLineMatcher
 {
@@ -27,7 +27,7 @@ class VideoBlock implements BlockInterface, BlockLineMatcher
     return false;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
     $content = $containerAppend = '';
 

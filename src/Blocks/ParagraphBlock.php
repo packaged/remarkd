@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\RemarkdContext;
 
 class ParagraphBlock implements BlockInterface
 {
@@ -18,8 +18,8 @@ class ParagraphBlock implements BlockInterface
     return true;
   }
 
-  public function complete(BlockEngine $blockEngine, RuleEngine $ruleEngine): string
+  public function complete(RemarkdContext $ctx): string
   {
-    return '<p>' . $ruleEngine->parse(implode("<br/>", $this->_lines)) . '</p>';
+    return '<p>' . $ctx->ruleEngine()->parse(implode("<br/>", $this->_lines)) . '</p>';
   }
 }

@@ -3,6 +3,7 @@ namespace Blocks;
 
 use Packaged\Remarkd\Blocks\OrderedListBlock;
 use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\RemarkdContext;
 use PHPUnit\Framework\TestCase;
 
 class OrderedListBlockTest extends TestCase
@@ -17,8 +18,9 @@ MARKDOWN;
 <ol><li>Item One</li></ol>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new OrderedListBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new OrderedListBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
@@ -35,8 +37,9 @@ MARKDOWN;
 <ol><li>Item One</li><li>Item Two</li><li>Item Three</li></ol>
 HTML;
 
-    $remarkd = new Remarkd(false, false);
-    $remarkd->blockEngine()->registerBlock(new OrderedListBlock());
+    $ctx = new RemarkdContext();
+    $remarkd = new Remarkd($ctx);
+    $ctx->blockEngine()->registerBlock(new OrderedListBlock());
 
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
