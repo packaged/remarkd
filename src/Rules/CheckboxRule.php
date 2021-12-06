@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class CheckboxRule implements RemarkdownRule
+class CheckboxRule implements RemarkdRule
 {
   public function apply(string $text): string
   {

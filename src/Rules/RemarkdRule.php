@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-interface RemarkdownRule
+interface RemarkdRule
 {
   public function apply(string $text): string;
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class MonospacedText implements RemarkdownRule
+class MonospacedText implements RemarkdRule
 {
   public function apply(string $text): string
   {

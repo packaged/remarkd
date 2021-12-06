@@ -14,6 +14,8 @@ use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Blocks\VideoBlock;
 use Packaged\Remarkd\Blocks\WellBlock;
 use Packaged\Remarkd\Markup\MarkupResource;
+use Packaged\Remarkd\Objects\ObjectEngine;
+use Packaged\Remarkd\Objects\ProgressMeterObject;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CheckboxRule;
 use Packaged\Remarkd\Rules\DeletedText;
@@ -39,6 +41,7 @@ class Remarkd
       $context = new RemarkdContext();
       $this->applyDefaultRules($context->ruleEngine());
       $this->applyDefaultBlocks($context->blockEngine());
+      $this->applyDefaultObjects($context->objectEngine());
     }
     $this->_context = $context;
   }
@@ -52,7 +55,9 @@ class Remarkd
   {
     $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $text));
     $blocks = $this->ctx()->blockEngine()->parseLines($lines);
-    return $this->ctx()->ruleEngine()->parse(implode("", $blocks));
+    return $this->ctx()->ruleEngine()->parse(
+      $this->ctx()->objectEngine()->parse(implode("", $blocks))
+    );
   }
 
   public function render($text, $cssClass = 'remarkd-styled')
@@ -92,6 +97,12 @@ class Remarkd
 
     $engine->registerRule(new CheckboxRule());
 
+    return $engine;
+  }
+
+  public function applyDefaultObjects(ObjectEngine $engine)
+  {
+    $engine->registerObject(new ProgressMeterObject());
     return $engine;
   }
 

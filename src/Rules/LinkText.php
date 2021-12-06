@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class LinkText implements RemarkdownRule
+class LinkText implements RemarkdRule
 {
   public function apply(string $text): string
   {

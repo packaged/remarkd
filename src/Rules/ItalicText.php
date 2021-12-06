@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class ItalicText implements RemarkdownRule
+class ItalicText implements RemarkdRule
 {
   public function apply(string $text): string
   {

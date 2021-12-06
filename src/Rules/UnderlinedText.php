@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class UnderlinedText implements RemarkdownRule
+class UnderlinedText implements RemarkdRule
 {
   public function apply(string $text): string
   {

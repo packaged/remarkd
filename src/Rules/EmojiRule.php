@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class EmojiRule implements RemarkdownRule
+class EmojiRule implements RemarkdRule
 {
   //data source : https://www.unicode.org/Public/emoji/14.0/emoji-test.txt
   protected static $_emoji = [

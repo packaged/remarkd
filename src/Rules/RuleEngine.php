@@ -17,7 +17,7 @@ class RuleEngine
 
   protected $_rules = [];
 
-  public function registerRule(RemarkdownRule $rule)
+  public function registerRule(RemarkdRule $rule)
   {
     $this->_rules[] = $rule;
     return $this;

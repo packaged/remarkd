@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class KeyboardKey implements RemarkdownRule
+class KeyboardKey implements RemarkdRule
 {
   public function apply(string $text): string
   {

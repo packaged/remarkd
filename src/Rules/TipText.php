@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class TipText implements RemarkdownRule
+class TipText implements RemarkdRule
 {
   public function apply(string $text): string
   {

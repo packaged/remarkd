@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class DeletedText implements RemarkdownRule
+class DeletedText implements RemarkdRule
 {
   public function apply(string $text): string
   {

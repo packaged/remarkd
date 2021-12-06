@@ -3,6 +3,7 @@ namespace Packaged\Remarkd;
 
 use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Markup\MarkupResource;
+use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Rules\RuleEngine;
 
 class RemarkdContext
@@ -11,6 +12,9 @@ class RemarkdContext
   protected $_ruleEngine;
   /** @var \Packaged\Remarkd\Blocks\BlockEngine */
   protected $_blockEngine;
+  /** @var \Packaged\Remarkd\Objects\ObjectEngine */
+  protected $_objectEngine;
+
   /** @var \Packaged\Remarkd\Markup\MarkupResource[] */
   protected $_markupResources = [
     MarkupResource::TYPE_JS   => [],
@@ -22,6 +26,7 @@ class RemarkdContext
   {
     $this->_ruleEngine = new RuleEngine($this);
     $this->_blockEngine = new BlockEngine($this);
+    $this->_objectEngine = new ObjectEngine($this);
   }
 
   /**
@@ -38,6 +43,11 @@ class RemarkdContext
   public function blockEngine(): BlockEngine
   {
     return $this->_blockEngine;
+  }
+
+  public function objectEngine(): ObjectEngine
+  {
+    return $this->_objectEngine;
   }
 
   public function addResource(MarkupResource $resource)

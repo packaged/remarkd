@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Rules;
 
-class BoldText implements RemarkdownRule
+class BoldText implements RemarkdRule
 {
   public function apply(string $text): string
   {
