@@ -12,7 +12,7 @@ class ProgressMeterObject extends AbstractRemarkdObject
   {
     $output = '';
     $id = $this->_config['id'] ?? 'remarkd-meter-' . rand(100, 200);
-    if($this->_config['label'])
+    if(isset($this->_config['label']))
     {
       $output .= '<label for="' . $id . '" class="remarkd-meter-label">' . $this->_config['label'] . '</label>';
     }
