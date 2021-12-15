@@ -20,6 +20,6 @@ class ParagraphBlock implements BlockInterface
 
   public function complete(RemarkdContext $ctx): string
   {
-    return '<p>' . $ctx->ruleEngine()->parse(implode("<br/>", $this->_lines)) . '</p>';
+    return '<p>' . $ctx->ruleEngine()->parse(implode(" ", $this->_lines)) . '</p>';
   }
 }

@@ -14,6 +14,7 @@ use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Blocks\VideoBlock;
 use Packaged\Remarkd\Blocks\WellBlock;
 use Packaged\Remarkd\Markup\MarkupResource;
+use Packaged\Remarkd\Objects\LineBreakObject;
 use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Objects\ProgressMeterObject;
 use Packaged\Remarkd\Rules\BoldText;
@@ -103,6 +104,7 @@ class Remarkd
   public function applyDefaultObjects(ObjectEngine $engine)
   {
     $engine->registerObject(new ProgressMeterObject());
+    $engine->registerObject(new LineBreakObject());
     return $engine;
   }
 
