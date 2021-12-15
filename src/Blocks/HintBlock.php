@@ -6,6 +6,7 @@ use Packaged\Remarkd\RemarkdContext;
 class HintBlock implements BlockInterface, BlockLineMatcher
 {
   protected $_lines = [];
+  protected $_hitNewLine = false;
   protected $_style;
   protected $_levelLen;
   protected $_level;
@@ -20,13 +21,25 @@ class HintBlock implements BlockInterface, BlockLineMatcher
   public function addNewLine(string $line)
   {
     $line = BlockEngine::trimLine($line);
-    if(empty($line) || ($this->_style === '|' && substr($line, 0, $this->_levelLen) !== $this->_level))
+
+    if(empty($line))
+    {
+      $this->_hitNewLine = true;
+      return true;
+    }
+
+    if($this->_hitNewLine && !empty($this->_lines))
+    {
+      return false;
+    }
+
+    if($this->_style === '|' && substr($line, 0, $this->_levelLen) !== $this->_level)
     {
       return false;
     }
 
     $this->_lines[] = trim(substr($line, $this->_levelLen + ($this->_style === ')' ? 2 : 1)));
-    return $this->_style === '|' ? true : null;
+    return true;
   }
 
   public function complete(RemarkdContext $ctx): string
