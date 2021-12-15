@@ -33,12 +33,21 @@ class HintBlock implements BlockInterface, BlockLineMatcher
       return false;
     }
 
-    if($this->_style === '|' && substr($line, 0, $this->_levelLen) !== $this->_level)
+    $multiLine = $this->_style === '|';
+    if($multiLine && substr($line, 0, $this->_levelLen) !== $this->_level)
     {
       return false;
     }
 
-    $this->_lines[] = trim(substr($line, $this->_levelLen + ($this->_style === ')' ? 2 : 1)));
+    if(!$multiLine && !empty($this->_lines))
+    {
+      $this->_lines[] = $line;
+    }
+    else
+    {
+      $this->_lines[] = trim(substr($line, $this->_levelLen + ($this->_style === ')' ? 2 : 1)));
+    }
+
     return true;
   }
 
