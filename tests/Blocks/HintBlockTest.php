@@ -103,6 +103,7 @@ HTML;
 
     $markdown = <<<MARKDOWN
 $style: Content
+
 $style: Content 2
 MARKDOWN;
 

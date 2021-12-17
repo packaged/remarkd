@@ -59,7 +59,7 @@ I think I\'ll use it to format all of my documents from now on .',
         'Line Breaks',
         'This is the first line.
 And this is the second line.',
-        '<p>This is the first line.<br/>'
+        '<p>This is the first line. '
         . 'And this is the second line.</p>',
       ],
     ];

@@ -35,7 +35,7 @@ Content Line 3
 MARKDOWN;
 
     $expect = <<<HTML
-<p>Content Line 1<br/>Content Line 2</p><p>Content Line 3</p>
+<p>Content Line 1 Content Line 2</p><p>Content Line 3</p>
 HTML;
 
     $ctx = new RemarkdContext();
