@@ -271,3 +271,13 @@ ul.tab-header li a.active {
     border-radius: 6px;
     padding: 15px;
 }
+
+sup.reference {
+    line-height: 1em;
+    font-size: 80%;
+}
+
+
+sup.reference a:link {
+    text-decoration: none;
+}
