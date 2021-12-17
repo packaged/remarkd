@@ -19,7 +19,7 @@ class ReferenceListObject extends AbstractRemarkdObject
       {
         if($ref instanceof ContentReference)
         {
-          $ol[] = '<li id="rmdref-ft-' . $ref->code . '"><a href="#rmdref-bdy-' . $ref->code . '">^</a> ' . $ref->content . '</li>';
+          $ol[] = '<li id="rmdref-ft-' . $ref->code . '"><a href="#rmdref-bdy-' . $ref->code . '" class="reference-tobody">^</a> ' . $ref->content . '</li>';
         }
       }
       if(!empty($ol))

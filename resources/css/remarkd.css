@@ -280,6 +280,7 @@ sup.reference {
 
 sup.reference a:link {
     text-decoration: none;
+    color: #0041fd;
 }
 
 ol.reference li {
@@ -290,4 +291,14 @@ ol.reference li {
 ol.reference li:target {
     background: rgba(0, 112, 243, 0.10);
     border-radius: 5px;
+}
+
+a.reference-tobody {
+    text-decoration: none;
+    font-weight: 500;
+    color: black;
+}
+
+sup.reference a:target {
+    font-weight: 500;
 }
