@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Remarkd;
 
+use Packaged\Map\DataMap;
 use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Markup\MarkupResource;
 use Packaged\Remarkd\Objects\ObjectEngine;
@@ -22,11 +23,14 @@ class RemarkdContext
     MarkupResource::TYPE_HTML => [],
   ];
 
+  protected $_meta = [];
+
   public function __construct()
   {
     $this->_ruleEngine = new RuleEngine($this);
     $this->_blockEngine = new BlockEngine($this);
     $this->_objectEngine = new ObjectEngine($this);
+    $this->_meta = new DataMap($this->_meta);
   }
 
   /**
@@ -59,5 +63,10 @@ class RemarkdContext
   public function resources($type)
   {
     return $this->_markupResources[$type] ?? [];
+  }
+
+  public function meta(): DataMap
+  {
+    return $this->_meta;
   }
 }

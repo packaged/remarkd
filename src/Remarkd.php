@@ -17,6 +17,8 @@ use Packaged\Remarkd\Markup\MarkupResource;
 use Packaged\Remarkd\Objects\LineBreakObject;
 use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Objects\ProgressMeterObject;
+use Packaged\Remarkd\Objects\References\ReferenceListObject;
+use Packaged\Remarkd\Objects\References\ReferenceObject;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CheckboxRule;
 use Packaged\Remarkd\Rules\DeletedText;
@@ -105,6 +107,8 @@ class Remarkd
   {
     $engine->registerObject(new ProgressMeterObject());
     $engine->registerObject(new LineBreakObject());
+    $engine->registerObject(new ReferenceObject());
+    $engine->registerObject(new ReferenceListObject());
     return $engine;
   }
 

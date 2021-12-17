@@ -29,6 +29,7 @@ class ObjectEngine
   public function registerObject(RemarkdObject $obj)
   {
     $this->_objects[$obj->getIdentifier()] = $obj;
+    krsort($this->_objects);
     $this->_selector = str_replace('%TYPES%', implode('|', array_keys($this->_objects)), self::objectSelectors);
     return $this;
   }
