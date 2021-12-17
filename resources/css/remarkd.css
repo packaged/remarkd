@@ -281,3 +281,13 @@ sup.reference {
 sup.reference a:link {
     text-decoration: none;
 }
+
+ol.reference li {
+    padding: 5px;
+    font-size: 80%;
+}
+
+ol.reference li:target {
+    background: rgba(0, 112, 243, 0.10);
+    border-radius: 5px;
+}

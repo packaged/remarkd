@@ -24,7 +24,7 @@ class ReferenceListObject extends AbstractRemarkdObject
       }
       if(!empty($ol))
       {
-        return '<ol>' . implode('', $ol) . '</ol>';
+        return '<ol class="reference">' . implode('', $ol) . '</ol>';
       }
       return '';
     }
