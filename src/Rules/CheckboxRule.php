@@ -11,8 +11,8 @@ class CheckboxRule implements RemarkdRule
         '[x]',
       ],
       [
-        '<input type="checkbox" onclick="return false;">',
-        '<input type="checkbox" onclick="return false;" checked>',
+        '<input type="checkbox" readonly="readonly">',
+        '<input type="checkbox" readonly="readonly" checked>',
       ],
       $text
     );

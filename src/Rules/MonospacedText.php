@@ -5,8 +5,6 @@ class MonospacedText implements RemarkdRule
 {
   public function apply(string $text): string
   {
-    return preg_replace_callback('/\B`(.+?)`/', function (array $matches) {
-      return '<span class="monospace">' . ($matches[2] ?? $matches[1]) . '</span>';
-    }, $text);
+    return preg_replace('/\B`(.+?)`/', '<span class="monospace">\1</span>', $text);
   }
 }
