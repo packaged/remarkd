@@ -7,7 +7,7 @@ class EmojiRule implements RemarkdRule
   protected static $_emoji = [
     '+1'                           => "\xF0\x9F\x91\x8D",
     'thumbsup'                     => "\xF0\x9F\x91\x8D",
-    '_1'                           => "\xF0\x9F\x91\x8E",
+    '-1'                           => "\xF0\x9F\x91\x8E",
     'thumbsdown'                   => "\xF0\x9F\x91\x8E",
     'eyes'                         => "\xF0\x9F\x91\x80",
     'grinning'                     => "\xF0\x9F\x98\x80",
