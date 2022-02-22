@@ -5,8 +5,6 @@ class ItalicText implements RemarkdRule
 {
   public function apply(string $text): string
   {
-    return preg_replace_callback('/\*(.+?)\*|\b_(.+)_\b/', function (array $matches) {
-      return '<em>' . ($matches[2] ?? $matches[1]) . '</em>';
-    }, $text);
+    return preg_replace('/([*_])(.+?)\1/', '<em>\2</em>', $text);
   }
 }

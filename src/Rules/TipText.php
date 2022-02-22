@@ -5,8 +5,6 @@ class TipText implements RemarkdRule
 {
   public function apply(string $text): string
   {
-    return preg_replace_callback('/\{(.*?)\}\((.*?)\)/', function ($matches) {
-      return '<span class="tooltip" title="' . $matches[2] . '">' . $matches[1] . '</span>';
-    }, $text);
+    return preg_replace('/{(.*?)}\((.*?)\)/', '<span class="tooltip" title="\2">\1</span>', $text);
   }
 }
