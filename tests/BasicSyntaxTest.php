@@ -27,11 +27,12 @@ class BasicSyntaxTest extends TestCase
   public function providerHeaders()
   {
     return [
-      ['Heading 1', '# Heading level 1', '<h1>Heading level 1</h1>'],
-      ['Heading 2', '## Heading level 2', '<h2>Heading level 2</h2>'],
-      ['Heading 3', '### Heading level 3', '<h3>Heading level 3</h3>'],
-      ['Heading 4', '#### Heading level 4', '<h4>Heading level 4</h4>'],
-      ['Heading 5', '##### Heading level 5', '<h5>Heading level 5</h5>'],
+      ['Heading 1', '# Heading level 1', '<h1 id="heading-level-1">Heading level 1</h1>'],
+      ['Heading 2', '## Heading level 2', '<h2 id="heading-level-2">Heading level 2</h2>'],
+      ['Heading 3', '### Heading level 3', '<h3 id="heading-level-3">Heading level 3</h3>'],
+      ['Heading 4', '#### Heading level 4', '<h4 id="heading-level-4">Heading level 4</h4>'],
+      ['Heading 5', '##### Heading level 5', '<h5 id="heading-level-5">Heading level 5</h5>'],
+      ['Heading anchor', '# Heading test {#custom-anchor}', '<h1 id="custom-anchor">Heading test</h1>'],
       [
         'Line Split Headings',
         'Try to put a blank line before...
@@ -39,7 +40,7 @@ class BasicSyntaxTest extends TestCase
 # Heading
 
 ...and after a heading.',
-        '<p>Try to put a blank line before...</p><h1>Heading</h1><p>...and after a heading.</p>',
+        '<p>Try to put a blank line before...</p><h1 id="heading">Heading</h1><p>...and after a heading.</p>',
       ],
     ];
   }
@@ -106,7 +107,7 @@ And this is the second line.',
 >
 >  *Everything* is going according to **plan**.',
         '<blockquote>'
-        . '<h4>The quarterly results look great!</h4>'
+        . '<h4 id="the-quarterly-results-look-great">The quarterly results look great!</h4>'
         . "\n"
         . '<ul>'
         . '<li>Revenue was off the chart.</li>'

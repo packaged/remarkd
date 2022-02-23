@@ -27,7 +27,7 @@ class HeadingBlockTest extends TestCase
   {
     $markdown = str_repeat('#', $level) . ' Heading ' . $level;
 
-    $expect = '<h' . $level . '>Heading ' . $level . '</h' . $level . '>';
+    $expect = '<h' . $level . ' id="heading-' . $level . '">Heading ' . $level . '</h' . $level . '>';
 
     $ctx = new RemarkdContext();
     $remarkd = new Remarkd($ctx);
