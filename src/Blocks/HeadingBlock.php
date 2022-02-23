@@ -11,7 +11,7 @@ class HeadingBlock implements BlockInterface, BlockStartCodes
   public function addNewLine(string $line)
   {
     $line = BlockEngine::trimLine($line);
-    $this->_level = substr_count($line, '#', 0);
+    $this->_level = strlen(preg_replace('/^(#+).+/', '\1', $line));
     $this->_heading = trim(substr(trim($line), $this->_level));
     return null;
   }
