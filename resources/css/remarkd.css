@@ -1,11 +1,20 @@
-.remarkd .monospace {
-  display: inline-block;
+.remarkd .monospace,
+.remarkd code {
   font-family: monospace;
   color: #000;
   background: rgba(71, 87, 120, 0.1);
   padding: 1px 4px;
   border-radius: 3px;
-  white-space: pre-wrap;
+  white-space: nowrap;
+}
+
+.remarkd .monospace {
+  display: inline-block;
+}
+
+.remarkd code {
+  display: block;
+  overflow: auto;
 }
 
 .remarkd .highlight {
