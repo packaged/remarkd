@@ -32,7 +32,7 @@ class ReferenceObject extends AbstractRemarkdObject
         $ref->content = '<a href="' . $this->_config['link'] . '" target="_blank">' . $this->_config['link'] . '</a>';
       }
 
-      return '<sup class="reference"><a name="rmdref-bdy-' . $ref->code . '" href="#rmdref-ft-' . $ref->code . '">[' . $ref->num . ']</a></sup>';
+      return '<sup class="reference"><a id="rmdref-bdy-' . $ref->code . '" href="#rmdref-ft-' . $ref->code . '">[' . $ref->num . ']</a></sup>';
     }
     return '[MISSING-CONTEXT]';
   }

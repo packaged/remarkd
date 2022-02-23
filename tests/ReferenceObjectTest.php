@@ -17,7 +17,7 @@ Here is some information, we sourced this at {ref, content="http://www.google.co
 MARKDOWN;
 
     $expect = <<<HTML
-<p>Here is some information, we sourced this at <sup class="reference"><a name="rmdref-bdy-1RM" href="#rmdref-ft-1RM">[1]</a></sup>.   For any more info, ask.</p><h1>References</h1><p><ol class="reference"><li id="rmdref-ft-1RM"><a href="#rmdref-bdy-1RM" class="reference-tobody">^</a> http://www.google.com</li></ol></p>
+<p>Here is some information, we sourced this at <sup class="reference"><a id="rmdref-bdy-1RM" href="#rmdref-ft-1RM">[1]</a></sup>.   For any more info, ask.</p><h1 id="references">References</h1><p><ol class="reference"><li id="rmdref-ft-1RM"><a href="#rmdref-bdy-1RM" class="reference-tobody">^</a> http://www.google.com</li></ol></p>
 HTML;
 
     self::assertEquals($expect, $remarkd->parse($markdown));
