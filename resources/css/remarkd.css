@@ -181,33 +181,43 @@
   padding: 15px;
 }
 
-sup.reference {
+.remarkd sup.reference {
   line-height: 1em;
   font-size: 80%;
 }
 
 
-sup.reference a:link {
+.remarkd sup.reference a:link {
   text-decoration: none;
   color: #0041fd;
 }
 
-ol.reference li {
+.remarkd ol.reference li {
   padding: 5px;
   font-size: 90%;
 }
 
-ol.reference li:target {
+.remarkd ol.reference li:target {
   background: rgba(0, 112, 243, 0.10);
   border-radius: 5px;
 }
 
-a.reference-tobody {
+.remarkd a.reference-tobody {
   text-decoration: none;
   font-weight: 600;
   color: black;
 }
 
-sup.reference a:target {
+.remarkd sup.reference a:target {
   font-weight: 600;
+}
+
+.remarkd h1:target,
+.remarkd h2:target,
+.remarkd h3:target,
+.remarkd h4:target,
+.remarkd h5:target,
+.remarkd h6:target {
+  background: rgba(0, 112, 243, 0.10);
+  border-radius: 5px;
 }
