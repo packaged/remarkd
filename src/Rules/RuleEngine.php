@@ -19,7 +19,13 @@ class RuleEngine
 
   public function registerRule(RemarkdRule $rule)
   {
-    $this->_rules[] = $rule;
+    $this->_rules[get_class($rule)] = $rule;
+    return $this;
+  }
+
+  public function removeRuleByClassname($className)
+  {
+    unset($this->_rules[$className]);
     return $this;
   }
 
