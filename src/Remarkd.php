@@ -14,6 +14,7 @@ use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Blocks\VideoBlock;
 use Packaged\Remarkd\Blocks\WellBlock;
 use Packaged\Remarkd\Markup\MarkupResource;
+use Packaged\Remarkd\Objects\AnchorObject;
 use Packaged\Remarkd\Objects\LineBreakObject;
 use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Objects\ProgressMeterObject;
@@ -109,6 +110,7 @@ class Remarkd
     $engine->registerObject(new LineBreakObject());
     $engine->registerObject(new ReferenceObject());
     $engine->registerObject(new ReferenceListObject());
+    $engine->registerObject(new AnchorObject());
     return $engine;
   }
 
