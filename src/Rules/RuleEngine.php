@@ -23,9 +23,10 @@ class RuleEngine
     return $this;
   }
 
-  public function removeRuleByClassname($className)
+  public function replaceRule($ruleClass, RemarkdRule $rule)
   {
-    unset($this->_rules[$className]);
+    //TODO: Having rule priorities would help here, as the rule processing order is important
+    $this->_rules[$ruleClass] = $rule;
     return $this;
   }
 
