@@ -12,6 +12,7 @@ class BasicSyntaxTest extends TestCase
    * @dataProvider providerParagraphs
    * @dataProvider providerBlockQuotes
    * @dataProvider providerOrderedLists
+   * @dataProvider providerImages
    *
    * @param $testName
    * @param $markdown
@@ -62,6 +63,27 @@ I think I\'ll use it to format all of my documents from now on .',
 And this is the second line.',
         '<p>This is the first line. '
         . 'And this is the second line.</p>',
+      ],
+    ];
+  }
+
+  public function providerImages()
+  {
+    return [
+      [
+        'Simple Image',
+        '![](path/to/image.jpg)',
+        '<p><img src="path/to/image.jpg"/></p>',
+      ],
+      [
+        'Basic Image',
+        '![ALT TEST](path/to/image.jpg)',
+        '<p><img src="path/to/image.jpg" alt="ALT TEST"/></p>',
+      ],
+      [
+        'Full Image',
+        '![ALT TEST](path/to/image.jpg "Title Here")',
+        '<p><img src="path/to/image.jpg" alt="ALT TEST" title="Title Here"/></p>',
       ],
     ];
   }

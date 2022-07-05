@@ -25,6 +25,7 @@ use Packaged\Remarkd\Rules\CheckboxRule;
 use Packaged\Remarkd\Rules\DeletedText;
 use Packaged\Remarkd\Rules\EmojiRule;
 use Packaged\Remarkd\Rules\HighlightText;
+use Packaged\Remarkd\Rules\Image;
 use Packaged\Remarkd\Rules\ItalicText;
 use Packaged\Remarkd\Rules\KeyboardKey;
 use Packaged\Remarkd\Rules\LinkText;
@@ -93,6 +94,7 @@ class Remarkd
     $engine->registerRule(new KeyboardKey());
 
     $engine->registerRule(new TipText());
+    $engine->registerRule(new Image());
     $engine->registerRule(new LinkText());
     $engine->registerRule(new BoldText());
     $engine->registerRule(new ItalicText());
