@@ -25,7 +25,7 @@ class HintBlock implements BlockInterface, BlockLineMatcher
     if(empty($line))
     {
       $this->_hitNewLine = true;
-      return true;
+      return null;
     }
 
     if($this->_hitNewLine && !empty($this->_lines))
