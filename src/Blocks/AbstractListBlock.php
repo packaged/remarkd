@@ -16,14 +16,30 @@ abstract class AbstractListBlock implements BlockInterface, BlockStartCodes
       return false;
     }
 
-    $prefix = substr($line, 0, 2);
-    if(in_array($prefix, $this->startCodes()))
+    if(empty(trim($line)))
     {
-      $this->_addItem(trim(substr($line, 2)));
+      $this->_appendItem('');
+      return true;
     }
-    else
+
+    $added = false;
+    $prefix = substr($line, 0, 2);
+    foreach($this->startCodes() as $startCode)
     {
-      $this->_appendItem(BlockEngine::trimLeftSpace(substr($line, 2), 2));
+      if($prefix . " " === $startCode . " ")
+      {
+        $added = true;
+        $this->_addItem(trim(substr($line, 2)));
+        break;
+      }
+    }
+    if(!$added)
+    {
+      if(substr($line, 0, 1) != " ")
+      {
+        return false;
+      }
+      $this->_appendItem(BlockEngine::trimLeftSpace(substr($line, 2), 2) . PHP_EOL);
     }
     return true;
   }
