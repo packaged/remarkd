@@ -4,6 +4,7 @@ namespace Packaged\Remarkd;
 use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\BlockQuote;
 use Packaged\Remarkd\Blocks\CodeBlock;
+use Packaged\Remarkd\Blocks\MermaidBlock;
 use Packaged\Remarkd\Blocks\HeadingBlock;
 use Packaged\Remarkd\Blocks\HintBlock;
 use Packaged\Remarkd\Blocks\OrderedListBlock;
@@ -78,6 +79,11 @@ class Remarkd
     {
       $return .= '<script>' . implode("\n", $js) . '</script>';
     }
+
+    // initialize mermaid graphing
+    $return .= '<script  src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>';
+    $return .= '<script>mermaid.initialize({startOnLoad: true})</script>';
+
     $return .= implode("\n", $this->ctx()->resources(MarkupResource::TYPE_HTML));
 
     $return .= '<div class="remarkd ' . $cssClass . '">' . $this->parse($text) . '</div>';
