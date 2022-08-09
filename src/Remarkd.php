@@ -60,8 +60,8 @@ class Remarkd
   {
     $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $text));
     $blocks = $this->ctx()->blockEngine()->parseLines($lines);
-    return $this->ctx()->ruleEngine()->parse(
-      $this->ctx()->objectEngine()->parse(implode("", $blocks))
+    return $this->ctx()->objectEngine()->parse(
+      $this->ctx()->ruleEngine()->parse(implode("", $blocks))
     );
   }
 
