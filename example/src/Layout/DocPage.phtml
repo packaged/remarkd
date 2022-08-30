@@ -1,0 +1,66 @@
+<?php
+/** @var $this \Packaged\RemarkdExample\Layout\DocPage */
+?>
+<div class="remarkd remarkd-styled" style="padding: 20px; max-width: 700px; margin: 0 auto;">
+  <?= $this->_content; ?>
+</div>
+<style>
+    .title {
+        color: orangered;
+    }
+
+    .preamble p:first-of-type {
+        font-size: 1.21875em;
+        line-height: 1.6;
+    }
+
+    .listing-block, .sidebar-block, .example-block {
+        margin-bottom: 1.25em;
+    }
+
+    .listing-block .content {
+        white-space: pre-line;
+        background: lightgray;
+        padding: 10px;
+    }
+
+    .sidebar-block {
+        border-style: solid;
+        border-width: 1px;
+        border-color: #e0e0dc;
+        padding: 1.25em;
+        background: #f8f8f7;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+    .sidebar-block > .title {
+        text-align: center;
+        margin-top: 0;
+        line-height: 1.2;
+        word-spacing: -0.05em;
+        font-size: 1.6875em;
+        margin-bottom: 20px;
+    }
+
+    .example-block > .content {
+        border-style: solid;
+        border-width: 1px;
+        border-color: #e6e6e6;
+        padding: 1.25em;
+        background: #fff;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        border-color: #e0e0dc;
+        -moz-box-shadow: 0 1px 4px #e0e0dc;
+        -webkit-box-shadow: 0 1px 4px #e0e0dc;
+        box-shadow: 0 1px 4px #e0e0dc;
+    }
+
+    .tip-block {
+        margin-left: 100px;
+        background: #e1f2fa;
+        border: 1px solid lightblue;
+        padding: 10px;
+    }
+</style>

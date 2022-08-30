@@ -1,224 +1,224 @@
 .remarkd .monospace,
 .remarkd code {
-  font-family: monospace;
-  color: #000;
-  background: rgba(71, 87, 120, 0.1);
-  padding: 1px 4px;
-  border-radius: 3px;
-  white-space: nowrap;
+    font-family: monospace;
+    color: #000;
+    background: rgba(71, 87, 120, 0.1);
+    padding: 1px 4px;
+    border-radius: 3px;
+    white-space: pre-line;
 }
 
 .remarkd .monospace {
-  display: inline-block;
+    display: inline-block;
 }
 
 .remarkd code {
-  display: block;
-  overflow: auto;
+    display: block;
+    overflow: auto;
 }
 
 .remarkd .highlight {
-  display: inline-block;
-  background-color: #dfeff1;
-  padding: 0 4px;
+    display: inline-block;
+    background-color: #dfeff1;
+    padding: 0 4px;
 }
 
 .remarkd .hint-tip {
-  position: relative;
-  margin: 16px 0;
-  padding: 12px;
-  border: 1px solid #63b7de;
-  border-radius: 3px;
-  background: #e7f5f9;
-  padding-left: 40px;
+    position: relative;
+    margin: 16px 0;
+    padding: 12px;
+    border: 1px solid #63b7de;
+    border-radius: 3px;
+    background: #e7f5f9;
+    padding-left: 40px;
 }
 
 .remarkd .hint-tip:before {
-  content: '';
-  position: absolute;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' viewBox='0 0 352 512'%3E%3Cpath fill='%230a5aa9' d='M96.06 454.35a32.01 32.01 0 005.36 17.69l17.09 25.69a31.99 31.99 0 0026.64 14.28h61.71a31.99 31.99 0 0026.64-14.28l17.09-25.69a31.99 31.99 0 005.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45l.11.78h160.24l.11-.78c9.85-33.22 35.69-72.6 52.21-91.45A175.02 175.02 0 00352 176C352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80a16 16 0 11-32 0c0-61.76 50.24-112 112-112a16 16 0 110 32z'/%3E%3C/svg%3E") no-repeat center center;
-  top: 8px;
-  left: 15px;
-  width: 14px;
-  height: 100%;
-  max-height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    content: '';
+    position: absolute;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' viewBox='0 0 352 512'%3E%3Cpath fill='%230a5aa9' d='M96.06 454.35a32.01 32.01 0 005.36 17.69l17.09 25.69a31.99 31.99 0 0026.64 14.28h61.71a31.99 31.99 0 0026.64-14.28l17.09-25.69a31.99 31.99 0 005.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45l.11.78h160.24l.11-.78c9.85-33.22 35.69-72.6 52.21-91.45A175.02 175.02 0 00352 176C352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80a16 16 0 11-32 0c0-61.76 50.24-112 112-112a16 16 0 110 32z'/%3E%3C/svg%3E") no-repeat center center;
+    top: 8px;
+    left: 15px;
+    width: 14px;
+    height: 100%;
+    max-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .remarkd .hint-tip, .remarkd .hint-caption,
 .remarkd .hint-tip .hint-caption {
-  color: #0a5aa9;
+    color: #0a5aa9;
 }
 
 .remarkd .hint-caption {
-  padding-right: 10px;
+    padding-right: 10px;
 }
 
 .remarkd .hint-important .hint-caption, .remarkd .hint-danger .hint-caption {
-  color: #c0392b;
+    color: #c0392b;
 }
 
 .remarkd .hint-important, .remarkd .hint-danger {
-  margin: 16px 0;
-  padding: 12px;
-  border-left: 3px solid #c0392b;
-  background: #f4dddb;
+    margin: 16px 0;
+    padding: 12px;
+    border-left: 3px solid #c0392b;
+    background: #f4dddb;
 }
 
 .remarkd .hint-note .hint-caption, .remarkd .hint-notice .hint-caption {
-  color: #276bae;
+    color: #276bae;
 }
 
 .remarkd .hint-note, .remarkd .hint-notice {
-  margin: 16px 0;
-  padding: 12px;
-  border-left: 3px solid #276bae;
-  background: #e6f0f7;
+    margin: 16px 0;
+    padding: 12px;
+    border-left: 3px solid #276bae;
+    background: #e6f0f7;
 }
 
 .remarkd .hint-success .remarkd .hint-caption {
-  color: #17964b;
+    color: #17964b;
 }
 
 .remarkd .hint-success {
-  margin: 16px 0;
-  padding: 12px;
-  border-left: 3px solid #17964b;
-  background: #e6f7e6;
+    margin: 16px 0;
+    padding: 12px;
+    border-left: 3px solid #17964b;
+    background: #e6f7e6;
 }
 
 .remarkd .hint-warning .hint-caption {
-  color: #f18f0f;
+    color: #f18f0f;
 }
 
 .remarkd .hint-warning {
-  margin: 16px 0;
-  padding: 12px;
-  border-left: 3px solid #f18f0f;
-  background: #fcf3e3;
+    margin: 16px 0;
+    padding: 12px;
+    border-left: 3px solid #f18f0f;
+    background: #fcf3e3;
 }
 
 .remarkd table {
-  border-collapse: separate;
-  border-spacing: 1px;
-  background: #BFCFDA;
-  margin: 12px 0;
-  word-break: normal;
+    border-collapse: separate;
+    border-spacing: 1px;
+    background: #BFCFDA;
+    margin: 12px 0;
+    word-break: normal;
 }
 
 .remarkd table th, .remarkd table td {
-  text-align: left;
+    text-align: left;
 }
 
 .remarkd table th {
-  font-weight: bold;
-  padding: 4px 6px;
-  background: #F8F9FC;
+    font-weight: bold;
+    padding: 4px 6px;
+    background: #F8F9FC;
 }
 
 .remarkd table td {
-  background: #fff;
-  padding: 3px 6px;
+    background: #fff;
+    padding: 3px 6px;
 }
 
 .remarkd ul.tab-header {
-  display: flex;
-  border-bottom: 1px solid #d8dee4;
-  margin-bottom: 0;
-  padding: 0;
+    display: flex;
+    border-bottom: 1px solid #d8dee4;
+    margin-bottom: 0;
+    padding: 0;
 }
 
 .remarkd ul.tab-header li {
-  display: block;
+    display: block;
 }
 
 .remarkd ul.tab-header li a {
-  color: #000000;
-  padding: 10px;
-  text-align: center;
-  display: block;
-  border-bottom: 2px solid transparent;
-  text-decoration: none;
+    color: #000000;
+    padding: 10px;
+    text-align: center;
+    display: block;
+    border-bottom: 2px solid transparent;
+    text-decoration: none;
 }
 
 
 .remarkd ul.tab-header li a:hover {
-  border-bottom-color: rgba(143, 143, 143, 0.2);
+    border-bottom-color: rgba(143, 143, 143, 0.2);
 }
 
 .remarkd ul.tab-header li a.active {
-  border-bottom-color: #5c7ef6;
-  font-weight: 600;
+    border-bottom-color: #5c7ef6;
+    font-weight: 600;
 }
 
 .remarkd .tabs .tab {
-  display: none;
-  padding: 10px;
+    display: none;
+    padding: 10px;
 }
 
 .remarkd .tabs .tab:first-of-type {
-  display: block;
+    display: block;
 }
 
 .remarkd .video-container {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
 }
 
 .remarkd .video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .remarkd .tooltip {
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
 }
 
 .remarkd .well {
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 6px;
-  padding: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 6px;
+    padding: 15px;
 }
 
 .remarkd sup.reference {
-  line-height: 1em;
-  font-size: 80%;
+    line-height: 1em;
+    font-size: 80%;
 }
 
 
 .remarkd sup.reference a:link {
-  text-decoration: none;
-  color: #0041fd;
+    text-decoration: none;
+    color: #0041fd;
 }
 
 .remarkd ol.reference li {
-  padding: 5px;
-  font-size: 90%;
+    padding: 5px;
+    font-size: 90%;
 }
 
 .remarkd ol.reference li:target {
-  background: rgba(0, 112, 243, 0.10);
-  border-radius: 5px;
+    background: rgba(0, 112, 243, 0.10);
+    border-radius: 5px;
 }
 
 .remarkd a.reference-tobody {
-  text-decoration: none;
-  font-weight: 600;
-  color: black;
+    text-decoration: none;
+    font-weight: 600;
+    color: black;
 }
 
 .remarkd sup.reference a:target {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .remarkd h1:target,
@@ -227,6 +227,6 @@
 .remarkd h4:target,
 .remarkd h5:target,
 .remarkd h6:target {
-  background: rgba(0, 112, 243, 0.10);
-  border-radius: 5px;
+    background: rgba(0, 112, 243, 0.10);
+    border-radius: 5px;
 }

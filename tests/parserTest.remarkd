@@ -1,0 +1,26 @@
+// Random comment in the file
+
+= Document Title
+Brooke Bryan <brooke@domain.com>; John Smith <john@smith.com>
+1.0, August 21st 2022: Unit Tests
+:bool-true:
+:bool-false!:
+:var-replace:Replacement value \
+over two lines
+Other data
+
+[positional_attribute_1,positional_attribute_2,named_attribute="value"]
+== Section Title
+
+:bool-val:
+
+Line Break
+---
+And another
+* * *
+
+:bool-val!:
+
+<<<
+
+New Page
