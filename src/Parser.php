@@ -3,10 +3,7 @@ namespace Packaged\Remarkd;
 
 use Packaged\Glimpse\Tags\Div;
 use Packaged\Glimpse\Tags\HorizontalRule;
-use Packaged\Glimpse\Tags\Text\CodeBlock;
 use Packaged\Helpers\Strings;
-use Packaged\Remarkd\Blocks\Admonition;
-use Packaged\Remarkd\Blocks\ContainerBlock;
 
 class Parser
 {
@@ -32,15 +29,6 @@ class Parser
     $this->_document->data = new DocumentData();
 
     $this->_remarkd = $remarkd;
-    $rCtx = $this->_remarkd->ctx();
-
-    $blockE = $rCtx->blockEngine();
-    $blockE->addMatcher(new Admonition());
-    $blockE->addMatcher(ContainerBlock::i('```')->setTag(CodeBlock::class)->setAllowChildren(false));
-    $blockE->addMatcher(ContainerBlock::i('...')->setTag(CodeBlock::class)->setAllowChildren(false));
-    $blockE->addMatcher(ContainerBlock::i('---')->setTag(Div::class)->addClass('listing-block'));
-    $blockE->addMatcher(ContainerBlock::i('===')->setTag(Div::class)->addClass('example-block'));
-    $blockE->addMatcher(ContainerBlock::i('***')->setTag(Div::class)->addClass('sidebar-block'));
 
     $section = new Section($this->_remarkd);
     $this->_setActiveSection($section);
@@ -226,6 +214,10 @@ class Parser
 
   protected function _setActiveSection(Section $section)
   {
+    if($this->_currentSection !== null)
+    {
+      $this->_currentSection->close();
+    }
     $this->_currentSection = $section;
     return $this;
   }

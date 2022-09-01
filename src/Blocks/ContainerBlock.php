@@ -1,8 +1,6 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\RemarkdContext;
-
 class ContainerBlock extends BasicBlock implements BlockMatcher
 {
   public static function i($marker)
@@ -20,14 +18,4 @@ class ContainerBlock extends BasicBlock implements BlockMatcher
     }
     return null;
   }
-
-  public function addLine(RemarkdContext $ctx, string $line): bool
-  {
-    if($line == $this->closer())
-    {
-      return empty($this->_children);
-    }
-    return parent::addLine($ctx, $line);
-  }
-
 }

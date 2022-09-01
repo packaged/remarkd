@@ -1,8 +1,15 @@
 <?php
 namespace Packaged\Remarkd;
 
+use Packaged\Glimpse\Tags\Div;
+use Packaged\Glimpse\Tags\Text\CodeBlock;
+use Packaged\Remarkd\Blocks\Admonition;
+use Packaged\Remarkd\Blocks\Block;
 use Packaged\Remarkd\Blocks\BlockEngine;
+use Packaged\Remarkd\Blocks\CalloutBlock;
+use Packaged\Remarkd\Blocks\ContainerBlock;
 use Packaged\Remarkd\Rules\BoldText;
+use Packaged\Remarkd\Rules\CalloutText;
 use Packaged\Remarkd\Rules\CheckboxRule;
 use Packaged\Remarkd\Rules\DeletedText;
 use Packaged\Remarkd\Rules\EmojiRule;
@@ -42,10 +49,7 @@ class Remarkd
   public function parse($text)
   {
     $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $text));
-    $blocks = $this->ctx()->blockEngine()->parseLines($lines);
-    return $this->ctx()->objectEngine()->parse(
-      $this->ctx()->ruleEngine()->parse(implode("", $blocks))
-    );
+    return $this->ctx()->ruleEngine()->parse(implode("", $lines));
   }
 
   public function render($text, $cssClass = 'remarkd-styled')
@@ -55,7 +59,23 @@ class Remarkd
 
   public function applyDefaultBlocks(BlockEngine $engine)
   {
-
+    $engine->addMatcher(new Admonition());
+    $engine->addMatcher(new CalloutBlock());
+    $engine->addMatcher(
+      ContainerBlock::i('```')->setContentType(Block::TYPE_VERBATIM)->setTag(CodeBlock::class)->setAllowChildren(false)
+    );
+    $engine->addMatcher(
+      ContainerBlock::i('...')->setContentType(Block::TYPE_VERBATIM)->setTag(CodeBlock::class)->setAllowChildren(false)
+    );
+    $engine->addMatcher(
+      ContainerBlock::i('----')->setContentType(Block::TYPE_VERBATIM)->setTag(Div::class)->addClass('listing-block')
+    );
+    $engine->addMatcher(
+      ContainerBlock::i('====')->setContentType(Block::TYPE_COMPOUND)->setTag(Div::class)->addClass('example-block')
+    );
+    $engine->addMatcher(
+      ContainerBlock::i('****')->setContentType(Block::TYPE_COMPOUND)->setTag(Div::class)->addClass('sidebar-block')
+    );
   }
 
   public function applyDefaultRules(RuleEngine $engine)
@@ -68,6 +88,7 @@ class Remarkd
     $engine->registerRule(new KeyboardKey());
 
     $engine->registerRule(new TipText());
+    $engine->registerRule(new CalloutText());
     $engine->registerRule(new Image());
     $engine->registerRule(new LinkText());
     $engine->registerRule(new BoldText());

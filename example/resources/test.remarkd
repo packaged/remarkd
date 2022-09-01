@@ -3,11 +3,6 @@
 = Document Title
 Brooke Bryan <brooke@domain.com>; John Smith <john@smith.com>
 1.0, August 21st 2022: Unit Tests
-:toc:
-:bool-true:
-:bool-false!:
-:var-replace:Replacement value \
-over two lines
 
 Other data
 

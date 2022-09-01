@@ -106,6 +106,16 @@ class BlockEngine
       return false;
     }
 
+    if($line === $block->closer())
+    {
+      if(!empty($block->children()))
+      {
+        $block->close();
+        return null;
+      }
+      return true;
+    }
+
     foreach($block->children() as $child)
     {
       if($child instanceof Block && $block->isOpen())
@@ -121,14 +131,19 @@ class BlockEngine
         $line = substr($line, $block->trimLeftLength());
       }
 
-      if($line !== $block->closer())
+      switch($block->contentType())
       {
-        $child = $this->getBlock($line);
-        if($child !== null)
-        {
-          $block->addChild($child);
-          return $this->_addBlockLine($line, $child);
-        }
+        case  Block::TYPE_COMPOUND:
+          $child = $this->getBlock($line);
+          if($child !== null)
+          {
+            $block->addChild($child);
+            return $this->_addBlockLine($line, $child);
+          }
+          break;
+        default:
+          $block->appendLine($this->_context, $line);
+          return true;
       }
     }
 
@@ -138,7 +153,7 @@ class BlockEngine
       return null;
     }
 
-    if($block->addLine($this->_context, $line))
+    if($block->appendLine($this->_context, $line))
     {
       //still open to append
       return true;

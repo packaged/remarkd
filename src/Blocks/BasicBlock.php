@@ -21,15 +21,27 @@ class BasicBlock implements ISafeHtmlProducer, Block
   protected $_allowChildren = true;
   protected $_substrim = '';
   protected $_substrimLen;
+  protected $_contentType;
+
+  public function setContentType($type)
+  {
+    $this->_contentType = $type;
+    return $this;
+  }
+
+  public function contentType(): string
+  {
+    return $this->_contentType ?? Block::TYPE_SIMPLE;
+  }
 
   public function isContainer(): bool
   {
-    return false;
+    return $this->_contentType == Block::TYPE_COMPOUND;
   }
 
   public function trimLeftLength(): int
   {
-    return $this->_substrimLen;
+    return $this->_substrimLen ?: 0;
   }
 
   protected function _setSubstrim(string $substrim)
@@ -94,7 +106,7 @@ class BasicBlock implements ISafeHtmlProducer, Block
 
   public function allowChildren(): bool
   {
-    return $this->_allowChildren;
+    return $this->_allowChildren && $this->contentType() != Block::TYPE_SIMPLE;
   }
 
   public function closesOnEmptyLine(): bool
@@ -124,14 +136,15 @@ class BasicBlock implements ISafeHtmlProducer, Block
   }
 
   /**
-   * @param string $line
+   * @param \Packaged\Remarkd\RemarkdContext $ctx
+   * @param string                           $line
    *
    * true = line appended
    * false = block complete
    *
    * @return bool
    */
-  public function addLine(RemarkdContext $ctx, string $line): bool
+  public function appendLine(RemarkdContext $ctx, string $line): bool
   {
     if(empty($line) && $this->closesOnEmptyLine())
     {
@@ -145,6 +158,10 @@ class BasicBlock implements ISafeHtmlProducer, Block
 
   protected function _formatLine(RemarkdContext $ctx, string $line)
   {
+    if($this->contentType() === Block::TYPE_RAW)
+    {
+      return $line;
+    }
     return new SafeHtml($ctx->ruleEngine()->parse($line));
   }
 

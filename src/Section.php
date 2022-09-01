@@ -50,7 +50,7 @@ class Section extends Element implements ISafeHtmlProducer
 
   public function hasChildren(): bool
   {
-    return !empty($this->children);
+    return !empty($this->children) || !empty($this->_blockEngine->blocks());
   }
 
   protected function _flushBlocks()

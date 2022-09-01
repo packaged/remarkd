@@ -6,6 +6,15 @@ use Packaged\Remarkd\RemarkdContext;
 
 interface Block
 {
+  const TYPE_SIMPLE = 'simple';
+  const TYPE_COMPOUND = 'compound';
+  const TYPE_VERBATIM = 'verbatim';
+  const TYPE_RAW = 'raw';
+  const TYPE_EMPTY = 'empty';
+  const TYPE_TABLE = 'table';
+
+  public function contentType(): string;
+
   public function setTitle(string $title);
 
   public function setAttributes(Attributes $attributes);
@@ -39,5 +48,5 @@ interface Block
    *
    * @return bool
    */
-  public function addLine(RemarkdContext $ctx, string $line): bool;
+  public function appendLine(RemarkdContext $ctx, string $line): bool;
 }
