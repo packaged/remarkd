@@ -1,25 +1,10 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Remarkd\RemarkdContext;
+use Packaged\Glimpse\Tags\Text\Paragraph;
 
-class ParagraphBlock implements BlockInterface
+class ParagraphBlock extends BasicBlock
 {
-  protected $_lines = [];
-
-  public function addNewLine(string $line)
-  {
-    $line = BlockEngine::trimLine($line);
-    if(empty($line))
-    {
-      return null;
-    }
-    $this->_lines[] = $line;
-    return true;
-  }
-
-  public function complete(RemarkdContext $ctx): string
-  {
-    return '<p>' . $ctx->ruleEngine()->parse(implode(" ", $this->_lines)) . '</p>';
-  }
+  protected $_tag = Paragraph::class;
+  protected $_allowChildren = false;
 }

@@ -1,11 +1,10 @@
 <?php
-namespace Packaged\Remarkd;
+namespace Packaged\Remarkd\Blocks;
 
-use Packaged\Glimpse\Tags\Div;
 use Packaged\Glimpse\Tags\Text\Paragraph;
 use Packaged\Helpers\Strings;
 
-class BlockMatcher
+class BasicBlockMatcher implements BlockMatcher
 {
   protected $_begin;
   protected $_beginPartial = false;
@@ -47,12 +46,7 @@ class BlockMatcher
     return $this;
   }
 
-  public function pendingLine()
-  {
-    return $this->_pendingLine;
-  }
-
-  public function match($line)
+  public function match($line): ?Block
   {
     $this->_pendingLine = null;
     if($this->_beginPartial)
@@ -60,20 +54,24 @@ class BlockMatcher
       if(Strings::startsWith($line, $this->_begin))
       {
         $this->_pendingLine = substr($line, strlen($this->_begin));
-        return true;
+        return $this->createBlock($line);
       }
     }
 
-    return preg_match(
+    if(preg_match(
       '/^' . preg_quote($this->_begin)
       . '(' . preg_quote($this->_continue ?: $this->_begin) . '){0,10}' . '$/',
       $line
-    );
+    ))
+    {
+      return $this->createBlock($line);
+    }
+    return null;
   }
 
   public function createBlock($line, $title = null, $attribute = null)
   {
-    $block = new Block();
+    $block = new BasicBlock();
     if($this->_tag)
     {
       $block->setTag($this->_tag);
@@ -81,13 +79,18 @@ class BlockMatcher
     else if(is_scalar($line))
     {
       $block->setTag(Paragraph::class);
-      $block->setCloseOnEmptyLine(true);
     }
 
-    $block->setTitle($title);
-    $block->setAttr($attribute);
+    if(!empty($title))
+    {
+      $block->setTitle($title);
+    }
+    if($attribute)
+    {
+      $block->setAttributes($attribute);
+    }
     $block->setAllowChildren($this->_allowChildren);
-    $block->setOpener($line);
+    $block->setCloser($line);
     $block->addClass($this->_class);
 
     return $block;

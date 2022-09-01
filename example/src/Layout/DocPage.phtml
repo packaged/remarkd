@@ -1,7 +1,10 @@
 <?php
 /** @var $this \Packaged\RemarkdExample\Layout\DocPage */
 ?>
-<div class="remarkd remarkd-styled" style="padding: 20px; max-width: 700px; margin: 0 auto;">
+<div class="toc">
+  <?= $this->_toc; ?>
+</div>
+<div class="remarkd remarkd-styled" style="padding: 20px; max-width: 900px; margin: 0 auto 0 400px;">
   <?= $this->_content; ?>
 </div>
 <style>
@@ -62,5 +65,33 @@
         background: #e1f2fa;
         border: 1px solid lightblue;
         padding: 10px;
+    }
+
+    .toc ul {
+        position: fixed;
+        left: 0;
+        top: 0;
+        padding-left: 10px;
+        list-style-type: none;
+    }
+
+    .toc--1 {
+        padding-left: 0;
+    }
+
+    .toc--2 {
+        padding-left: 1rem;
+    }
+
+    .toc--3 {
+        padding-left: 1.5rem;
+    }
+
+    .toc--4 {
+        padding-left: 2rem;
+    }
+
+    .toc--5 {
+        padding-left: 2.5rem;
     }
 </style>

@@ -9,10 +9,14 @@ class CheckboxRule implements RemarkdRule
       [
         '[ ]',
         '[x]',
+        '[_]',
+        '[*]',
       ],
       [
         '<input type="checkbox" readonly="readonly">',
         '<input type="checkbox" readonly="readonly" checked>',
+        '<input type="checkbox">',
+        '<input type="checkbox" checked>',
       ],
       $text
     );

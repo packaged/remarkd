@@ -5,7 +5,8 @@ use Packaged\Glimpse\Tags\Div;
 use Packaged\Glimpse\Tags\HorizontalRule;
 use Packaged\Glimpse\Tags\Text\CodeBlock;
 use Packaged\Helpers\Strings;
-use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\Blocks\Admonition;
+use Packaged\Remarkd\Blocks\ContainerBlock;
 
 class Parser
 {
@@ -20,31 +21,28 @@ class Parser
    */
   protected $_currentSection;
 
-  protected $_matchers;
   /**
-   * @var \Packaged\Remarkd\Rules\RuleEngine
+   * @var \Packaged\Remarkd\Remarkd
    */
-  protected $_ruleEngine;
+  protected $_remarkd;
 
-  public function __construct(array $rawLines)
+  public function __construct(array $rawLines, Remarkd $remarkd)
   {
     $this->_document = new Document();
     $this->_document->data = new DocumentData();
 
-    $this->_matchers = [
-      BlockMatcher::i('```')->setContinue('`')->setTag(CodeBlock::class)->setAllowChildren(false),
-      BlockMatcher::i('...')->setContinue('.')->setTag(CodeBlock::class)->setAllowChildren(false),
-      BlockMatcher::i('---')->setContinue('-')->setTag(Div::class)->setClass('listing-block'),
-      BlockMatcher::i('====')->setContinue('=')->setTag(Div::class)->setClass('example-block'),
-      BlockMatcher::i('****')->setContinue('*')->setTag(Div::class)->setClass('sidebar-block'),
-      BlockMatcher::i('_|_')->setContinue('|_'),
-      BlockMatcher::i('TIP:', true)->setAllowChildren(false)->setClass('tip-block'),
-    ];
+    $this->_remarkd = $remarkd;
+    $rCtx = $this->_remarkd->ctx();
 
-    $remark = new Remarkd();
-    $this->_ruleEngine = $remark->ctx()->ruleEngine();
+    $blockE = $rCtx->blockEngine();
+    $blockE->addMatcher(new Admonition());
+    $blockE->addMatcher(ContainerBlock::i('```')->setTag(CodeBlock::class)->setAllowChildren(false));
+    $blockE->addMatcher(ContainerBlock::i('...')->setTag(CodeBlock::class)->setAllowChildren(false));
+    $blockE->addMatcher(ContainerBlock::i('---')->setTag(Div::class)->addClass('listing-block'));
+    $blockE->addMatcher(ContainerBlock::i('===')->setTag(Div::class)->addClass('example-block'));
+    $blockE->addMatcher(ContainerBlock::i('***')->setTag(Div::class)->addClass('sidebar-block'));
 
-    $section = new Section();
+    $section = new Section($this->_remarkd);
     $this->_setActiveSection($section);
     $this->_document->sections[] = $section;
 
@@ -137,6 +135,10 @@ class Parser
       $this->_addLine($line, $title, $attribute);
       $attribute = $title = null;
     }
+    if($this->_currentSection !== null)
+    {
+      $this->_currentSection->close();
+    }
     return $this->_document;
   }
 
@@ -181,9 +183,8 @@ class Parser
             array_pop($this->_document->sections);
           }
 
-          $newSection = new Section();
-          $newSection->level = $level;
-          $newSection->title = $matches[2];
+          $newSection = new Section($this->_remarkd, $matches[2], $level);
+          $newSection->setId(Strings::stringToUnderScore($matches[2]));
 
           //Always add Level 0 and 1 to the doc root
           if($level < 2)
@@ -231,7 +232,7 @@ class Parser
 
   public function _addSectionLine($line, $title = null, $attribute = null)
   {
-    $this->_currentSection->addLine($this->_ruleEngine, $this->_matchers, $line, $title, $attribute);
+    $this->_currentSection->addLine($line, $title, $attribute);
     return $this;
   }
 }

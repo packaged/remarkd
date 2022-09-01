@@ -5,13 +5,17 @@ use Cubex\Controller\Controller;
 use Packaged\Context\Context;
 use Packaged\Dispatch\ResourceManager;
 use Packaged\Dispatch\Resources\ResourceFactory;
+use Packaged\Glimpse\Tags\Link;
+use Packaged\Glimpse\Tags\Lists\ListItem;
+use Packaged\Glimpse\Tags\Lists\UnorderedList;
 use Packaged\Glimpse\Tags\Span;
 use Packaged\Helpers\Strings;
-use Packaged\Http\Responses\JsonResponse;
+use Packaged\Remarkd\Document;
 use Packaged\Remarkd\Parser;
+use Packaged\Remarkd\Remarkd;
+use Packaged\Remarkd\Section;
 use Packaged\RemarkdExample\Layout\DocPage;
 use Packaged\RemarkdExample\Layout\Wrap;
-use Packaged\Remarkd\Remarkd;
 use Packaged\Ui\Renderable;
 
 class ContentController extends Controller
@@ -98,16 +102,17 @@ class ContentController extends Controller
     }
     if(file_exists($loc))
     {
-      $d = new Parser(file($loc));
-      $doc = $d->parse();
-      //echo '<pre>'; var_dump($doc);die;
-      $page->setContent($doc->produceSafeHTML());
-      return $page;
-
-      $md = $this->_replacements(file_get_contents($loc));
       $remarkd = new Remarkd();
       $cwd = substr(dirname($loc), strlen($resDir));
       $remarkd->ctx()->meta()->set('cwd', $cwd);
+
+      $d = new Parser(file($loc), $remarkd);
+      $doc = $d->parse();
+      //echo '<pre>'; var_dump($doc);die;
+
+      $page->setToc($this->_toc($doc));
+      $page->setContent($doc->produceSafeHTML());
+      return $page;
 
       $path = substr($loc, 0, -3);
       $bname = basename($path);
@@ -167,6 +172,33 @@ class ContentController extends Controller
       }
     }
     return $page;
+  }
+
+  protected function _toc(Document $doc)
+  {
+    return $this->_addTocChildren(new UnorderedList(), $doc->sections);
+  }
+
+  protected function _addTocChildren(UnorderedList $list, array $sections)
+  {
+    foreach($sections as $section)
+    {
+      if($section instanceof Section && $section->level > 0)
+      {
+        $list->addItem(
+          ListItem::create(Link::create('#' . $section->id, $section->title))->addClass('toc--' . $section->level)
+        );
+        if($section->hasChildren())
+        {
+          $list = $this->_addTocChildren($list, $section->children);
+        }
+      }
+      else if(is_array($section))
+      {
+        $list = $this->_addTocChildren($list, $section);
+      }
+    }
+    return $list;
   }
 
   public function getDocs()

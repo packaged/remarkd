@@ -1,41 +1,65 @@
 <?php
-namespace Packaged\Remarkd;
+namespace Packaged\Remarkd\Blocks;
 
 use Packaged\Glimpse\Core\AbstractContainerTag;
 use Packaged\Glimpse\Tags\Div;
-use Packaged\Glimpse\Tags\Lists\ListItem;
-use Packaged\Glimpse\Tags\Lists\UnorderedList;
 use Packaged\Helpers\Arrays;
+use Packaged\Remarkd\Attributes;
+use Packaged\Remarkd\RemarkdContext;
 use Packaged\SafeHtml\ISafeHtmlProducer;
 use Packaged\SafeHtml\SafeHtml;
 use Packaged\Ui\Html\HtmlElement;
 
-class Block implements ISafeHtmlProducer
+class BasicBlock implements ISafeHtmlProducer, Block
 {
   protected $_closed = false;
-  protected $_opener;
+  protected $_closer;
   protected $_attr;
   protected $_class = [];
   protected $_tag;
   protected $_title;
   protected $_allowChildren = true;
-  protected $_closeOnEmptyLine = false;
+  protected $_substrim = '';
+  protected $_substrimLen;
+
+  public function isContainer(): bool
+  {
+    return false;
+  }
+
+  public function trimLeftLength(): int
+  {
+    return $this->_substrimLen;
+  }
+
+  protected function _setSubstrim(string $substrim)
+  {
+    $this->_substrim = $substrim;
+    $this->_substrimLen = strlen($substrim);
+    return $this;
+  }
+
+  public function setAttributes(Attributes $attributes)
+  {
+    $this->_attr = $attributes;
+    return $this;
+  }
+
+  public function closer(): ?string
+  {
+    return $this->_closer;
+  }
+
+  public function isOpen(): bool
+  {
+    return !$this->_closed;
+  }
 
   protected $_children = [];
-  /**
-   * @var ?Block
-   */
-  protected $_activeChild;
 
   public function setTitle($title)
   {
     $this->_title = $title;
-    return $this;
-  }
-
-  public function setAttr($attribute)
-  {
-    $this->_attr = $attribute;
     return $this;
   }
 
@@ -45,9 +69,9 @@ class Block implements ISafeHtmlProducer
     return $this;
   }
 
-  public function setOpener($tag)
+  public function setCloser($tag)
   {
-    $this->_opener = $tag;
+    $this->_closer = $tag;
     return $this;
   }
 
@@ -73,20 +97,9 @@ class Block implements ISafeHtmlProducer
     return $this->_allowChildren;
   }
 
-  public function setCloseOnEmptyLine(bool $bool)
-  {
-    $this->_closeOnEmptyLine = $bool;
-    return $this;
-  }
-
   public function closesOnEmptyLine(): bool
   {
-    return $this->_closeOnEmptyLine;
-  }
-
-  public function isClosed(): bool
-  {
-    return $this->_closed;
+    return empty($this->closer());
   }
 
   public function close(): array
@@ -99,45 +112,40 @@ class Block implements ISafeHtmlProducer
         $blockIDs = array_merge($blockIDs, $child->close());
       }
     }
-    $blockIDs[] = $this->_opener;
+    $blockIDs[] = $this->closer();
     $this->_closed = true;
     return $blockIDs;
   }
 
-  public function addChild(Block $block)
+  public function addChild($block)
   {
-    if($this->_activeChild && !$this->_activeChild->isClosed() && $this->_activeChild->allowChildren())
-    {
-      $this->_activeChild->addChild($block);
-    }
-    else
-    {
-      $this->_children[] = $block;
-      $this->_activeChild = $block;
-    }
+    $this->_children[] = $block;
     return $this;
   }
 
-  public function addLine($line)
+  /**
+   * @param string $line
+   *
+   * true = line appended
+   * false = block complete
+   *
+   * @return bool
+   */
+  public function addLine(RemarkdContext $ctx, string $line): bool
   {
-    if(empty($line))
+    if(empty($line) && $this->closesOnEmptyLine())
     {
-      if($this->closesOnEmptyLine())
-      {
-        $this->close();
-      }
-      return $this;
+      $this->close();
+      return false;
     }
 
-    if($this->_activeChild && !$this->_activeChild->isClosed())
-    {
-      $this->_activeChild->addLine($line);
-    }
-    else
-    {
-      $this->_children[] = $line;
-    }
-    return $this;
+    $this->addChild($this->_formatLine($ctx, $line));
+    return true;
+  }
+
+  protected function _formatLine(RemarkdContext $ctx, string $line)
+  {
+    return new SafeHtml($ctx->ruleEngine()->parse($line));
   }
 
   public function produceSafeHTML(): SafeHtml
@@ -169,4 +177,13 @@ class Block implements ISafeHtmlProducer
     return $ele->produceSafeHTML();
   }
 
+  public function children(): array
+  {
+    return $this->_children;
+  }
+
+  public function allowLine(string $line): bool
+  {
+    return $this->_substrimLen == 0 || substr($line, 0, $this->_substrimLen) === $this->_substrim;
+  }
 }

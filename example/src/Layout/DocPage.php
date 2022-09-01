@@ -10,6 +10,13 @@ class DocPage extends TemplatedHtmlElement implements ContextAware
   use ContextAwareTrait;
 
   protected $_content;
+  protected $_toc;
+
+  public function setToc($toc)
+  {
+    $this->_toc = $toc;
+    return $this;
+  }
 
   public function setContent($content)
   {

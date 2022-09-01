@@ -1,25 +1,43 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
+use Packaged\Remarkd\Attributes;
 use Packaged\Remarkd\RemarkdContext;
 
-class Block implements BlockInterface
+interface Block
 {
-  protected $_lines = [];
+  public function setTitle(string $title);
 
-  public function addNewLine(string $line)
-  {
-    $line = BlockEngine::trimLine($line);
-    if(empty($line))
-    {
-      return false;
-    }
-    $this->_lines[] = $line;
-    return true;
-  }
+  public function setAttributes(Attributes $attributes);
 
-  public function complete(RemarkdContext $ctx): string
-  {
-    return $ctx->ruleEngine()->parse(str_replace("<hr/>\n<br/>", '<hr/>', implode("\n<br/>", $this->_lines)));
-  }
+  public function closer(): ?string;
+
+  public function close(): array;
+
+  public function isOpen(): bool;
+
+  public function isContainer(): bool;
+
+  public function closesOnEmptyLine(): bool;
+
+  public function trimLeftLength(): int;
+
+  public function allowChildren(): bool;
+
+  public function children(): array;
+
+  public function addChild($child);
+
+  public function allowLine(string $line): bool;
+
+  /**
+   * @param \Packaged\Remarkd\RemarkdContext $ctx
+   * @param string                           $line
+   *
+   * true = line appended
+   * false = block complete
+   *
+   * @return bool
+   */
+  public function addLine(RemarkdContext $ctx, string $line): bool;
 }

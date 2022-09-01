@@ -7,9 +7,9 @@ class LinkText implements RemarkdRule
   {
     /** @noinspection HtmlUnknownTarget */
     return preg_replace_callback(
-      '/((http|ftp|https|mailto):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-]))(\[([^\]\n]+)\])?/',
+      '/([^="(])((http|ftp|https|mailto):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-]))(\[([^\]\n]+)\])?/',
       function ($input) {
-        return '<a href="' . $input[1] . '">' . ($input[6] ?? $input[1]) . '</a>';
+        return $input[1] . '<a href="' . $input[2] . '">' . ($input[7] ?? $input[2]) . '</a>';
       },
       $text
     );
