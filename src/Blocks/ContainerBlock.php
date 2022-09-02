@@ -3,6 +3,8 @@ namespace Packaged\Remarkd\Blocks;
 
 class ContainerBlock extends BasicBlock implements BlockMatcher
 {
+  protected $_closeOnEmpty = false;
+
   public static function i($marker)
   {
     $block = new static();
@@ -18,10 +20,4 @@ class ContainerBlock extends BasicBlock implements BlockMatcher
     }
     return null;
   }
-
-  public function closesOnEmptyLine(): bool
-  {
-    return false;
-  }
-
 }

@@ -5,6 +5,11 @@ class MonospacedText implements RemarkdRule
 {
   public function apply(string $text): string
   {
-    return preg_replace('/\B`(.+?)`/', '<span class="monospace">\1</span>', $text);
+    $text = preg_replace_callback('/([^\`]|^)\`\`([^\`]+)\`\`/', function ($match) {
+      return $match[1] . '<span class="monospace">' . htmlspecialchars($match[2]) . '</span>';
+    }, $text);
+    return preg_replace_callback('/([^\`]|^)\`([^\`\n]+)\`/', function ($match) {
+      return $match[1] . '<span class="monospace">' . htmlspecialchars($match[2]) . '</span>';
+    }, $text);
   }
 }

@@ -1,14 +1,15 @@
 <?php
 namespace Packaged\Remarkd;
 
-use Packaged\Glimpse\Tags\Div;
-use Packaged\Glimpse\Tags\Text\CodeBlock;
 use Packaged\Remarkd\Blocks\Admonition;
-use Packaged\Remarkd\Blocks\Block;
 use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\CalloutBlock;
-use Packaged\Remarkd\Blocks\ContainerBlock;
+use Packaged\Remarkd\Blocks\CodeBlock;
+use Packaged\Remarkd\Blocks\ExampleBlock;
+use Packaged\Remarkd\Blocks\ListingBlock;
 use Packaged\Remarkd\Blocks\ListItemBlock;
+use Packaged\Remarkd\Blocks\LiteralBlock;
+use Packaged\Remarkd\Blocks\SidebarBlock;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CalloutText;
 use Packaged\Remarkd\Rules\CheckboxRule;
@@ -21,7 +22,9 @@ use Packaged\Remarkd\Rules\ItalicText;
 use Packaged\Remarkd\Rules\KeyboardKey;
 use Packaged\Remarkd\Rules\LinkText;
 use Packaged\Remarkd\Rules\MonospacedText;
+use Packaged\Remarkd\Rules\QuoteText;
 use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\Rules\SectionLinkText;
 use Packaged\Remarkd\Rules\SubScriptText;
 use Packaged\Remarkd\Rules\SuperScriptText;
 use Packaged\Remarkd\Rules\TipText;
@@ -64,25 +67,16 @@ class Remarkd
     $engine->addMatcher(new Admonition());
     $engine->addMatcher(new CalloutBlock());
     $engine->addMatcher(new ListItemBlock());
-    $engine->addMatcher(
-      ContainerBlock::i('```')->setContentType(Block::TYPE_VERBATIM)->setTag(CodeBlock::class)->setAllowChildren(false)
-    );
-    $engine->addMatcher(
-      ContainerBlock::i('...')->setContentType(Block::TYPE_VERBATIM)->setTag(CodeBlock::class)->setAllowChildren(false)
-    );
-    $engine->addMatcher(
-      ContainerBlock::i('----')->setContentType(Block::TYPE_VERBATIM)->setTag(Div::class)->addClass('listing-block')
-    );
-    $engine->addMatcher(
-      ContainerBlock::i('====')->setContentType(Block::TYPE_COMPOUND)->setTag(Div::class)->addClass('example-block')
-    );
-    $engine->addMatcher(
-      ContainerBlock::i('****')->setContentType(Block::TYPE_COMPOUND)->setTag(Div::class)->addClass('sidebar-block')
-    );
+    $engine->addMatcher(new ListingBlock());
+    $engine->addMatcher(new ExampleBlock());
+    $engine->addMatcher(new CodeBlock());
+    $engine->addMatcher(new SidebarBlock());
+    $engine->addMatcher(new LiteralBlock());
   }
 
   public function applyDefaultRules(RuleEngine $engine)
   {
+    $engine->registerRule(new QuoteText());
     $engine->registerRule(new MonospacedText());
     $engine->registerRule(new UnderlinedText());//must be before bold
 
@@ -94,6 +88,7 @@ class Remarkd
     $engine->registerRule(new CalloutText());
     $engine->registerRule(new Image());
     $engine->registerRule(new LinkText());
+    $engine->registerRule(new SectionLinkText());
     $engine->registerRule(new BoldText());
     $engine->registerRule(new ItalicText());
     $engine->registerRule(new DeletedText());

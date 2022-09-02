@@ -20,9 +20,16 @@ class BasicBlock implements ISafeHtmlProducer, Block
   protected $_tag;
   protected $_title;
   protected $_allowChildren = true;
+  protected $_closeOnEmpty;
   protected $_substrim = '';
   protected $_substrimLen;
   protected $_contentType;
+
+  public function setCloseOnEmptyLine(bool $close)
+  {
+    $this->_closeOnEmpty = $close;
+    return $this;
+  }
 
   public function setContentType($type)
   {
@@ -117,6 +124,10 @@ class BasicBlock implements ISafeHtmlProducer, Block
 
   public function closesOnEmptyLine(): bool
   {
+    if($this->_closeOnEmpty !== null)
+    {
+      return $this->_closeOnEmpty;
+    }
     return empty($this->closer());
   }
 
@@ -152,19 +163,13 @@ class BasicBlock implements ISafeHtmlProducer, Block
    */
   public function appendLine(RemarkdContext $ctx, string $line): bool
   {
-    if(empty($line) && $this->closesOnEmptyLine())
-    {
-      $this->close();
-      return false;
-    }
-
     $this->addChild($this->_formatLine($ctx, $line));
     return true;
   }
 
   protected function _formatLine(RemarkdContext $ctx, string $line)
   {
-    if($this->contentType() === Block::TYPE_RAW)
+    if(in_array($this->contentType(), [Block::TYPE_RAW, Block::TYPE_VERBATIM]))
     {
       return $line;
     }

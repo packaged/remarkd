@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
+use Packaged\Glimpse\Tags\LineBreak;
 use Packaged\Remarkd\Attributes;
 use Packaged\Remarkd\RemarkdContext;
 use Packaged\SafeHtml\SafeHtml;
@@ -45,14 +46,14 @@ class BlockEngine
 
     if($this->_activeRoot === null || !$this->_activeRoot->isOpen())
     {
-      $block = $this->getBlock($line);
+      $block = $this->getBlock($line, $attribute);
       $append = true;
     }
 
     $added = $this->_addLine($line, $block, $append, $title, $attribute);
     if($added === false)
     {
-      $this->_addLine($line, $this->getBlock($line), true, $title, $attribute);
+      $this->_addLine($line, $this->getBlock($line, $attribute), true, $title, $attribute);
     }
     else if($added === null)
     {
@@ -74,7 +75,7 @@ class BlockEngine
       $this->_activeRoot = $block;
       $this->_rootBlocks[] = $block;
     }
-    $result = $this->_addBlockLine($line, $block);
+    $result = $this->_addBlockLine($line, $block, $attribute);
     if($result !== false)
     {
       if(!empty($title))
@@ -98,16 +99,23 @@ class BlockEngine
    *
    * @return null|bool
    */
-  protected function _addBlockLine($line, Block $block): ?bool
+  protected function _addBlockLine($line, Block $block, ?Attributes $attributes): ?bool
   {
+    if(empty($line) && $block->closesOnEmptyLine())
+    {
+      $block->close();
+      return null;
+    }
+
     $allowLine = $block->allowLine($line);
+
     if($allowLine === false)
     {
       $block->close();
       return false;
     }
 
-    if($line === $block->closer())
+    if(!empty($line) && $line === $block->closer())
     {
       if(!empty($block->children()))
       {
@@ -121,10 +129,25 @@ class BlockEngine
     {
       foreach($block->children() as $child)
       {
-        if($child instanceof Block && $block->isOpen())
+        if($child instanceof Block && $child->isOpen())
         {
-          return $this->_addBlockLine($line, $child);
+          $res = $this->_addBlockLine($line, $child, $attributes);
+          if($res !== false)
+          {
+            return true;
+          }
         }
+      }
+    }
+
+    if($line == '+')
+    {
+      switch($block->contentType())
+      {
+        case Block::TYPE_COMPOUND:
+        case Block::TYPE_SIMPLE:
+          $line = new LineBreak();
+          break;
       }
     }
 
@@ -138,27 +161,53 @@ class BlockEngine
     {
       switch($block->contentType())
       {
-        case  Block::TYPE_COMPOUND:
-          $child = $this->getBlock($line);
-          if($child !== null)
+        case Block::TYPE_COMPOUND:
+          $child = $this->getBlock($line, $attributes);
+          if($child !== null && get_class($child) !== get_class($block))
           {
             $block->addChild($child);
-            return $this->_addBlockLine($line, $child);
+            $childAdd = $this->_addBlockLine($line, $child, $attributes);
+            //avoid a null return for the child block
+            return $childAdd !== false;
           }
-          break;
         default:
-          $block->appendLine($this->_context, $line);
+          $this->_append($block, $line);
           return true;
       }
     }
 
-    if(empty($line) && $block->closesOnEmptyLine())
+    return $this->_append($block, $line);
+  }
+
+  protected function _append(Block $block, $line)
+  {
+    if(is_object($line))
     {
-      $block->close();
-      return null;
+      $block->addChild($line);
+      return true;
     }
 
-    if($block->appendLine($this->_context, $line))
+    $append = null;
+    switch($block->contentType())
+    {
+      case Block::TYPE_SIMPLE:
+      case Block::TYPE_COMPOUND:
+        if(substr($line, -2) == ' +')
+        {
+          $line = substr($line, 0, -2);
+          $append = new LineBreak();
+        }
+        break;
+    }
+
+    $ret = $block->appendLine($this->_context, $line);
+
+    if($append !== null)
+    {
+      $block->addChild($append);
+    }
+
+    if($ret)
     {
       //still open to append
       return true;
@@ -169,21 +218,39 @@ class BlockEngine
     return null;
   }
 
-  public function getBlock(string $line): ?Block
+  public function getBlock(string $line, ?Attributes $attr = null): ?Block
   {
+    $block = null;
     foreach($this->_matchers as $matcher)
     {
       $block = $matcher->match($line);
       if($block !== null)
       {
+        if($attr !== null)
+        {
+          $block->setAttributes($attr);
+        }
         return $block;
       }
     }
 
     if(!empty($line))
     {
-      return new ParagraphBlock();
+      if($attr && $attr->position(0) == 'source')
+      {
+        $block = new CodeBlock();
+        $block->setCloseOnEmptyLine(true);
+      }
+      else
+      {
+        $block = new ParagraphBlock();
+      }
     }
-    return null;
+
+    if($attr !== null && $block !== null)
+    {
+      $block->setAttributes($attr);
+    }
+    return $block;
   }
 }

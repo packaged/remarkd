@@ -9,7 +9,7 @@
 </div>
 <style>
     .title {
-        color: orangered;
+        color: #a82f00;
     }
 
     .preamble > p:first-of-type {
@@ -21,7 +21,17 @@
         margin-bottom: 1.25em;
     }
 
-    .listing-block .content, .source-code .content {
+    .listing-block :last-child, .sidebar-block :last-child, .example-block :last-child {
+        margin-bottom: 0;
+    }
+
+
+    .listing-block :first-child, .sidebar-block :first-child, .example-block :first-child {
+        margin-top: 0;
+    }
+
+
+    .listing-block .content, .source-code .content, p.source-code {
         white-space: pre-line;
         background: #efefef;
         padding: 10px;
@@ -127,18 +137,19 @@
     }
 
     .conum[data-value] {
-        border: 1px solid;
-        border-radius: 100%;
         display: inline-block;
-        font-family: Roboto, sans-serif;
-        font-size: .75rem;
-        font-style: normal;
-        line-height: 1.2;
+        color: #fff !important;
+        background-color: rgba(0, 0, 0, 0.8);
+        -webkit-border-radius: 100px;
+        border-radius: 100px;
         text-align: center;
-        width: 1.25em;
-        height: 1.25em;
-        letter-spacing: -.25ex;
-        text-indent: -.25ex;
+        width: 1.67em;
+        height: 1.67em;
+        font-size: 0.75em;
+        line-height: 1.67em;
+        font-family: "Open Sans", "Sans", sans-serif;
+        font-style: normal;
+        font-weight: bold;
     }
 
     .conum[data-value]::after {

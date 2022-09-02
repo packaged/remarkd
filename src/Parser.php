@@ -27,6 +27,7 @@ class Parser
   {
     $this->_document = new Document();
     $this->_document->data = new DocumentData();
+    $this->_document->data->set('plus', '+');
 
     $this->_remarkd = $remarkd;
 
@@ -172,7 +173,7 @@ class Parser
           }
 
           $newSection = new Section($this->_remarkd, $matches[2], $level);
-          $newSection->setId(Strings::stringToUnderScore($matches[2]));
+          $newSection->setId(Strings::hyphenate(Strings::stringToUnderScore($matches[2])));
 
           //Always add Level 0 and 1 to the doc root
           if($level < 2)
