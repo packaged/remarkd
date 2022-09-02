@@ -1,7 +1,6 @@
 <?php
 namespace Packaged\Remarkd;
 
-use Packaged\Glimpse\Core\AbstractContainerTag;
 use Packaged\Glimpse\Tags\Div;
 use Packaged\Glimpse\Tags\Text\HeadingFive;
 use Packaged\Glimpse\Tags\Text\HeadingFour;
@@ -119,12 +118,15 @@ class Section extends Element implements ISafeHtmlProducer
         break;
     }
 
+    $ele = Div::create($head, $content);
+    $ele->addClass('section--level' . $this->level, 'section--' . (empty($this->children) ? 'empty' : 'with-content'));
+
     if($this->id && $head instanceof HtmlElement)
     {
-      $head->setId($this->id);
+      $ele->setId($this->id);
     }
 
-    return AbstractContainerTag::create($head, $content)->produceSafeHTML();
+    return $ele->produceSafeHTML();
   }
 
 }
