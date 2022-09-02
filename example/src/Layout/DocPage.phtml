@@ -4,7 +4,7 @@
 <div class="toc">
   <?= $this->_toc; ?>
 </div>
-<div class="remarkd remarkd-styled" style="padding: 20px; max-width: 900px; margin: 0 auto 0 400px;">
+<div class="remarkd remarkd-styled" style="padding: 30px; max-width: 690px; margin: 0 auto 0 400px;">
   <?= $this->_content; ?>
 </div>
 <style>
@@ -12,7 +12,7 @@
         color: orangered;
     }
 
-    .preamble p:first-of-type {
+    .preamble > p:first-of-type {
         font-size: 1.21875em;
         line-height: 1.6;
     }
@@ -68,11 +68,41 @@
     }
 
     .toc ul {
+        padding: 0;
+        list-style-type: none;
+    }
+
+
+    .toc {
+
         position: fixed;
         left: 0;
         top: 0;
-        padding-left: 10px;
-        list-style-type: none;
+        margin-left: 10px;
+        margin-top: 10px;
+
+        border-style: solid;
+        border-width: 1px;
+        border-color: #e0e0dc;
+        margin-bottom: 1.25em;
+        padding: 1.25em;
+        background: #f8f8f7;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+    .toc a:link, .toc a:visited {
+        color: rgba(0, 0, 0, 0.75);
+        text-decoration: none;
+    }
+
+    .toc a:hover {
+        text-decoration: underline;
+    }
+
+    .toc li {
+        padding-top: 3px;
+        padding-bottom: 3px;
     }
 
     .toc--1 {

@@ -8,6 +8,7 @@ use Packaged\Remarkd\Blocks\Block;
 use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\CalloutBlock;
 use Packaged\Remarkd\Blocks\ContainerBlock;
+use Packaged\Remarkd\Blocks\ListItemBlock;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CalloutText;
 use Packaged\Remarkd\Rules\CheckboxRule;
@@ -61,6 +62,7 @@ class Remarkd
   {
     $engine->addMatcher(new Admonition());
     $engine->addMatcher(new CalloutBlock());
+    $engine->addMatcher(new ListItemBlock());
     $engine->addMatcher(
       ContainerBlock::i('```')->setContentType(Block::TYPE_VERBATIM)->setTag(CodeBlock::class)->setAllowChildren(false)
     );

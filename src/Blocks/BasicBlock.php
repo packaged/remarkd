@@ -44,6 +44,11 @@ class BasicBlock implements ISafeHtmlProducer, Block
     return $this->_substrimLen ?: 0;
   }
 
+  public function trimLeftStr(): string
+  {
+    return $this->_substrim;
+  }
+
   protected function _setSubstrim(string $substrim)
   {
     $this->_substrim = $substrim;
@@ -199,7 +204,7 @@ class BasicBlock implements ISafeHtmlProducer, Block
     return $this->_children;
   }
 
-  public function allowLine(string $line): bool
+  public function allowLine(string $line): ?bool
   {
     return $this->_substrimLen == 0 || substr($line, 0, $this->_substrimLen) === $this->_substrim;
   }

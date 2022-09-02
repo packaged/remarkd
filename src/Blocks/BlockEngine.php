@@ -100,7 +100,8 @@ class BlockEngine
    */
   protected function _addBlockLine($line, Block $block): ?bool
   {
-    if(!$block->allowLine($line))
+    $allowLine = $block->allowLine($line);
+    if($allowLine === false)
     {
       $block->close();
       return false;
@@ -116,21 +117,25 @@ class BlockEngine
       return true;
     }
 
-    foreach($block->children() as $child)
+    if($allowLine !== null)
     {
-      if($child instanceof Block && $block->isOpen())
+      foreach($block->children() as $child)
       {
-        return $this->_addBlockLine($line, $child);
+        if($child instanceof Block && $block->isOpen())
+        {
+          return $this->_addBlockLine($line, $child);
+        }
       }
+    }
+
+    if($block->isContainer() && $block->trimLeftLength() > 0 && is_scalar($line)
+      && substr($line, 0, $block->trimLeftLength()) === $block->trimLeftStr())
+    {
+      $line = substr($line, $block->trimLeftLength());
     }
 
     if($block->allowChildren())
     {
-      if($block->isContainer() && $block->trimLeftLength() > 0 && is_scalar($line))
-      {
-        $line = substr($line, $block->trimLeftLength());
-      }
-
       switch($block->contentType())
       {
         case  Block::TYPE_COMPOUND:

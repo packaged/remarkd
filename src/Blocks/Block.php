@@ -31,13 +31,24 @@ interface Block
 
   public function trimLeftLength(): int;
 
+  public function trimLeftStr(): string;
+
   public function allowChildren(): bool;
 
   public function children(): array;
 
   public function addChild($child);
 
-  public function allowLine(string $line): bool;
+  /**
+   * @param string $line
+   *
+   * true = allow
+   * false = reject
+   * null = direct only
+   *
+   * @return bool|null
+   */
+  public function allowLine(string $line): ?bool;
 
   /**
    * @param \Packaged\Remarkd\RemarkdContext $ctx

@@ -43,4 +43,9 @@ class Admonition extends BasicBlock implements BlockMatcher
     return Div::create($content)->addClass('hint-' . $this->_level)->produceSafeHTML();
   }
 
+  public function allowLine(string $line): bool
+  {
+    return !empty($line);
+  }
+
 }
