@@ -3,10 +3,32 @@ namespace Packaged\Remarkd;
 
 class Attributes
 {
-  protected $_raw = '';
+  protected $_position = [];
+  protected $_named = [];
 
   public function __construct($raw = '')
   {
-    $this->_raw = $raw;
+    $raw = trim($raw, '[]');
+    $matches = [];
+    preg_match_all('/(^|[\s,]+)([^, =}]+)(=((\"([^\"]*)\")|([^\s,}]*)))?/', $raw, $matches);
+    foreach($matches[2] as $pos => $match)
+    {
+      $this->_position[$pos] = $match;
+      $this->_named[$match] = $matches[7][$pos] ?: $matches[6][$pos];
+    }
+  }
+
+  public function position(int $pos, bool $getValue = false): ?string
+  {
+    if($getValue)
+    {
+      return $this->_named[$this->_position[$pos]] ?? null;
+    }
+    return $this->_position[$pos] ?? null;
+  }
+
+  public function named(string $key): ?string
+  {
+    return $this->_named[$key] ?? null;
   }
 }

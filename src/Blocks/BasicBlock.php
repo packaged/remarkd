@@ -14,6 +14,7 @@ class BasicBlock implements ISafeHtmlProducer, Block
 {
   protected $_closed = false;
   protected $_closer;
+  /** @var Attributes */
   protected $_attr;
   protected $_class = [];
   protected $_tag;
@@ -193,6 +194,18 @@ class BasicBlock implements ISafeHtmlProducer, Block
 
     if($ele instanceof HtmlElement)
     {
+      if($this->_attr)
+      {
+        $class = $this->_attr->position(0);
+        if($class && $class[0] == '.')
+        {
+          $ele->addClass(substr($class, 1));
+        }
+        else if($class === 'source')
+        {
+          $ele->addClass('source-code');
+        }
+      }
       $ele->addClass(...$this->_class);
     }
 

@@ -21,10 +21,11 @@
         margin-bottom: 1.25em;
     }
 
-    .listing-block .content {
+    .listing-block .content, .source-code .content {
         white-space: pre-line;
-        background: lightgray;
+        background: #efefef;
         padding: 10px;
+        font-family: monospace;
     }
 
     .sidebar-block {
@@ -142,5 +143,25 @@
 
     .conum[data-value]::after {
         content: attr(data-value);
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .purple {
+        color: purple;
+    }
+
+    .fuchsia {
+        color: fuchsia;
+    }
+
+    .blue {
+        color: blue;
     }
 </style>

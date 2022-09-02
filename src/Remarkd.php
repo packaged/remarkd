@@ -16,6 +16,7 @@ use Packaged\Remarkd\Rules\DeletedText;
 use Packaged\Remarkd\Rules\EmojiRule;
 use Packaged\Remarkd\Rules\HighlightText;
 use Packaged\Remarkd\Rules\Image;
+use Packaged\Remarkd\Rules\InlineStyleText;
 use Packaged\Remarkd\Rules\ItalicText;
 use Packaged\Remarkd\Rules\KeyboardKey;
 use Packaged\Remarkd\Rules\LinkText;
@@ -101,6 +102,8 @@ class Remarkd
     $engine->registerRule(new SuperScriptText());
 
     $engine->registerRule(new CheckboxRule());
+
+    $engine->registerRule(new InlineStyleText());
 
     return $engine;
   }

@@ -18,4 +18,10 @@ class ContainerBlock extends BasicBlock implements BlockMatcher
     }
     return null;
   }
+
+  public function closesOnEmptyLine(): bool
+  {
+    return false;
+  }
+
 }
