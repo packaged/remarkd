@@ -23,13 +23,10 @@ class Parser
    */
   protected $_remarkd;
 
-  public function __construct(array $rawLines, Remarkd $remarkd)
+  public function __construct(array $rawLines, ?Remarkd $remarkd = null, ?Document $doc = null)
   {
-    $this->_document = new Document();
-    $this->_document->data = new DocumentData();
-    $this->_document->data->set('plus', '+');
-
-    $this->_remarkd = $remarkd;
+    $this->_document = $doc ?? static::createDocument();
+    $this->_remarkd = $remarkd ?? new Remarkd();
 
     $section = new Section($this->_remarkd);
     $this->_setActiveSection($section);
@@ -51,6 +48,14 @@ class Parser
 
       $this->_raw[] = $line;
     }
+  }
+
+  public static function createDocument(): Document
+  {
+    $document = new Document();
+    $document->data = new DocumentData();
+    $document->data->set('plus', '+');
+    return $document;
   }
 
   const EXPECT_TITLE = 1;
