@@ -8,7 +8,7 @@ class CalloutBlock extends BasicBlock implements BlockMatcher
   protected $_tag = Div::class;
   protected $_contentType = Block::TYPE_SIMPLE;
 
-  public function match($line): ?Block
+  public function match($line, ?Block $parent): ?Block
   {
     if(preg_match('/^\<\d+\> (.*)/', $line))
     {

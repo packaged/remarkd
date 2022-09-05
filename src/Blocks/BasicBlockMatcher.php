@@ -46,7 +46,7 @@ class BasicBlockMatcher implements BlockMatcher
     return $this;
   }
 
-  public function match($line): ?Block
+  public function match($line, ?Block $parent): ?Block
   {
     $this->_pendingLine = null;
     if($this->_beginPartial)

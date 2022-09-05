@@ -162,7 +162,7 @@ class BlockEngine
       switch($block->contentType())
       {
         case Block::TYPE_COMPOUND:
-          $child = $this->getBlock($line, $attributes);
+          $child = $this->getBlock($line, $attributes, $block);
           if($child !== null && get_class($child) !== get_class($block))
           {
             $block->addChild($child);
@@ -218,12 +218,12 @@ class BlockEngine
     return null;
   }
 
-  public function getBlock(string $line, ?Attributes $attr = null): ?Block
+  public function getBlock(string $line, ?Attributes $attr = null, ?Block $parent = null): ?Block
   {
     $block = null;
     foreach($this->_matchers as $matcher)
     {
-      $block = $matcher->match($line);
+      $block = $matcher->match($line, $parent);
       if($block !== null)
       {
         if($attr !== null)

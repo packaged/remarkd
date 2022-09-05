@@ -23,7 +23,7 @@ class Admonition extends BasicBlock implements BlockMatcher
     $this->_setSubstrim($level . $style);
   }
 
-  public function match($line): ?Block
+  public function match($line, ?Block $parent): ?Block
   {
     $matches = [];
     if(preg_match('/(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])/', $line, $matches))

@@ -224,6 +224,11 @@ class BasicBlock implements ISafeHtmlProducer, Block
 
   public function allowLine(string $line): ?bool
   {
+    if($line === '' && $this->closesOnEmptyLine())
+    {
+      return false;
+    }
+
     return $this->_substrimLen == 0 || substr($line, 0, $this->_substrimLen) === $this->_substrim;
   }
 }

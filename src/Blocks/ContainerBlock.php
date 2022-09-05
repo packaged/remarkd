@@ -12,7 +12,7 @@ class ContainerBlock extends BasicBlock implements BlockMatcher
     return $block;
   }
 
-  public function match($line): ?Block
+  public function match($line, ?Block $parent): ?Block
   {
     if($line === $this->_closer)
     {

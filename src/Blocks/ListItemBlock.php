@@ -8,13 +8,33 @@ class ListItemBlock extends BasicBlock implements BlockMatcher
   protected $_contentType = Block::TYPE_SIMPLE;
   protected $_tag = ListItem::class;
 
-  public function match($line): ?Block
+  public function match($line, ?Block $parent): ?Block
   {
-    if(preg_match('/^(((\d*\.)|\*|\-){1,10}) (.*)/', $line, $matches))
+    if(preg_match('/^((\d+\.)+) (.*)/', $line, $matches))
     {
       $block = clone $this;
       $block->_setSubstrim($matches[1]);
-      return $block;
+      if($parent instanceof OrderedListBlock)
+      {
+        return $block;
+      }
+
+      $parent = new OrderedListBlock();
+      $parent->addChild($block);
+      return $parent;
+    }
+    if(preg_match('/^((\*|\-){1,10}) (.*)/', $line, $matches))
+    {
+      $block = clone $this;
+      $block->_setSubstrim($matches[1]);
+      if($parent instanceof UnorderedListBlock)
+      {
+        return $block;
+      }
+
+      $parent = new UnorderedListBlock();
+      $parent->addChild($block);
+      return $parent;
     }
     return null;
   }
@@ -30,6 +50,12 @@ class ListItemBlock extends BasicBlock implements BlockMatcher
     {
       return empty($this->children());
     }
+
+    if($line !== '')
+    {
+      return true;
+    }
+
     return parent::allowLine($line);
   }
 }
