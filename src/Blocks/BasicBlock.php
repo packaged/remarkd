@@ -173,7 +173,7 @@ class BasicBlock implements ISafeHtmlProducer, Block
     {
       return $line;
     }
-    return new SafeHtml($ctx->ruleEngine()->parse($line));
+    return new SafeHtml($ctx->objectEngine()->parse($ctx->ruleEngine()->parse($line)));
   }
 
   public function produceSafeHTML(): SafeHtml

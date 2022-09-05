@@ -4,7 +4,8 @@
 <div class="toc">
   <?= $this->_toc; ?>
 </div>
-<div class="remarkd remarkd-styled" style="padding: 30px; max-width: 690px; margin: 0 auto 0 400px;">
+<div class="remarkd remarkd-styled" style="padding: 30px; max-width:800px; margin: 0 auto 0 400px;">
+  <h1><?= $this->getContext()->meta()->get('title'); ?></h1>
   <?= $this->_content; ?>
 </div>
 <style>
@@ -12,9 +13,29 @@
         color: #a82f00;
     }
 
+    a {
+        color: #0070c9;
+    }
+
+    .remarkd-styled h1 {
+        font-weight: 500;
+    }
+
+    .remarkd-styled li {
+        line-height: 1.8;
+    }
+
+    .remarkd-styled p {
+        margin-top: 13px;
+    }
+
+    .remarkd {
+        font-size: 17px;
+    }
+
     .preamble > p:first-of-type {
-        font-size: 1.21875em;
-        line-height: 1.6;
+        font-size: 22px;
+        line-height: 1.5;
     }
 
     .listing-block, .sidebar-block, .example-block {
@@ -76,6 +97,11 @@
         background: #e1f2fa;
         border: 1px solid lightblue;
         padding: 10px;
+    }
+
+    img.block {
+        display: block;
+        margin: 10px 0;
     }
 
     .toc ul {

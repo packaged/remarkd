@@ -35,8 +35,21 @@ class Attributes
     return array_key_exists($key, $this->_named);
   }
 
-  public function named(string $key): ?string
+  public function get(string $key, $default = null): ?string
   {
-    return $this->_named[$key] ?? null;
+    return $this->_named[$key] ?? $default;
+  }
+
+  public function classes(): array
+  {
+    $classes = [];
+    foreach($this->_position as $k)
+    {
+      if($k[0] === '.')
+      {
+        $classes[] = substr($k, 1);
+      }
+    }
+    return $classes;
   }
 }

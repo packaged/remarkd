@@ -110,6 +110,8 @@ class ContentController extends Controller
       $doc = $d->parse();
       //echo '<pre>'; var_dump($doc);die;
 
+      $this->getContext()->meta()->set('title', $doc->title);
+
       $page->setToc($this->_toc($doc));
       $page->setContent($doc->produceSafeHTML());
       return $page;

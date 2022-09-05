@@ -10,6 +10,13 @@ use Packaged\Remarkd\Blocks\ListingBlock;
 use Packaged\Remarkd\Blocks\ListItemBlock;
 use Packaged\Remarkd\Blocks\LiteralBlock;
 use Packaged\Remarkd\Blocks\SidebarBlock;
+use Packaged\Remarkd\Objects\AnchorObject;
+use Packaged\Remarkd\Objects\ImageObject;
+use Packaged\Remarkd\Objects\LineBreakObject;
+use Packaged\Remarkd\Objects\ObjectEngine;
+use Packaged\Remarkd\Objects\ProgressMeterObject;
+use Packaged\Remarkd\Objects\References\ReferenceListObject;
+use Packaged\Remarkd\Objects\References\ReferenceObject;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CalloutText;
 use Packaged\Remarkd\Rules\CheckboxRule;
@@ -42,6 +49,7 @@ class Remarkd
       $context = new RemarkdContext();
       $this->applyDefaultBlocks($context->blockEngine());
       $this->applyDefaultRules($context->ruleEngine());
+      $this->applyDefaultObjects($context->objectEngine());
     }
     $this->_context = $context;
   }
@@ -74,6 +82,17 @@ class Remarkd
     $engine->addMatcher(new LiteralBlock());
   }
 
+  public function applyDefaultObjects(ObjectEngine $engine)
+  {
+    $engine->registerObject(new ProgressMeterObject());
+    $engine->registerObject(new LineBreakObject());
+    $engine->registerObject(new ReferenceObject());
+    $engine->registerObject(new ReferenceListObject());
+    $engine->registerObject(new AnchorObject());
+    $engine->registerObject(new ImageObject());
+    return $engine;
+  }
+
   public function applyDefaultRules(RuleEngine $engine)
   {
     $engine->registerRule(new QuoteText());
@@ -83,6 +102,7 @@ class Remarkd
     $engine->registerRule(new TypographicSymbolRule());
     $engine->registerRule(new EmojiRule());
     $engine->registerRule(new KeyboardKey());
+    $engine->registerRule(new HighlightText());
 
     $engine->registerRule(new TipText());
     $engine->registerRule(new CalloutText());
@@ -92,7 +112,6 @@ class Remarkd
     $engine->registerRule(new BoldText());
     $engine->registerRule(new ItalicText());
     $engine->registerRule(new DeletedText());
-    $engine->registerRule(new HighlightText());
     $engine->registerRule(new SubScriptText());
     $engine->registerRule(new SuperScriptText());
 
