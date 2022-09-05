@@ -4,7 +4,6 @@ namespace Packaged\Remarkd;
 use Packaged\Glimpse\Tags\Div;
 use Packaged\Glimpse\Tags\Text\HeadingFive;
 use Packaged\Glimpse\Tags\Text\HeadingFour;
-use Packaged\Glimpse\Tags\Text\HeadingOne;
 use Packaged\Glimpse\Tags\Text\HeadingSix;
 use Packaged\Glimpse\Tags\Text\HeadingThree;
 use Packaged\Glimpse\Tags\Text\HeadingTwo;
@@ -99,21 +98,18 @@ class Section extends Element implements ISafeHtmlProducer
         $content = Div::create($content)->addClass('preamble');
         break;
       case 1:
-        $head = HeadingOne::create($this->title);
-        break;
-      case 2:
         $head = HeadingTwo::create($this->title);
         break;
-      case 3:
+      case 2:
         $head = HeadingThree::create($this->title);
         break;
-      case 4:
+      case 3:
         $head = HeadingFour::create($this->title);
         break;
-      case 5:
+      case 4:
         $head = HeadingFive::create($this->title);
         break;
-      case 6:
+      case 5:
         $head = HeadingSix::create($this->title);
         break;
     }
