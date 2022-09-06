@@ -42,7 +42,7 @@ class Parser
 
       if($appendNext)
       {
-        $line = rtrim(array_pop($this->_raw), '\\ ') . "\n" . substr($line, 0, -1);
+        $line = rtrim(array_pop($this->_raw), '\\ ') . "\n" . $line;
       }
 
       $appendNext = substr($line, -1) == '\\';
