@@ -9,6 +9,7 @@ use Packaged\Remarkd\Blocks\ExampleBlock;
 use Packaged\Remarkd\Blocks\ListingBlock;
 use Packaged\Remarkd\Blocks\ListItemBlock;
 use Packaged\Remarkd\Blocks\LiteralBlock;
+use Packaged\Remarkd\Blocks\MarkdownHeaderBlock;
 use Packaged\Remarkd\Blocks\SidebarBlock;
 use Packaged\Remarkd\Objects\AnchorObject;
 use Packaged\Remarkd\Objects\ImageObject;
@@ -59,17 +60,6 @@ class Remarkd
     return $this->_context;
   }
 
-  public function parse($text)
-  {
-    $lines = explode("\n", str_replace(["\r\n", "\r"], "\n", $text));
-    return $this->ctx()->ruleEngine()->parse(implode("", $lines));
-  }
-
-  public function render($text, $cssClass = 'remarkd-styled')
-  {
-    return '<div class="remarkd ' . $cssClass . '">' . $this->parse($text) . '</div>';
-  }
-
   public function applyDefaultBlocks(BlockEngine $engine)
   {
     $engine->addMatcher(new Admonition());
@@ -80,6 +70,7 @@ class Remarkd
     $engine->addMatcher(new CodeBlock());
     $engine->addMatcher(new SidebarBlock());
     $engine->addMatcher(new LiteralBlock());
+    $engine->addMatcher(new MarkdownHeaderBlock());
   }
 
   public function applyDefaultObjects(ObjectEngine $engine)
