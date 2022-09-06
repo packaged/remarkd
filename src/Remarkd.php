@@ -10,7 +10,9 @@ use Packaged\Remarkd\Blocks\ListingBlock;
 use Packaged\Remarkd\Blocks\ListItemBlock;
 use Packaged\Remarkd\Blocks\LiteralBlock;
 use Packaged\Remarkd\Blocks\MarkdownHeaderBlock;
+use Packaged\Remarkd\Blocks\OrderedListBlock;
 use Packaged\Remarkd\Blocks\SidebarBlock;
+use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Objects\AnchorObject;
 use Packaged\Remarkd\Objects\ImageObject;
 use Packaged\Remarkd\Objects\LineBreakObject;
@@ -64,13 +66,15 @@ class Remarkd
   {
     $engine->addMatcher(new Admonition());
     $engine->addMatcher(new CalloutBlock());
-    $engine->addMatcher(new ListItemBlock());
     $engine->addMatcher(new ListingBlock());
     $engine->addMatcher(new ExampleBlock());
     $engine->addMatcher(new CodeBlock());
     $engine->addMatcher(new SidebarBlock());
     $engine->addMatcher(new LiteralBlock());
     $engine->addMatcher(new MarkdownHeaderBlock());
+    $engine->addMatcher(new OrderedListBlock());
+    $engine->addMatcher(new UnorderedListBlock());
+    $engine->addMatcher(new ListItemBlock());
   }
 
   public function applyDefaultObjects(ObjectEngine $engine)

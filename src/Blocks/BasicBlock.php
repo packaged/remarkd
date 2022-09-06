@@ -24,6 +24,7 @@ class BasicBlock implements ISafeHtmlProducer, Block
   protected $_substrim = '';
   protected $_substrimLen;
   protected $_contentType;
+  protected $_contentContainer = true;
 
   public function setCloseOnEmptyLine(bool $close)
   {
@@ -179,7 +180,7 @@ class BasicBlock implements ISafeHtmlProducer, Block
   public function produceSafeHTML(): SafeHtml
   {
     $content = Arrays::interleave(PHP_EOL, $this->_children);
-    if($this->allowChildren())
+    if($this->allowChildren() && $this->_contentContainer)
     {
       $content = Div::create($content)->addClass('content');
     }
@@ -224,6 +225,11 @@ class BasicBlock implements ISafeHtmlProducer, Block
 
   public function allowChild($child): bool
   {
+    if($this->closer() && $child instanceof Block)
+    {
+      return $this->closer() != $child->closer();
+    }
+
     return get_class($this) != get_class($child);
   }
 

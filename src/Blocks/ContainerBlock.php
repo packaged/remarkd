@@ -12,7 +12,7 @@ class ContainerBlock extends BasicBlock implements BlockMatcher
     if($this->_match && preg_match($this->_match, $line))
     {
       $block = clone $this;
-      $block->_closer = $line;
+      $block->setCloser($line);
       return $block;
     }
     if($line === $this->_closer)
@@ -20,14 +20,5 @@ class ContainerBlock extends BasicBlock implements BlockMatcher
       return clone $this;
     }
     return null;
-  }
-
-  public function allowChild($child): bool
-  {
-    if($this->closer() && $child instanceof Block)
-    {
-      return $this->closer() != $child->closer();
-    }
-    return parent::allowChild($child);
   }
 }
