@@ -256,16 +256,20 @@ class BlockEngine
       }
     }
 
-    if(!empty($line))
+    if(!empty(trim($line)))
     {
       if($attr && $attr->position(0) == 'source')
       {
         $block = new CodeBlock();
         $block->setCloseOnEmptyLine(true);
       }
-      else
+      else if(substr($line, 0, 2) !== '{{' && substr($line, -2) !== '}}')
       {
         $block = new ParagraphBlock();
+      }
+      else
+      {
+        $block = new BasicBlock();
       }
     }
 
