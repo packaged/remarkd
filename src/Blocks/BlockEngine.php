@@ -185,7 +185,7 @@ class BlockEngine
       {
         case Block::TYPE_COMPOUND:
           $child = $this->getBlock($line, $attributes, $block);
-          if($child !== null && get_class($child) !== get_class($block))
+          if($child !== null && $block->allowChild($child))
           {
             $block->addChild($child);
             $childAdd = $this->_addBlockLine($line, $child, $attributes);

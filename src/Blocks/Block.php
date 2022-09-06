@@ -37,6 +37,8 @@ interface Block
 
   public function children(): array;
 
+  public function allowChild($child): bool;
+  
   public function addChild($child);
 
   /**

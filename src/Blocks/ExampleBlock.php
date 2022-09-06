@@ -10,4 +10,6 @@ class ExampleBlock extends ContainerBlock
   protected $_allowChildren = true;
   protected $_class = ['example-block'];
   protected $_closer = '====';
+
+  protected $_match = '/^={4,10}$/';
 }

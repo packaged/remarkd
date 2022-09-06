@@ -10,4 +10,6 @@ class SidebarBlock extends ContainerBlock
   protected $_allowChildren = true;
   protected $_class = ['sidebar-block'];
   protected $_closer = '****';
+
+  protected $_match = '/^\*{4,10}$/';
 }

@@ -222,6 +222,11 @@ class BasicBlock implements ISafeHtmlProducer, Block
     return $this->_children;
   }
 
+  public function allowChild($child): bool
+  {
+    return get_class($this) != get_class($child);
+  }
+
   public function allowLine(string $line): ?bool
   {
     if($line === '' && $this->closesOnEmptyLine())
