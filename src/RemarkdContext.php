@@ -28,6 +28,42 @@ class RemarkdContext
   }
 
   /**
+   * @param \Packaged\Remarkd\Rules\RuleEngine $ruleEngine
+   */
+  public function setRuleEngine(RuleEngine $ruleEngine)
+  {
+    $this->_ruleEngine = $ruleEngine;
+    return $this;
+  }
+
+  /**
+   * @param \Packaged\Remarkd\Blocks\BlockEngine $blockEngine
+   */
+  public function setBlockEngine(BlockEngine $blockEngine)
+  {
+    $this->_blockEngine = $blockEngine;
+    return $this;
+  }
+
+  /**
+   * @param \Packaged\Remarkd\Objects\ObjectEngine $objectEngine
+   */
+  public function setObjectEngine(ObjectEngine $objectEngine)
+  {
+    $this->_objectEngine = $objectEngine;
+    return $this;
+  }
+
+  /**
+   * @param array|\Packaged\Map\DataMap $meta
+   */
+  public function setMeta($meta)
+  {
+    $this->_meta = $meta;
+    return $this;
+  }
+
+  /**
    * @return \Packaged\Remarkd\Rules\RuleEngine
    */
   public function ruleEngine(): RuleEngine

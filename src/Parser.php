@@ -63,10 +63,18 @@ class Parser
   const EXPECT_REVISION = 3;
   const EXPECT_DOCUMENT = 4;
 
-  public function parse(): Document
+  public function parse($detectHeaders = true): Document
   {
     $attribute = $title = null;
-    $expectAction = self::EXPECT_TITLE;
+    $expectAction = $detectHeaders ? self::EXPECT_TITLE : self::EXPECT_DOCUMENT;
+    $oldBlocks = null;
+    if(!empty($this->_remarkd->ctx()->blockEngine()->blocks()))
+    {
+      $oldBlocks = $this->_remarkd->ctx()->blockEngine();
+      $newBlocks = clone $oldBlocks;
+      $newBlocks->clearBlocks();
+      $this->_remarkd->ctx()->setBlockEngine($newBlocks);
+    }
     foreach($this->_raw as $line)
     {
       $char1 = $line[0] ?? '';
@@ -133,6 +141,12 @@ class Parser
     {
       $this->_currentSection->close();
     }
+
+    if($oldBlocks !== null)
+    {
+      $this->_remarkd->ctx()->setBlockEngine($oldBlocks);
+    }
+
     return $this->_document;
   }
 
