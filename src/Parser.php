@@ -4,6 +4,7 @@ namespace Packaged\Remarkd;
 use Packaged\Glimpse\Tags\Div;
 use Packaged\Glimpse\Tags\HorizontalRule;
 use Packaged\Helpers\Strings;
+use Packaged\Remarkd\Blocks\BlockEngine;
 
 class Parser
 {
@@ -67,14 +68,10 @@ class Parser
   {
     $attribute = $title = null;
     $expectAction = $detectHeaders ? self::EXPECT_TITLE : self::EXPECT_DOCUMENT;
-    $oldBlocks = null;
-    if(!empty($this->_remarkd->ctx()->blockEngine()->blocks()))
-    {
-      $oldBlocks = $this->_remarkd->ctx()->blockEngine();
-      $newBlocks = clone $oldBlocks;
-      $newBlocks->clearBlocks();
-      $this->_remarkd->ctx()->setBlockEngine($newBlocks);
-    }
+    $oldBlocks = $this->_remarkd->ctx()->blockEngine();
+    $newBlocks = new BlockEngine($this->_remarkd->ctx());
+    $newBlocks->setMatchers($oldBlocks->getMatchers());
+    $this->_remarkd->ctx()->setBlockEngine($newBlocks);
     foreach($this->_raw as $line)
     {
       $char1 = $line[0] ?? '';
@@ -142,10 +139,7 @@ class Parser
       $this->_currentSection->close();
     }
 
-    if($oldBlocks !== null)
-    {
-      $this->_remarkd->ctx()->setBlockEngine($oldBlocks);
-    }
+    $this->_remarkd->ctx()->setBlockEngine($oldBlocks);
 
     return $this->_document;
   }

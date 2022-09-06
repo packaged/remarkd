@@ -27,6 +27,13 @@ class RemarkdContext
     $this->_meta = new DataMap($this->_meta);
   }
 
+  public function __clone()
+  {
+    $be = new BlockEngine($this);
+    $be->setMatchers($this->_blockEngine->getMatchers());
+    $this->setBlockEngine($be);
+  }
+
   /**
    * @param \Packaged\Remarkd\Rules\RuleEngine $ruleEngine
    */

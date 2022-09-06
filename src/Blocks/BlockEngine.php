@@ -26,12 +26,34 @@ class BlockEngine
     $this->_rootBlocks = [];
   }
 
+  public function __clone()
+  {
+    $this->clearBlocks();
+  }
+
   public function __construct(RemarkdContext $ctx)
   {
     $this->_context = $ctx;
   }
 
   public function blocks() { return $this->_rootBlocks; }
+
+  /**
+   * @return array|\Packaged\Remarkd\Blocks\BlockMatcher[]
+   */
+  public function getMatchers(): array
+  {
+    return $this->_matchers;
+  }
+
+  /**
+   * @param array|\Packaged\Remarkd\Blocks\BlockMatcher[] $matchers
+   */
+  public function setMatchers(array $matchers)
+  {
+    $this->_matchers = $matchers;
+    return $this;
+  }
 
   public function addMatcher(BlockMatcher $matcher)
   {
