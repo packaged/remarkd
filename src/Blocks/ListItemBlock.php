@@ -10,7 +10,7 @@ class ListItemBlock extends BasicBlock implements BlockMatcher
   protected $_tag = ListItem::class;
   protected $_contentContainer = false;
 
-  const OL_MATCH = '/^((\d+\.)+) (.*)/';
+  const OL_MATCH = '/^((\d*\.)+) (.*)/';
   const UL_MATCH = '/^((\*|\-){1,10}) (.*)/';
 
   public function match($line, ?Block $parent): ?Block

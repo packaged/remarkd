@@ -126,7 +126,7 @@ class Parser
         case $char1 == '[' && substr($line, -1) == ']':
           $attribute = new Attributes($line);
           continue 2;
-        case $char1 == '.':
+        case $char1 == '.' && !in_array($line[1] ?? ' ', ['.', ' ']):
           $title = substr($line, 1);
           continue 2;
       }
