@@ -94,9 +94,6 @@ class Section extends Element implements ISafeHtmlProducer
     $content = $this->children;
     switch($this->level)
     {
-      case 0:
-        $content = Div::create($content)->addClass('preamble');
-        break;
       case 1:
         $head = HeadingTwo::create($this->title);
         break;
