@@ -173,7 +173,7 @@ class BlockEngine
       }
     }
 
-    if($block->isContainer() && $block->trimLeftLength() > 0 && is_scalar($line)
+    if(/*$block->isContainer() && */ $block->trimLeftLength() > 0 && is_scalar($line)
       && substr($line, 0, $block->trimLeftLength()) === $block->trimLeftStr())
     {
       $line = substr($line, $block->trimLeftLength());
@@ -242,6 +242,11 @@ class BlockEngine
 
   public function getBlock(string $line, ?Attributes $attr = null, ?Block $parent = null): ?Block
   {
+    if($line === '')
+    {
+      return null;
+    }
+
     $block = null;
     foreach($this->_matchers as $matcher)
     {

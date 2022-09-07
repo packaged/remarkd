@@ -179,6 +179,12 @@ class BasicBlock implements ISafeHtmlProducer, Block
 
   public function produceSafeHTML(): SafeHtml
   {
+    $ele = $this->_produceElement();
+    return $ele->produceSafeHTML();
+  }
+
+  protected function _produceElement(): HtmlElement
+  {
     $content = Arrays::interleave(PHP_EOL, $this->_children);
     if($this->allowChildren() && $this->_contentContainer)
     {
@@ -214,8 +220,7 @@ class BasicBlock implements ISafeHtmlProducer, Block
       }
       $ele->addClass(...$this->_class);
     }
-
-    return $ele->produceSafeHTML();
+    return $ele;
   }
 
   public function children(): array
