@@ -89,7 +89,10 @@ class BlockEngine
   {
     if($block === null)
     {
-      $this->_rootBlocks[] = new SafeHtml($line);
+      if($line !== '')
+      {
+        $this->_rootBlocks[] = new SafeHtml($line);
+      }
       return true;
     }
     if($appendBlock)
