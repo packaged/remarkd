@@ -29,7 +29,7 @@ class CalloutBlock extends BasicBlock implements BlockMatcher
   protected function _produceElement(): HtmlElement
   {
     $ele = parent::_produceElement();
-    $ele->addAttributes(['data-marker' => substr($this->_substrim, 1, -1)]);
+    $ele->addAttributes(['data-marker' => substr($this->_substrim, 1, -2)]);
     return $ele;
   }
 
