@@ -176,7 +176,7 @@ class BlockEngine
       }
     }
 
-    if(/*$block->isContainer() && */ $block->trimLeftLength() > 0 && is_scalar($line)
+    if($block->trimLeftLength() > 0 && is_scalar($line)
       && substr($line, 0, $block->trimLeftLength()) === $block->trimLeftStr())
     {
       $line = substr($line, $block->trimLeftLength());
