@@ -5,12 +5,13 @@ class Attributes
 {
   protected $_position = [];
   protected $_named = [];
+  protected $_raw;
 
   public function __construct($raw = '')
   {
-    $raw = trim($raw, '[]');
+    $this->_raw = trim($raw, '[]');
     $matches = [];
-    preg_match_all('/(^|[\s,]+)([^, =}]+)(=((\"([^\"]*)\")|([^\s,}]*)))?/', $raw, $matches);
+    preg_match_all('/(^|[\s,]+)([^, =}]+)(=((\"([^\"]*)\")|([^\s,}]*)))?/', $this->_raw, $matches);
     if(isset($matches[2]))
     {
       foreach($matches[2] as $pos => $match)
@@ -19,6 +20,11 @@ class Attributes
         $this->_named[$match] = $matches[7][$pos] ?: $matches[6][$pos];
       }
     }
+  }
+
+  public function raw(): string
+  {
+    return $this->_raw;
   }
 
   public function position(int $pos, bool $getValue = false): ?string
