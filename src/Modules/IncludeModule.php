@@ -6,7 +6,7 @@ use Packaged\Remarkd\Parser;
 use Packaged\Remarkd\Remarkd;
 use Packaged\SafeHtml\SafeHtml;
 
-class IncludeModule extends AbstractModule
+class IncludeModule extends AbstractRemarkdModule
 {
   protected $_root;
   /** @var Remarkd */

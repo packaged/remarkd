@@ -11,6 +11,7 @@ use Packaged\Glimpse\Tags\Lists\UnorderedList;
 use Packaged\Glimpse\Tags\Span;
 use Packaged\Helpers\Strings;
 use Packaged\Remarkd\Document;
+use Packaged\Remarkd\Modules\IncludeModule;
 use Packaged\Remarkd\Parser;
 use Packaged\Remarkd\Remarkd;
 use Packaged\Remarkd\Section;
@@ -103,7 +104,7 @@ class ContentController extends Controller
     if(file_exists($loc))
     {
       $remarkd = new Remarkd();
-      $remarkd->setIncludePath($dir);
+      $remarkd->registerModule(IncludeModule::create($remarkd, $dir));
       $cwd = substr(dirname($loc), strlen($resDir));
       $remarkd->ctx()->meta()->set('cwd', $cwd);
 

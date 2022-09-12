@@ -3,6 +3,7 @@ namespace Packaged\Remarkd;
 
 use Packaged\Remarkd\Blocks\Admonition;
 use Packaged\Remarkd\Blocks\BlockEngine;
+use Packaged\Remarkd\Blocks\BlockMatcher;
 use Packaged\Remarkd\Blocks\CalloutBlock;
 use Packaged\Remarkd\Blocks\CodeBlock;
 use Packaged\Remarkd\Blocks\DefinitionListBlock;
@@ -15,7 +16,7 @@ use Packaged\Remarkd\Blocks\ModuleBlock;
 use Packaged\Remarkd\Blocks\OrderedListBlock;
 use Packaged\Remarkd\Blocks\SidebarBlock;
 use Packaged\Remarkd\Blocks\UnorderedListBlock;
-use Packaged\Remarkd\Modules\IncludeModule;
+use Packaged\Remarkd\Modules\RemarkdModule;
 use Packaged\Remarkd\Objects\AnchorObject;
 use Packaged\Remarkd\Objects\ImageObject;
 use Packaged\Remarkd\Objects\LineBreakObject;
@@ -23,6 +24,7 @@ use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Objects\ProgressMeterObject;
 use Packaged\Remarkd\Objects\References\ReferenceListObject;
 use Packaged\Remarkd\Objects\References\ReferenceObject;
+use Packaged\Remarkd\Objects\RemarkdObject;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CalloutText;
 use Packaged\Remarkd\Rules\CheckboxRule;
@@ -36,6 +38,7 @@ use Packaged\Remarkd\Rules\KeyboardKey;
 use Packaged\Remarkd\Rules\LinkText;
 use Packaged\Remarkd\Rules\MonospacedText;
 use Packaged\Remarkd\Rules\QuoteText;
+use Packaged\Remarkd\Rules\RemarkdRule;
 use Packaged\Remarkd\Rules\RuleEngine;
 use Packaged\Remarkd\Rules\SectionLinkText;
 use Packaged\Remarkd\Rules\SubScriptText;
@@ -47,17 +50,15 @@ use Packaged\Remarkd\Rules\UnderlinedText;
 class Remarkd
 {
   protected RemarkdContext $_context;
-  protected $_modules;
 
   public function __construct(RemarkdContext $context = null)
   {
-    $this->_modules = new ModuleBlock();
     if($context === null)
     {
       $context = new RemarkdContext();
       $this->applyDefaultBlocks($context->blockEngine());
-      $context->blockEngine()->addMatcher($this->_modules);
-      $this->applyDefaultModules($this->_modules);
+      $context->blockEngine()->addMatcher($context->modules());
+      $this->applyDefaultModules($context->modules());
       $this->applyDefaultRules($context->ruleEngine());
       $this->applyDefaultObjects($context->objectEngine());
     }
@@ -69,16 +70,8 @@ class Remarkd
     return $this->_context;
   }
 
-  public function setIncludePath($path)
-  {
-    $this->_modules->registerModule(IncludeModule::create($this, $path));
-    return $this;
-  }
-
   public function applyDefaultModules(ModuleBlock $block)
   {
-    //$block->registerModule(IncludeModule::create());
-    return $block;
   }
 
   public function applyDefaultBlocks(BlockEngine $engine)
@@ -135,6 +128,26 @@ class Remarkd
     $engine->registerRule(new InlineStyleText());
 
     return $engine;
+  }
+
+  public function registerBlock(BlockMatcher $block)
+  {
+    return $this->ctx()->blockEngine()->addMatcher($block);
+  }
+
+  public function registerModule(RemarkdModule $module)
+  {
+    return $this->ctx()->modules()->registerModule($module);
+  }
+
+  public function registerObject(RemarkdObject $object)
+  {
+    return $this->ctx()->objectEngine()->registerObject($object);
+  }
+
+  public function registerRule(RemarkdRule $rule)
+  {
+    return $this->ctx()->ruleEngine()->registerRule($rule);
   }
 
 }

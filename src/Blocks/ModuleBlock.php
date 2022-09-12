@@ -2,14 +2,14 @@
 namespace Packaged\Remarkd\Blocks;
 
 use Packaged\Remarkd\Attributes;
-use Packaged\Remarkd\Modules\AbstractModule;
+use Packaged\Remarkd\Modules\RemarkdModule;
 
 class ModuleBlock implements BlockMatcher
 {
-  /** @var AbstractModule[] */
+  /** @var RemarkdModule[] */
   protected $_register = [];
 
-  public function registerModule(AbstractModule $module)
+  public function registerModule(RemarkdModule $module)
   {
     $this->_register[$module->identifier()] = $module;
     return $this;

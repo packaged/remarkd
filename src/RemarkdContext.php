@@ -3,6 +3,7 @@ namespace Packaged\Remarkd;
 
 use Packaged\Map\DataMap;
 use Packaged\Remarkd\Blocks\BlockEngine;
+use Packaged\Remarkd\Blocks\ModuleBlock;
 use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Rules\RuleEngine;
 
@@ -17,6 +18,9 @@ class RemarkdContext
   /** @var \Packaged\Remarkd\Objects\ObjectEngine */
   protected $_objectEngine;
 
+  /** @var \Packaged\Remarkd\Blocks\ModuleBlock */
+  protected $_moduleBlock;
+
   protected $_meta = [];
 
   public function __construct()
@@ -24,6 +28,7 @@ class RemarkdContext
     $this->_blockEngine = new BlockEngine($this);
     $this->_ruleEngine = new RuleEngine($this);
     $this->_objectEngine = new ObjectEngine($this);
+    $this->_moduleBlock = new ModuleBlock();
     $this->_meta = new DataMap($this->_meta);
   }
 
@@ -89,6 +94,11 @@ class RemarkdContext
   public function objectEngine(): ObjectEngine
   {
     return $this->_objectEngine;
+  }
+
+  public function modules(): ModuleBlock
+  {
+    return $this->_moduleBlock;
   }
 
   public function meta(): DataMap

@@ -5,7 +5,7 @@ use Packaged\Remarkd\Attributes;
 use Packaged\Remarkd\Blocks\Block;
 use Packaged\Remarkd\RemarkdContext;
 
-abstract class AbstractModule implements Block
+abstract class AbstractRemarkdModule implements RemarkdModule
 {
   /** @var \Packaged\Remarkd\Attributes */
   protected $_attr;
@@ -20,7 +20,7 @@ abstract class AbstractModule implements Block
     return $this;
   }
 
-  public function setKey($key)
+  public function setKey(string $key): self
   {
     $this->_key = $key;
     return $this;
