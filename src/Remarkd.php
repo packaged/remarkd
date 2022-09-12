@@ -11,9 +11,11 @@ use Packaged\Remarkd\Blocks\ListingBlock;
 use Packaged\Remarkd\Blocks\ListItemBlock;
 use Packaged\Remarkd\Blocks\LiteralBlock;
 use Packaged\Remarkd\Blocks\MarkdownHeaderBlock;
+use Packaged\Remarkd\Blocks\ModuleBlock;
 use Packaged\Remarkd\Blocks\OrderedListBlock;
 use Packaged\Remarkd\Blocks\SidebarBlock;
 use Packaged\Remarkd\Blocks\UnorderedListBlock;
+use Packaged\Remarkd\Modules\IncludeModule;
 use Packaged\Remarkd\Objects\AnchorObject;
 use Packaged\Remarkd\Objects\ImageObject;
 use Packaged\Remarkd\Objects\LineBreakObject;
@@ -45,13 +47,17 @@ use Packaged\Remarkd\Rules\UnderlinedText;
 class Remarkd
 {
   protected RemarkdContext $_context;
+  protected $_modules;
 
   public function __construct(RemarkdContext $context = null)
   {
+    $this->_modules = new ModuleBlock();
     if($context === null)
     {
       $context = new RemarkdContext();
       $this->applyDefaultBlocks($context->blockEngine());
+      $context->blockEngine()->addMatcher($this->_modules);
+      $this->applyDefaultModules($this->_modules);
       $this->applyDefaultRules($context->ruleEngine());
       $this->applyDefaultObjects($context->objectEngine());
     }
@@ -61,6 +67,18 @@ class Remarkd
   public function ctx()
   {
     return $this->_context;
+  }
+
+  public function setIncludePath($path)
+  {
+    $this->_modules->registerModule(IncludeModule::create($this, $path));
+    return $this;
+  }
+
+  public function applyDefaultModules(ModuleBlock $block)
+  {
+    //$block->registerModule(IncludeModule::create());
+    return $block;
   }
 
   public function applyDefaultBlocks(BlockEngine $engine)

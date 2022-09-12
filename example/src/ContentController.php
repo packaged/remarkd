@@ -103,6 +103,7 @@ class ContentController extends Controller
     if(file_exists($loc))
     {
       $remarkd = new Remarkd();
+      $remarkd->setIncludePath($dir);
       $cwd = substr(dirname($loc), strlen($resDir));
       $remarkd->ctx()->meta()->set('cwd', $cwd);
 

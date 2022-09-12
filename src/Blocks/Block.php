@@ -3,8 +3,9 @@ namespace Packaged\Remarkd\Blocks;
 
 use Packaged\Remarkd\Attributes;
 use Packaged\Remarkd\RemarkdContext;
+use Packaged\SafeHtml\ISafeHtmlProducer;
 
-interface Block
+interface Block extends ISafeHtmlProducer
 {
   const TYPE_SIMPLE = 'simple';
   const TYPE_COMPOUND = 'compound';
@@ -38,7 +39,7 @@ interface Block
   public function children(): array;
 
   public function allowChild($child): bool;
-  
+
   public function addChild($child);
 
   /**
