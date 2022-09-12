@@ -8,6 +8,7 @@ use Packaged\Remarkd\Blocks\CalloutBlock;
 use Packaged\Remarkd\Blocks\CodeBlock;
 use Packaged\Remarkd\Blocks\DefinitionListBlock;
 use Packaged\Remarkd\Blocks\ExampleBlock;
+use Packaged\Remarkd\Blocks\IDBlock;
 use Packaged\Remarkd\Blocks\ListingBlock;
 use Packaged\Remarkd\Blocks\ListItemBlock;
 use Packaged\Remarkd\Blocks\LiteralBlock;
@@ -82,6 +83,7 @@ class Remarkd
     $engine->addMatcher(new ExampleBlock());
     $engine->addMatcher(new CodeBlock());
     $engine->addMatcher(new SidebarBlock());
+    $engine->addMatcher(new IDBlock());
     $engine->addMatcher(new LiteralBlock());
     $engine->addMatcher(new MarkdownHeaderBlock());
     $engine->addMatcher(new OrderedListBlock());
