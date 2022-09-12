@@ -5,6 +5,7 @@ use Packaged\Remarkd\Blocks\Admonition;
 use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\CalloutBlock;
 use Packaged\Remarkd\Blocks\CodeBlock;
+use Packaged\Remarkd\Blocks\DefinitionListBlock;
 use Packaged\Remarkd\Blocks\ExampleBlock;
 use Packaged\Remarkd\Blocks\ListingBlock;
 use Packaged\Remarkd\Blocks\ListItemBlock;
@@ -73,6 +74,7 @@ class Remarkd
     $engine->addMatcher(new LiteralBlock());
     $engine->addMatcher(new MarkdownHeaderBlock());
     $engine->addMatcher(new OrderedListBlock());
+    $engine->addMatcher(new DefinitionListBlock());
     $engine->addMatcher(new UnorderedListBlock());
     $engine->addMatcher(new ListItemBlock());
   }
