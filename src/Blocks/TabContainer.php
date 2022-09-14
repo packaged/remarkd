@@ -13,6 +13,7 @@ class TabContainer extends BasicBlock
 {
   protected $_contentType = Block::TYPE_COMPOUND;
   protected $_closer = '_|_';
+  protected $_closeOnEmpty = false;
 
   public function allowLine(string $line): ?bool
   {

@@ -10,6 +10,7 @@ class TabBlock extends BasicBlock implements BlockMatcher
 {
   protected $_contentType = Block::TYPE_COMPOUND;
   protected $_tabID = null;
+  protected $_closeOnEmpty = false;
 
   public function tabID()
   {
