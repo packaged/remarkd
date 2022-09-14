@@ -218,4 +218,44 @@
     .horizontal-definitions th {
         font-weight: bold;
     }
+
+
+    ul.tab-header {
+        display: flex;
+        border-bottom: 1px solid #d8dee4;
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    ul.tab-header li {
+        display: block;
+    }
+
+    ul.tab-header li a {
+        color: #000000;
+        padding: 10px;
+        text-align: center;
+        display: block;
+        border-bottom: 2px solid transparent;
+        text-decoration: none;
+    }
+
+
+    ul.tab-header li a:hover {
+        border-bottom-color: rgba(143, 143, 143, 0.2);
+    }
+
+    ul.tab-header li a.active {
+        border-bottom-color: #5c7ef6;
+        font-weight: 600;
+    }
+
+    .tabs .tab {
+        display: none;
+        padding: 10px;
+    }
+
+    .tabs .tab:first-of-type {
+        display: block;
+    }
 </style>
