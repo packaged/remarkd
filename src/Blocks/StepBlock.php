@@ -63,6 +63,7 @@ class StepBlock extends BasicBlock implements BlockMatcher
   {
     if(substr($line, 0, 3) === self::MATCH)
     {
+      $this->_children[] = '';
       return true;
     }
     return parent::appendLine($ctx, $line);
