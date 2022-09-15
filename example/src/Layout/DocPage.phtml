@@ -258,4 +258,68 @@
     .tabs .tab:first-of-type {
         display: block;
     }
+
+    @counter-style space-counter {
+        symbols: "\1F680" "\1F6F8" "\1F6F0" "\1F52D";
+        suffix: " "
+    }
+
+    ul {
+        list-style-type: space-counter;
+    }
+
+
+    .steps-container {
+        counter-reset: step-count;
+    }
+
+    .step {
+        position: relative;
+        min-height: 80px;
+        padding-left: 60px;
+
+        margin-top: 35px;
+        margin-bottom: 30px;
+
+        border-bottom: 1px solid #dedede;
+
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .step > div {
+        flex-grow: 1;
+        margin-right: 20px;
+    }
+
+    .step > div > h3 {
+        margin-top: 0;
+    }
+
+    .step .step-content {
+        flex-basis: 330px;
+        flex-grow: 1;
+    }
+
+    .step .step-image {
+        flex-basis: 280px;
+    }
+
+    .step .step-image img {
+        max-width: 360px !important;
+        height: auto;
+    }
+
+    .step::before {
+        counter-increment: step-count;
+        content: counter(step-count);
+        position: absolute;
+        left: 0;
+        top: -10px;
+        font-size: 80px;
+        font-weight: 200;
+        line-height: 1em;
+        color: #0070c9;
+    }
+
 </style>

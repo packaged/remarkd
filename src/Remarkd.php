@@ -16,6 +16,7 @@ use Packaged\Remarkd\Blocks\MarkdownHeaderBlock;
 use Packaged\Remarkd\Blocks\ModuleBlock;
 use Packaged\Remarkd\Blocks\OrderedListBlock;
 use Packaged\Remarkd\Blocks\SidebarBlock;
+use Packaged\Remarkd\Blocks\StepBlock;
 use Packaged\Remarkd\Blocks\TabBlock;
 use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Modules\RemarkdModule;
@@ -86,6 +87,7 @@ class Remarkd
     $engine->addMatcher(new SidebarBlock());
     $engine->addMatcher(new TabBlock());
     $engine->addMatcher(new IDBlock());
+    $engine->addMatcher(new StepBlock());
     $engine->addMatcher(new LiteralBlock());
     $engine->addMatcher(new MarkdownHeaderBlock());
     $engine->addMatcher(new OrderedListBlock());
