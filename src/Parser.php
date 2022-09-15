@@ -81,7 +81,7 @@ class Parser
         continue;
       }
 
-      if(empty($line) && $expectAction < self::EXPECT_DOCUMENT)
+      if(empty($line) && $expectAction == self::EXPECT_TITLE)
       {
         continue;
       }
