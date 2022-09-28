@@ -187,6 +187,15 @@ class Parser
 
           $newSection = new Section($this->_remarkd, $matches[2], $level);
           $newSection->setId(Strings::hyphenate(Strings::stringToUnderScore($matches[2])));
+          if($attribute !== null)
+          {
+            $newSection->setAttributes($attribute);
+            $id = $attribute->id();
+            if($id !== null)
+            {
+              $newSection->setId($id);
+            }
+          }
 
           //Always add Level 0 and 1 to the doc root
           if($level < 2)

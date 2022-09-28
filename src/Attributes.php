@@ -46,6 +46,18 @@ class Attributes
     return $this->_named[$key] ?? $default;
   }
 
+  public function id(): ?string
+  {
+    foreach($this->_position as $k)
+    {
+      if($k[0] === '#')
+      {
+        return substr($k, 1);
+      }
+    }
+    return null;
+  }
+
   public function classes(): array
   {
     $classes = [];
