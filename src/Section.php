@@ -122,7 +122,11 @@ class Section extends Element implements ISafeHtmlProducer
     }
 
     $ele = Div::create($head, $content);
-    $ele->addClass('section--level' . $this->level, 'section--' . (empty($this->children) ? 'empty' : 'with-content'));
+    $ele->addClass(
+      'remarkd-section',
+      'section--level' . $this->level,
+      'section--' . (empty($this->children) ? 'empty' : 'with-content')
+    );
 
     if($this->id && $head instanceof HtmlElement)
     {
