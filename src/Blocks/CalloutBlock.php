@@ -12,7 +12,7 @@ class CalloutBlock extends BasicBlock implements BlockMatcher
 
   public function match($line, ?Block $parent): ?Block
   {
-    if(preg_match('/^(\<\d+\> )(.*)/', $line, $match))
+    if(preg_match('/^(\<(\d+|\d+\.\d+|\w|[^\>])\> )(.*)/', $line, $match))
     {
       $block = clone $this;
       $block->_setSubstrim($match[1]);

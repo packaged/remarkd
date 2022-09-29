@@ -322,4 +322,34 @@
         color: #0070c9;
     }
 
+    .conum[data-value], li.callout::before {
+        display: inline-block;
+        background-color: rgba(2, 129, 222, 0.92);
+        color: rgb(255 255 255 / 83%) !important;
+        -webkit-border-radius: 100px;
+        border-radius: 100px;
+        text-align: center;
+        width: 1.67em;
+        height: 1.67em;
+        font-size: 0.75em;
+        line-height: 1.67em;
+        font-family: "Open Sans", "Sans", sans-serif;
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    li.callout {
+        list-style-type: none;
+        position: relative;
+        padding: 5px 0 5px 35px;
+    }
+
+    li.callout::before {
+        position: absolute;
+        left: 0;
+        top: 9px;
+        content: attr(data-marker);
+    }
+
+
 </style>
