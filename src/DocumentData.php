@@ -33,20 +33,16 @@ class DocumentData
 
   public function add($attr): bool
   {
-    if(!preg_match("/:(\!?[\w\-]+):(.*)?/s", $attr, $matches))
+    if(!preg_match("/:(\!?[\w\-\.]+)(\!)?:(.*)?$/m", $attr, $matches))
     {
       return false;
     }
     $key = $matches[1];
-    $val = trim($matches[2]);
-    if(empty($matches[2]))
+    $val = trim($matches[3]);
+    $isFalse = $matches[2] == '!';
+    if($val === '')
     {
-      $isFalse = substr($key, -1) == '!';
       $val = !$isFalse;
-      if($isFalse)
-      {
-        $key = substr($key, 1);
-      }
     }
     $this->_data[$this->_key($key)] = $val;
 
