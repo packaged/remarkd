@@ -126,6 +126,10 @@ class Parser
         case $char1 == '[' && substr($line, -1) == ']':
           $attribute = new Attributes($line);
           continue 2;
+        case $line == '|:DUMP:|':
+          $line = '<code class="remarkd-dump">'
+            . json_encode($this->_document->data->data(), JSON_PRETTY_PRINT) . '</code>';
+          break;
         case $char1 == '.' && !in_array($line[1] ?? ' ', ['.', ' ']):
           $title = substr($line, 1);
           continue 2;
