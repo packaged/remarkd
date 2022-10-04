@@ -157,8 +157,14 @@ class Parser
     $doc = $this->_document;
     //revision number, revision date: revision remark
     [$doc->revisionNumber, $revisionData] = Strings::explode(',', $revision, null, 2);
-    [$doc->revisionDate, $doc->revisionRemark] = Strings::explode(':', trim($revisionData), null, 2);
-    $doc->revisionRemark = trim($doc->revisionRemark);
+    if($revisionData !== null)
+    {
+      [$doc->revisionDate, $doc->revisionRemark] = Strings::explode(':', trim($revisionData), null, 2);
+      if($doc->revisionRemark !== null)
+      {
+        $doc->revisionRemark = trim($doc->revisionRemark);
+      }
+    }
   }
 
   protected function _addLine($line, $title = null, ?Attributes $attribute = null)
