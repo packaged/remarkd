@@ -101,20 +101,13 @@ class Parser
         continue;
       }
 
-      if('endif::' === substr($line, 0, 7))
+      $line = $this->_ifParse($line);
+      if($line === null)
       {
-        array_pop($this->_conditionals);
-        $this->_currentCondition = end($this->_conditionals) ?: self::COND_INCLUDE;
         continue;
       }
 
       if($this->_currentCondition == self::COND_EXCLUDE)
-      {
-        continue;
-      }
-
-      $line = $this->_ifParse($line);
-      if($line === null)
       {
         continue;
       }
@@ -174,40 +167,54 @@ class Parser
 
   protected function _ifParse($line)
   {
-    if(preg_match('/if(n)?def::([^\[]*)\[([^\]]*)\]/', $line, $matches))
+    if(preg_match('/(end)?if(def|ndef|eval)?::([^\[]*)\[([^\]]*)\]/', $line, $matches))
     {
-      $negate = $matches[1] == 'n';
-
-      $validated = false;
-      $props = explode(',', $matches[2]);
-      foreach($props as $prop)
+      //return '<pre>' . var_export($matches, true) . '</pre>';
+      $isEnd = $matches[1] == 'end';
+      if($isEnd)
       {
-        $ands = explode('+', $prop);
-        $andValid = true;
-        foreach($ands as $propReq)
-        {
-          if(!$this->_document->data->has($propReq))
-          {
-            $andValid = false;
-            break;
-          }
-        }
-        if($andValid)
-        {
-          $validated = true;
-          break;
-        }
+        array_pop($this->_conditionals);
+        $this->_currentCondition = end($this->_conditionals) ?: self::COND_INCLUDE;
+        return null;
       }
 
-      if($negate)
+      $validated = false;
+      if($this->_currentCondition === self::COND_INCLUDE)
       {
-        $validated = !$validated;
+        if(in_array($matches[2], ['def', 'ndef']))
+        {
+          $negate = $matches[2] == 'ndef';
+          $props = explode(',', $matches[3]);
+          foreach($props as $prop)
+          {
+            $ands = explode('+', $prop);
+            $andValid = true;
+            foreach($ands as $propReq)
+            {
+              if(!$this->_document->data->has($propReq))
+              {
+                $andValid = false;
+                break;
+              }
+            }
+            if($andValid)
+            {
+              $validated = true;
+              break;
+            }
+          }
+
+          if($negate)
+          {
+            $validated = !$validated;
+          }
+        }
       }
 
       //validate
-      if(!empty($matches[3]))
+      if(!empty($matches[4]))
       {
-        return $validated ? $matches[3] : null;
+        return $validated ? $matches[4] : null;
       }
 
       $this->_currentCondition = $validated ? self::COND_INCLUDE : self::COND_EXCLUDE;
