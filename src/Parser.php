@@ -24,6 +24,12 @@ class Parser
    */
   protected $_remarkd;
 
+  const COND_INCLUDE = 1;
+  const COND_EXCLUDE = 2;
+
+  protected $_conditionals = [];
+  protected $_currentCondition = self::COND_INCLUDE;
+
   public function __construct(array $rawLines, ?Remarkd $remarkd = null, ?Document $doc = null)
   {
     $this->_document = $doc ?? static::createDocument();
@@ -95,6 +101,24 @@ class Parser
         continue;
       }
 
+      $line = $this->_ifParse($line);
+      if($line === null)
+      {
+        continue;
+      }
+
+      if('endif::' === substr($line, 0, 7))
+      {
+        array_pop($this->_conditionals);
+        $this->_currentCondition = end($this->_conditionals) ?: self::COND_INCLUDE;
+        continue;
+      }
+
+      if($this->_currentCondition == self::COND_EXCLUDE)
+      {
+        continue;
+      }
+
       switch($expectAction)
       {
         case self::EXPECT_TITLE:
@@ -146,6 +170,52 @@ class Parser
     $this->_remarkd->ctx()->setBlockEngine($oldBlocks);
 
     return $this->_document;
+  }
+
+  protected function _ifParse($line)
+  {
+    if(preg_match('/if(n)?def::([^\[]*)\[([^\]]*)\]/', $line, $matches))
+    {
+      $negate = $matches[1] == 'n';
+
+      $validated = false;
+      $props = explode(',', $matches[2]);
+      foreach($props as $prop)
+      {
+        $ands = explode('+', $prop);
+        $andValid = true;
+        foreach($ands as $propReq)
+        {
+          if(!$this->_document->data->has($propReq))
+          {
+            $andValid = false;
+            break;
+          }
+        }
+        if($andValid)
+        {
+          $validated = true;
+          break;
+        }
+      }
+
+      if($negate)
+      {
+        $validated = !$validated;
+      }
+
+      //validate
+      if(!empty($matches[3]))
+      {
+        return $validated ? $matches[3] : null;
+      }
+
+      $this->_currentCondition = $validated ? self::COND_INCLUDE : self::COND_EXCLUDE;
+      $this->_conditionals[] = $this->_currentCondition;
+
+      return null;
+    }
+    return $line;
   }
 
   protected function _setAuthors($authorsLine)
