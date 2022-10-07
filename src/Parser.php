@@ -167,11 +167,9 @@ class Parser
 
   protected function _ifParse($line)
   {
-    if(preg_match('/(end)?if(def|ndef|eval)?::([^\[]*)\[([^\]]*)\]/', $line, $matches))
+    if(preg_match('/(end)?if(def|ndef|eval|nempty|empty|true|false)?::([^\[]*)\[([^\]]*)\]/', $line, $matches))
     {
-      //return '<pre>' . var_export($matches, true) . '</pre>';
-      $isEnd = $matches[1] == 'end';
-      if($isEnd)
+      if($matches[1] == 'end')
       {
         array_pop($this->_conditionals);
         $this->_currentCondition = end($this->_conditionals) ?: self::COND_INCLUDE;
@@ -181,40 +179,27 @@ class Parser
       $validated = false;
       if($this->_currentCondition === self::COND_INCLUDE)
       {
-        if(in_array($matches[2], ['def', 'ndef']))
+        switch($matches[2])
         {
-          $negate = $matches[2] == 'ndef';
-          $props = explode(',', $matches[3]);
-          foreach($props as $prop)
-          {
-            $ands = explode('+', $prop);
-            $andValid = true;
-            foreach($ands as $propReq)
-            {
-              if(!$this->_document->data->has($propReq))
-              {
-                $andValid = false;
-                break;
-              }
-            }
-            if($andValid)
-            {
-              $validated = true;
-              break;
-            }
-          }
+          case self::VALIDATOR_DEF:
+          case self::VALIDATOR_NDEF:
+          case self::VALIDATOR_TRUE:
+          case self::VALIDATOR_EMPTY:
+          case self::VALIDATOR_NOT_EMPTY:
+          case self::VALIDATOR_FALSE:
+            $validated = $this->_ifdefValidate($matches[2], $matches[3]);
 
-          if($negate)
-          {
-            $validated = !$validated;
-          }
+            //validate
+            if(!empty($matches[4]))
+            {
+              return $validated ? $matches[4] : null;
+            }
+
+            break;
+          case 'eval':
+            $validated = $this->_ifevalValidate($matches[4]);
+            break;
         }
-      }
-
-      //validate
-      if(!empty($matches[4]))
-      {
-        return $validated ? $matches[4] : null;
       }
 
       $this->_currentCondition = $validated ? self::COND_INCLUDE : self::COND_EXCLUDE;
@@ -223,6 +208,92 @@ class Parser
       return null;
     }
     return $line;
+  }
+
+  const VALIDATOR_DEF = 'def';
+  const VALIDATOR_NDEF = 'ndef';
+  const VALIDATOR_TRUE = 'true';
+  const VALIDATOR_EMPTY = 'empty';
+  const VALIDATOR_NOT_EMPTY = 'nempty';
+  const VALIDATOR_FALSE = 'false';
+
+  protected function _ifdefValidate($validator, $conditions)
+  {
+    $validated = false;
+    $props = explode(',', $conditions);
+    foreach($props as $prop)
+    {
+      $ands = explode('+', $prop);
+      $andValid = true;
+      foreach($ands as $propReq)
+      {
+        $matched = false;
+        switch($validator)
+        {
+          case self::VALIDATOR_DEF:
+            $matched = $this->_document->data->has($propReq);
+            break;
+          case self::VALIDATOR_NDEF:
+            $matched = !$this->_document->data->has($propReq);
+            break;
+          case self::VALIDATOR_TRUE:
+            $matched = $this->_document->data->get($propReq) === true;
+            break;
+          case self::VALIDATOR_EMPTY:
+            $matched = empty($this->_document->data->get($propReq));
+            break;
+          case self::VALIDATOR_NOT_EMPTY:
+            $matched = !empty($this->_document->data->get($propReq));
+            break;
+          case self::VALIDATOR_FALSE:
+            $matched = $this->_document->data->get($propReq) === false;
+            break;
+        }
+        if(!$matched)
+        {
+          $andValid = false;
+          break;
+        }
+      }
+      if($andValid)
+      {
+        $validated = true;
+        break;
+      }
+    }
+
+    return $validated;
+  }
+
+  protected function _ifevalValidate($condition)
+  {
+    $matched = preg_match('/(.+)(\=\=\=|\=\=|\!\=|\<\=|\<|\>\=|\>)(.+)/', $condition, $matches);
+    if(!$matched)
+    {
+      return false;
+    }
+
+    $matches[1] = trim($this->_document->data->replace($matches[1]));
+    $matches[3] = trim($this->_document->data->replace($matches[3]));
+
+    switch($matches[2])
+    {
+      case '===':
+        return $matches[1] === $matches[3];
+      case '==':
+        return $matches[1] == $matches[3];
+      case '!=':
+        return $matches[1] != $matches[3];
+      case '<=':
+        return $matches[1] <= $matches[3];
+      case '<':
+        return $matches[1] < $matches[3];
+      case '>=':
+        return $matches[1] >= $matches[3];
+      case '>':
+        return $matches[1] > $matches[3];
+    }
+    return false;
   }
 
   protected function _setAuthors($authorsLine)
