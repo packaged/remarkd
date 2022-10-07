@@ -101,12 +101,6 @@ class Parser
         continue;
       }
 
-      $line = $this->_ifParse($line);
-      if($line === null)
-      {
-        continue;
-      }
-
       if('endif::' === substr($line, 0, 7))
       {
         array_pop($this->_conditionals);
@@ -115,6 +109,12 @@ class Parser
       }
 
       if($this->_currentCondition == self::COND_EXCLUDE)
+      {
+        continue;
+      }
+
+      $line = $this->_ifParse($line);
+      if($line === null)
       {
         continue;
       }
