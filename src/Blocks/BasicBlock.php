@@ -83,6 +83,12 @@ class BasicBlock implements ISafeHtmlProducer, Block
 
   protected $_children = [];
 
+  public function clearChildren()
+  {
+    $this->_children = [];
+    return $this;
+  }
+
   public function setTitle($title)
   {
     $this->_title = $title;

@@ -12,6 +12,11 @@ class IDBlock extends BasicBlock implements BlockMatcher
   protected $_closeOnEmpty = false;
   protected $_id = null;
 
+  public function id()
+  {
+    return $this->_id;
+  }
+
   public function match($line, ?Block $parent): ?Block
   {
     if(preg_match('/!!([\w-]+)!!/', $line, $matches))
