@@ -12,6 +12,7 @@
     }
   },
   "require": {
+    "packaged/dispatch": "^2.0",
     "packaged/map": "^0.4",
     "ext-json": "*"
   },
