@@ -34,17 +34,17 @@ class VideoObject extends AbstractRemarkdObject
     switch($this->_config->get('source', 'youtube'))
     {
       case 'youtube':
-        $content = $this->_completeYoutube($this->_key);
+        $content = $this->_completeYoutube($this->_key, $this->_config->get('start', 0));
         break;
     }
 
     return '<div class="video-container"' . $containerAppend . '>' . $content . '</div>';
   }
 
-  protected function _completeYoutube($id)
+  protected function _completeYoutube($id, $time = 0)
   {
     return '<iframe '
-      . 'src="https://www.youtube.com/embed/' . $id . '" '
+      . 'src="https://www.youtube.com/embed/' . $id . ($time > 0 ? '?start=' . $time : '') . '" '
       . 'title="YouTube video player" frameborder="0" '
       . 'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" '
       . 'allowfullscreen></iframe>';
