@@ -28,6 +28,7 @@ use Packaged\Remarkd\Objects\ProgressMeterObject;
 use Packaged\Remarkd\Objects\References\ReferenceListObject;
 use Packaged\Remarkd\Objects\References\ReferenceObject;
 use Packaged\Remarkd\Objects\RemarkdObject;
+use Packaged\Remarkd\Objects\VideoObject;
 use Packaged\Remarkd\Rules\BoldText;
 use Packaged\Remarkd\Rules\CalloutText;
 use Packaged\Remarkd\Rules\CheckboxRule;
@@ -104,6 +105,7 @@ class Remarkd
     $engine->registerObject(new ReferenceListObject());
     $engine->registerObject(new AnchorObject());
     $engine->registerObject(new ImageObject());
+    $engine->registerObject(new VideoObject());
     return $engine;
   }
 
