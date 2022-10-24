@@ -26,6 +26,7 @@ class ImageObject extends AbstractRemarkdObject
 
     $img = Image::create($src, $this->_config->get("alt"));
 
+    $img->setAttribute('style', 'display: ' . $this->_config->get('display', 'inline-block'));
     $img->setAttribute('style', 'max-width: ' . $this->_config->get('max-width', '100%'));
     $img->addClass(...$this->_config->classes());
     return $img;
