@@ -29,6 +29,11 @@ class ImageObject extends AbstractRemarkdObject
     $style = 'display: ' . $this->_config->get('display', 'inline-block') . ';';
     $style .= 'max-width: ' . $this->_config->get('max-width', '100%') . ';';
 
+    if($this->_config->has('float'))
+    {
+      $style .= 'float: ' . $this->_config->get('float') . ';';
+    }
+
     $img->setAttribute('style', $style);
 
     $img->addClass(...$this->_config->classes());
