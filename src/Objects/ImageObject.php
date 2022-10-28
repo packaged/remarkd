@@ -34,26 +34,6 @@ class ImageObject extends AbstractRemarkdObject
       $style .= 'float: ' . $this->_config->get('float') . ';';
     }
 
-    if($this->_config->has('width'))
-    {
-      $style .= 'width: ' . $this->_config->get('width') . ';';
-    }
-
-    if($this->_config->has('max-width'))
-    {
-      $style .= 'max-width: ' . $this->_config->get('max-width') . ';';
-    }
-
-    if($this->_config->has('height'))
-    {
-      $style .= 'height: ' . $this->_config->get('height') . ';';
-    }
-
-    if($this->_config->has('max-height'))
-    {
-      $style .= 'max-height: ' . $this->_config->get('max-height') . ';';
-    }
-
     $img->setAttribute('style', $style);
 
     $img->addClass(...$this->_config->classes());
