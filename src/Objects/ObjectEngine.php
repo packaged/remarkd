@@ -11,7 +11,7 @@ class ObjectEngine
    */
   protected RemarkdContext $_context;
 
-  const objectSelectors = '/{{(%TYPES%)(:([^ }]+))?([^}]*|.*?\"(.|\n)*\".*?)}}/miU';
+  const objectSelectors = '/{{(%TYPES%)(:([^ }]+))?([^}]*|.*?\"(.|\n)*\".*?)}}/mi';
 
   protected $_selector = '';
 
