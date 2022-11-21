@@ -23,6 +23,7 @@ use Packaged\Remarkd\Modules\RemarkdModule;
 use Packaged\Remarkd\Objects\AnchorObject;
 use Packaged\Remarkd\Objects\ImageObject;
 use Packaged\Remarkd\Objects\LineBreakObject;
+use Packaged\Remarkd\Objects\LinkObject;
 use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Objects\ProgressMeterObject;
 use Packaged\Remarkd\Objects\References\ReferenceListObject;
@@ -100,6 +101,7 @@ class Remarkd
   public function applyDefaultObjects(ObjectEngine $engine)
   {
     $engine->registerObject(new ProgressMeterObject());
+    $engine->registerObject(new LinkObject());
     $engine->registerObject(new LineBreakObject());
     $engine->registerObject(new ReferenceObject());
     $engine->registerObject(new ReferenceListObject());
