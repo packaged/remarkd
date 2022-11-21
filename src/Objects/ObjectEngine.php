@@ -11,7 +11,7 @@ class ObjectEngine
    */
   protected RemarkdContext $_context;
 
-  const objectSelectors = '/{{(%TYPES%)(:([^ }]+))?([^}]*|.*?\"(.|\n)*\".*?)}}/mi';
+  const objectSelectors = '/({{(%TYPES%)(:([^ }]+))?([^}]*|.*?\"(.|\n)*\".*?)}}|{!(.*)!})/miU';
 
   protected $_selector = '';
 
@@ -41,6 +41,10 @@ class ObjectEngine
     {
       foreach($matches as $match)
       {
+        if(isset($match[7]))
+        {
+          return $match[7];
+        }
         if(isset($this->_objects[$match[1]]))
         {
           $o = $this->_objects[$match[1]]->create($this->_context, new Attributes(trim($match[4])), $match[3]);
