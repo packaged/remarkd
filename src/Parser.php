@@ -53,7 +53,7 @@ class Parser
 
       $appendNext = substr($line, -1) == '\\';
 
-      $this->_raw[] = preg_replace('/{!(.*)!}/mui', '$1', $line);
+      $this->_raw[] = preg_replace('/{!(.*)!}/mUi', '$1', $line);
     }
   }
 
