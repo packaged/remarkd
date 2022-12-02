@@ -94,13 +94,6 @@ class Parser
 
       $line = $this->_document->data->replace($line);
 
-      if($char1 === ':')
-      {
-        $expectAction = self::EXPECT_DOCUMENT;
-        $this->_document->data->add($line);
-        continue;
-      }
-
       $line = $this->_ifParse($line);
       if($line === null)
       {
@@ -109,6 +102,13 @@ class Parser
 
       if($this->_currentCondition == self::COND_EXCLUDE)
       {
+        continue;
+      }
+
+      if($char1 === ':')
+      {
+        $expectAction = self::EXPECT_DOCUMENT;
+        $this->_document->data->add($line);
         continue;
       }
 
