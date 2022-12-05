@@ -136,5 +136,12 @@ class Section extends Element implements ISafeHtmlProducer
     return $ele->produceSafeHTML();
   }
 
+  /**
+   * @return Attributes
+   */
+  public function getAttributes(): Attributes
+  {
+    return $this->_attributes;
+  }
 }
 
