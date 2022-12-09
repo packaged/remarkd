@@ -30,7 +30,7 @@ class Section extends Element implements ISafeHtmlProducer
   protected $_remarkd;
 
   /** @var \Packaged\Remarkd\Blocks\BlockEngine */
-  protected $_bockEngine;
+  protected $_blockEngine;
   /**
    * @var \Packaged\Remarkd\Attributes
    */
@@ -39,6 +39,7 @@ class Section extends Element implements ISafeHtmlProducer
   public function __construct(Remarkd $remarkd, $title = null, $level = 0)
   {
     $this->_remarkd = $remarkd;
+    $this->_attributes = new Attributes();
     $this->_blockEngine = $remarkd->ctx()->blockEngine();
     $this->title = $title;
     $this->level = $level;
