@@ -5,7 +5,26 @@ revision number, revision date: revision remark
 :icons: font
 :url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
 
+
 Content entered directly below the header but before the first section heading is called the preamble.
+
+there's a comment below here
+
+////
+this is a large comment
+with multiple lines
+
+and paragraphs
+////
+
+////
+this is a large comment
+with multiple lines
+
+and paragraphs
+////
+
+there's a comment above here
 
 == First level heading
 

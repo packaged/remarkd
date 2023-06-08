@@ -6,6 +6,7 @@ use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\BlockMatcher;
 use Packaged\Remarkd\Blocks\CalloutBlock;
 use Packaged\Remarkd\Blocks\CodeBlock;
+use Packaged\Remarkd\Blocks\CommentBlock;
 use Packaged\Remarkd\Blocks\DefinitionListBlock;
 use Packaged\Remarkd\Blocks\ExampleBlock;
 use Packaged\Remarkd\Blocks\IDBlock;
@@ -81,6 +82,7 @@ class Remarkd
 
   public function applyDefaultBlocks(BlockEngine $engine)
   {
+    $engine->addMatcher(new CommentBlock());
     $engine->addMatcher(new Admonition());
     $engine->addMatcher(new CalloutBlock());
     $engine->addMatcher(new ListingBlock());
