@@ -7,6 +7,13 @@ document.addEventListener('click', function (e) {
   }
 });
 
+let url = new URL(window.location.href);
+let tabKey = url.searchParams.get("tab");
+if(tabKey)
+{
+  setActiveTab(tabKey);
+}
+
 function setActiveTab(tabKey)
 {
   let tabs = document.querySelectorAll('.tabs .tab[data-tab-key=' + tabKey + ']');
