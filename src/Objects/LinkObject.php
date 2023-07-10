@@ -14,13 +14,18 @@ class LinkObject extends AbstractRemarkdObject
   public function render(): string
   {
     $text = $this->_config->get('text', Strings::titleize($this->_key));
-    $target = $this->_config->has('target') ? $this->_config->get('target') : '';
-
     $link = Link::create($this->_config->get('href', $this->_key), $text);
 
-    if($target)
+    $target = $this->_config->get('target');
+    if($target !== null)
     {
       $link->setAttribute('target', $target);
+    }
+
+    $hrefLang = $this->_config->get('hreflang');
+    if($hrefLang !== null)
+    {
+      $link->setAttribute('hreflang', $hrefLang);
     }
 
     return $link;
