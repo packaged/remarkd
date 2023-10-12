@@ -52,7 +52,8 @@ class VideoObject extends AbstractRemarkdObject
     {
       $opts[] = 'end=' . $end;
     }
-    $opts['rel'] = 0;
+
+    $opts[] = 'rel=0';
     return '<iframe '
       . 'src="https://www.youtube.com/embed/' . $id . (empty($opts) ? '' : '?' . implode(';', $opts)) . '" '
       . 'title="YouTube video player" frameborder="0" '
