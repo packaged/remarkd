@@ -292,6 +292,14 @@ class Parser
         return $matches[1] >= $matches[3];
       case '>':
         return $matches[1] > $matches[3];
+      case '&&':
+        return $matches[1] && $matched[3];
+      case '||':
+        return $matches[1] || $matched[3];
+      case 'in':
+        return in_array($matches[1], explode(',', $matches[3]));
+      case 'nin':
+        return !in_array($matches[1], explode(',', $matches[3]));
     }
     return false;
   }
