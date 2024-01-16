@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Remarkd;
 
+use Packaged\Remarkd\Blocks\AccordionBlock;
 use Packaged\Remarkd\Blocks\Admonition;
 use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\BlockMatcher;
@@ -90,6 +91,7 @@ class Remarkd
     $engine->addMatcher(new CodeBlock());
     $engine->addMatcher(new SidebarBlock());
     $engine->addMatcher(new TabBlock());
+    $engine->addMatcher(new AccordionBlock());
     $engine->addMatcher(new IDBlock());
     $engine->addMatcher(new StepBlock());
     $engine->addMatcher(new LiteralBlock());

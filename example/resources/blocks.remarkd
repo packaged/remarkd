@@ -10,10 +10,21 @@ _|_#linux["Linux"]
 Linux Content
 _|_
 
-
 !!main-id!!
 
 This is in the main page
+
+
+== Accordion
+
+_-_#mac[name="Apple Mac"]
+Mac Content
+_-_#windows[name="Microsoft Windows"]
+Windows Content
+_-_#linux["Linux"]
+Linux Content
+_-_
+
 
 == Code Blocks
 

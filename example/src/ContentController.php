@@ -56,6 +56,7 @@ class ContentController extends Controller
     $rmpm->requireCss('resources/css/remarkd.css');
     $rmpm->requireCss('resources/css/remarkd-theme.css');
     $rmpm->requireJs('resources/js/tabs.js');
+    $rmpm->requireJs('resources/js/accordion.js');
 
     $resDir = $this->getContext()->getProjectRoot() . '/resources/';
     $dir = $resDir . $project;
