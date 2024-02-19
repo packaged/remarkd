@@ -1,34 +1,10 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-class OrderedListBlock extends AbstractListBlock
+use Packaged\Glimpse\Tags\Lists\OrderedList;
+
+class OrderedListBlock extends ListBlock
 {
-  protected $_listType = 'ol';
-
-  public function startCodes(): array
-  {
-    return [
-      "0 ",
-      "1 ",
-      "2 ",
-      "3 ",
-      "4 ",
-      "5 ",
-      "6 ",
-      "7 ",
-      "8 ",
-      "9 ",
-      "0.",
-      "1.",
-      "2.",
-      "3.",
-      "4.",
-      "5.",
-      "6.",
-      "7.",
-      "8.",
-      "9.",
-    ];
-  }
-
+  protected $_tag = OrderedList::class;
+  protected $_match = ListItemBlock::OL_MATCH;
 }

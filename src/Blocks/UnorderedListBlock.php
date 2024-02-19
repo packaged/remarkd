@@ -1,13 +1,10 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
-class UnorderedListBlock extends AbstractListBlock
+use Packaged\Glimpse\Tags\Lists\UnorderedList;
+
+class UnorderedListBlock extends ListBlock
 {
-  protected $_listType = 'ul';
-
-  public function startCodes(): array
-  {
-    return ['- ', '* ', '+ '];
-  }
-
+  protected $_tag = UnorderedList::class;
+  protected $_match = ListItemBlock::UL_MATCH;
 }

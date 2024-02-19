@@ -5,7 +5,7 @@
   background: rgba(71, 87, 120, 0.1);
   padding: 1px 4px;
   border-radius: 3px;
-  white-space: nowrap;
+  white-space: pre-line;
 }
 
 .remarkd .monospace {
@@ -229,4 +229,43 @@
 .remarkd h6:target {
   background: rgba(0, 112, 243, 0.10);
   border-radius: 5px;
+}
+
+.remarkd .accordion-container .accordion {
+  box-sizing: border-box;
+  background-color: rgba(71, 87, 120, 0.08);
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+.remarkd .accordion-container .panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.remarkd .accordion-container .accordion.active,
+.remarkd .accordion-container .accordion:hover {
+  background-color: #dcdcdc;
+}
+
+
+.remarkd .accordion-container .accordion:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #c4c4c4;
+  float: right;
+  margin-left: 5px;
+}
+
+.remarkd .accordion-container .accordion.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
 }

@@ -1,25 +1,22 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
+use Packaged\Glimpse\Tags\LineBreak;
+use Packaged\Glimpse\Tags\Text\Paragraph;
 use Packaged\Remarkd\RemarkdContext;
 
-class ParagraphBlock implements BlockInterface
+class ParagraphBlock extends BasicBlock
 {
-  protected $_lines = [];
+  protected $_tag = Paragraph::class;
+  protected $_allowChildren = false;
+  protected $_contentType = Block::TYPE_SIMPLE;
 
-  public function addNewLine(string $line)
+  public function appendLine(RemarkdContext $ctx, string $line): bool
   {
-    $line = BlockEngine::trimLine($line);
-    if(empty($line))
+    if($this->_attr && $this->_attr->has('%hardbreaks') && !empty($this->children()))
     {
-      return null;
+      $this->addChild(new LineBreak());
     }
-    $this->_lines[] = $line;
-    return true;
-  }
-
-  public function complete(RemarkdContext $ctx): string
-  {
-    return '<p>' . $ctx->ruleEngine()->parse(implode(" ", $this->_lines)) . '</p>';
+    return parent::appendLine($ctx, $line);
   }
 }

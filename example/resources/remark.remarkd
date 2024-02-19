@@ -1,0 +1,75 @@
+This guide provides a gentle introduction to AsciiDoc, a _plain text_ documentation *syntax* and *processor*.
+This introduction is intended for anyone who wants to reduce the effort required to write and publish content, whether for technical documentation, articles, web pages or good ol'-fashioned prose.
+
+TIP: If you want to know what AsciiDoc is all about, find the answer in {url-docs-asciidoc}#about-asciidoc[About AsciiDoc].
+If you're looking for a concise survey of the AsciiDoc syntax, consult the {url-quickref}[AsciiDoc Syntax Quick Reference].
+
+In this guide, you'll learn:
+
+- The basic structure of an AsciiDoc document
+- How to create your first AsciiDoc document
+- How to add other structural elements such as lists, block quotes and source code
+- How to convert an AsciiDoc document to HTML, DocBook and PDF
+
+In addition to covering the AsciiDoc basics, this guide also suggests a set of conventions to help you create more consistent documents and maximize your writing productivity.
+
+Let's dive in to AsciiDoc!
+
+== Writing in AsciiDoc
+
+The goal of this section is to teach you how to compose your first AsciiDoc document.
+Hopefully, when you look back, you'll agree it just makes sense.
+
+Your adventure with AsciiDoc begins in your favorite text editor.
+
+=== It's just text, mate.
+
+Since AsciiDoc syntax is just _plain text_, you can write an AsciiDoc document using _any_ text editor.
+You don't need complex word processing programs like Microsoft Word, OpenOffice Writer or Google Docs.
+In fact, you _shouldn't_ use these programs because they add cruft to your document (that you can't see) and makes conversion tedious.
+
+TIP: While it's true any text editor will do, I recommend selecting an editor that supports syntax highlighting for AsciiDoc.
+The *[red]##c##[green]##o##[purple]##l##[fuchsia]##o##[blue]##r##* brings contrast to the text, making it easier to read.
+The highlighting also confirms when you've entered the correct syntax for an inline or block element.
+
+The most popular application for editing plain text on macOS is *TextMate*.
+A similar choice on Linux is *GEdit*.
+On Windows, stay away from Notepad and Wordpad because they produce plain text which is not cross-platform friendly.
+Opt instead for a competent text editor like *Notepad++*.
+If you're a programmer (or a writer with an inner geek), you'll likely prefer *Vim*, *Emacs*, or *Sublime Text*, all of which are available cross-platform.
+The key feature all these editors share is syntax highlighting for AsciiDoc.
+
+Open up your favorite text editor and get ready to write some AsciiDoc!
+
+=== Content is king!
+
+The bulk of the content in a document is paragraph text.
+This is why Asciidoctor doesn't require any special markup or attributes to specify paragraph content.
+You can just start typing.
+
+In Asciidoctor, adjacent or consecutive lines of text form a paragraph element.
+To start a new paragraph after another element, such as a section title or table, hit the kbd:[RETURN] key twice to insert a blank line, and then continue typing your content.
+
+.Two paragraphs in an AsciiDoc document
+[source]
+----
+This journey begins one late Monday afternoon in Antwerp.
+Our team desperately needs coffee, but none of us dare open the office door.
+
+To leave means code dismemberment and certain death.
+----
+
+.The two paragraphs rendered using the default (html5) converter and stylesheet (asciidoctor.css)
+====
+This journey begins one late Monday afternoon in Antwerp.
+Our team desperately needs coffee, but none of us dare open the office door.
+
+To leave means code dismemberment and certain death.
+====
+
+Just like that, *you're writing in AsciiDoc!*
+As you can see, it's just like writing an e-mail.
+
+Save the file with a file extension of `.adoc`.
+
+TIP: If you want to find out how to convert the document to HTML, DocBook or PDF, skip ahead to the section on <<converting-your-document>>.

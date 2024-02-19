@@ -1,0 +1,27 @@
+= Conditionals
+:env-gitshub: set
+:revnumber: 1
+
+
+ifdef::env-github[]
+This content is shown on GitHub.
+endif::[]
+
+ifndef::env-github[]
+This content is not shown on GitHub.
+endif::[]
+
+
+ifdef::revnumber[]
+This document has a version number of {revnumber}.
+
+And displayed as a block
+endif::[]
+
+ifdef::revnumber[This document has a version number of {revnumber}.]
+
+
+
+ifdef::env-github,revnumber[]
+This content is shown on GitHub, if rev number is set
+endif::[]

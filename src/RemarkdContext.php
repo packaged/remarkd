@@ -3,7 +3,7 @@ namespace Packaged\Remarkd;
 
 use Packaged\Map\DataMap;
 use Packaged\Remarkd\Blocks\BlockEngine;
-use Packaged\Remarkd\Markup\MarkupResource;
+use Packaged\Remarkd\Blocks\ModuleBlock;
 use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Rules\RuleEngine;
 
@@ -11,26 +11,68 @@ class RemarkdContext
 {
   /** @var \Packaged\Remarkd\Rules\RuleEngine */
   protected $_ruleEngine;
+
   /** @var \Packaged\Remarkd\Blocks\BlockEngine */
   protected $_blockEngine;
+
   /** @var \Packaged\Remarkd\Objects\ObjectEngine */
   protected $_objectEngine;
 
-  /** @var \Packaged\Remarkd\Markup\MarkupResource[] */
-  protected $_markupResources = [
-    MarkupResource::TYPE_JS   => [],
-    MarkupResource::TYPE_CSS  => [],
-    MarkupResource::TYPE_HTML => [],
-  ];
+  /** @var \Packaged\Remarkd\Blocks\ModuleBlock */
+  protected $_moduleBlock;
 
   protected $_meta = [];
 
   public function __construct()
   {
-    $this->_ruleEngine = new RuleEngine($this);
     $this->_blockEngine = new BlockEngine($this);
+    $this->_ruleEngine = new RuleEngine($this);
     $this->_objectEngine = new ObjectEngine($this);
+    $this->_moduleBlock = new ModuleBlock();
     $this->_meta = new DataMap($this->_meta);
+  }
+
+  public function __clone()
+  {
+    $be = new BlockEngine($this);
+    $be->setMatchers($this->_blockEngine->getMatchers());
+    $this->setBlockEngine($be);
+  }
+
+  /**
+   * @param \Packaged\Remarkd\Rules\RuleEngine $ruleEngine
+   */
+  public function setRuleEngine(RuleEngine $ruleEngine)
+  {
+    $this->_ruleEngine = $ruleEngine;
+    return $this;
+  }
+
+  /**
+   * @param \Packaged\Remarkd\Blocks\BlockEngine $blockEngine
+   */
+  public function setBlockEngine(BlockEngine $blockEngine)
+  {
+    $this->_blockEngine = $blockEngine;
+    return $this;
+  }
+
+  /**
+   * @param \Packaged\Remarkd\Objects\ObjectEngine $objectEngine
+   */
+  public function setObjectEngine(ObjectEngine $objectEngine)
+  {
+    $this->_objectEngine = $objectEngine;
+    return $this;
+  }
+
+  /**
+   * @param array|\Packaged\Map\DataMap $meta
+   */
+  public function setMeta($meta)
+  {
+    $this->_meta = $meta;
+    return $this;
   }
 
   /**
@@ -54,15 +96,9 @@ class RemarkdContext
     return $this->_objectEngine;
   }
 
-  public function addResource(MarkupResource $resource)
+  public function modules(): ModuleBlock
   {
-    $this->_markupResources[$resource->type][$resource->key] = $resource;
-    return $this;
-  }
-
-  public function resources($type)
-  {
-    return $this->_markupResources[$type] ?? [];
+    return $this->_moduleBlock;
   }
 
   public function meta(): DataMap

@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+use Cubex\Context\Context;
+use Cubex\Cubex;
+
+$loader = require_once('../vendor/autoload.php');
+exit(Cubex::withCustomContext(Context::class, __DIR__, $loader)->cli());

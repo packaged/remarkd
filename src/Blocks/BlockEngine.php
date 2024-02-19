@@ -1,196 +1,290 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
+use Packaged\Glimpse\Tags\LineBreak;
+use Packaged\Remarkd\Attributes;
 use Packaged\Remarkd\RemarkdContext;
+use Packaged\SafeHtml\SafeHtml;
 
 class BlockEngine
 {
-  protected $_startCodes = [];
-  /** @var array|\Packaged\Remarkd\Blocks\BlockLineMatcher[] */
+  /** @var array|\Packaged\Remarkd\Blocks\BlockMatcher[] */
   protected $_matchers = [];
 
-  protected $_codeBlock;
-  protected $_defaultBlock;
+  /** @var \Packaged\Remarkd\Blocks\Block */
+  protected $_activeRoot;
+  protected $_rootBlocks = [];
+
   /**
    * @var \Packaged\Remarkd\RemarkdContext
    */
   protected RemarkdContext $_context;
+
+  public function clearBlocks()
+  {
+    $this->_activeRoot = null;
+    $this->_rootBlocks = [];
+  }
+
+  public function __clone()
+  {
+    $this->clearBlocks();
+  }
 
   public function __construct(RemarkdContext $ctx)
   {
     $this->_context = $ctx;
   }
 
-  public static function trimLine($line)
+  public function blocks() { return $this->_rootBlocks; }
+
+  /**
+   * @return array|\Packaged\Remarkd\Blocks\BlockMatcher[]
+   */
+  public function getMatchers(): array
   {
-    return ltrim($line, "\r\n\0\x0B ");
+    return $this->_matchers;
   }
 
-  public static function trimLeftSpace($line, $max = 2)
+  /**
+   * @param array|\Packaged\Remarkd\Blocks\BlockMatcher[] $matchers
+   */
+  public function setMatchers(array $matchers)
   {
-    $line = ltrim($line, "\r\n\0\x0B");
-
-    $parts = str_split($line, $max);
-    if(empty(trim($parts[0])))
-    {
-      return implode("", array_slice($parts, 1));
-    }
-    else
-    {
-      return ltrim($line, " ");
-    }
-  }
-
-  public function setDefaultBlock(BlockInterface $block)
-  {
-    $this->_defaultBlock = get_class($block);
+    $this->_matchers = $matchers;
     return $this;
   }
 
-  public function registerBlock(BlockInterface $block)
+  public function addMatcher(BlockMatcher $matcher)
   {
-    if($block instanceof BlockStartCodes)
-    {
-      foreach($block->startCodes() as $code)
-      {
-        $this->_startCodes[$code] = get_class($block);
-      }
-    }
-
-    if($block instanceof BlockLineMatcher)
-    {
-      $this->_matchers[] = $block;
-    }
-
-    if(!$this->_codeBlock && $block instanceof CodeBlock)
-    {
-      $this->_codeBlock = get_class($block);
-    }
+    $this->_matchers[] = $matcher;
     return $this;
   }
 
-  public function parseLines(array $lines, $subBlock = false)
+  public function addLine($line, string $title = null, ?Attributes $attribute = null)
   {
-    $newLines = [];
-    $nlCount = 0;
-    foreach($this->parseBlocks($lines, $subBlock) as $block)
+    $append = false;
+    $block = $this->_activeRoot;
+
+    if($this->_activeRoot === null || !$this->_activeRoot->isOpen())
     {
-      if(empty($block))
-      {
-        if($nlCount)
-        {
-          $newLines[] = '<br/>';
-        }
-        $nlCount++;
-      }
-      else
-      {
-        $nlCount = 0;
-        if($block instanceof BlockInterface)
-        {
-          $newLines[] = $block->complete($this->_context);
-        }
-        else
-        {
-          $newLines[] = $block;
-        }
-      }
+      $block = $this->getBlock($line, $attribute);
+      $append = true;
     }
-    return $newLines;
+
+    $added = $this->_addLine($line, $block, $append, $title, $attribute);
+    if($added === false)
+    {
+      $this->_addLine($line, $this->getBlock($line, $attribute), true, $title, $attribute);
+    }
+    else if($added === null)
+    {
+      $this->_activeRoot = null;
+    }
   }
 
-  public function parseBlocks(array $lines, $subBlock = false)
+  protected function _addLine(
+    $line, ?Block $block, $appendBlock = false, string $title = null, ?Attributes $attribute = null
+  )
   {
-    $blocks = [];
-    $currentBlock = null;
-    foreach($lines as $line)
+    if($block === null)
     {
-      if(isset($line[0]) && preg_match('/^\s*?[- *_]{3,}\s*?$/', $line))
+      if($line !== '')
       {
-        $line = '<hr/>';
+        $this->_rootBlocks[] = new SafeHtml($line);
       }
-
-      if($currentBlock === null)
+      return true;
+    }
+    if($appendBlock)
+    {
+      $this->_activeRoot = $block;
+      $this->_rootBlocks[] = $block;
+    }
+    $result = $this->_addBlockLine($line, $block, $attribute);
+    if($result !== false)
+    {
+      if(!empty($title))
       {
-        $currentBlock = $this->_detectBlock($line, $subBlock);
+        $block->setTitle($title);
       }
-
-      if($currentBlock !== null)
+      if($attribute !== null)
       {
-        //Attempt to add the line to the current block
-        $lineAccept = $currentBlock->addNewLine($line);
-        if($lineAccept)
+        $block->setAttributes($attribute);
+      }
+    }
+    return $result;
+  }
+
+  /**
+   * @param string $line
+   *
+   * true = line appended
+   * false = line rejected
+   * null = block complete
+   *
+   * @return null|bool
+   */
+  protected function _addBlockLine($line, Block $block, ?Attributes $attributes): ?bool
+  {
+    if(empty($line) && $block->closesOnEmptyLine())
+    {
+      $block->close();
+      return null;
+    }
+
+    $allowLine = $block->allowLine($line);
+
+    if($allowLine === false)
+    {
+      $block->close();
+      return false;
+    }
+
+    if(!empty($line) && $line === $block->closer())
+    {
+      if(!empty($block->children()))
+      {
+        $block->close();
+        return null;
+      }
+      return true;
+    }
+
+    if($allowLine !== null)
+    {
+      foreach($block->children() as $child)
+      {
+        if($child instanceof Block && $child->isOpen())
         {
-          continue;
-        }
-        else
-        {
-          $blocks[] = $currentBlock;
-          $currentBlock = null;
-          if($lineAccept === false)
+          $res = $this->_addBlockLine($line, $child, $attributes);
+          if($res !== false)
           {
-            $currentBlock = $this->_detectBlock($line, $subBlock);
-            if($currentBlock)
-            {
-              if(!$currentBlock->addNewLine($line))
-              {
-                $currentBlock = null;
-              }
-            }
-            else
-            {
-              $blocks[] = $line;
-            }
+            return true;
           }
         }
       }
-      else
+    }
+
+    if($line == '+')
+    {
+      switch($block->contentType())
       {
-        $blocks[] = $line;
+        case Block::TYPE_COMPOUND:
+        case Block::TYPE_SIMPLE:
+          $line = new LineBreak();
+          break;
       }
     }
-    if($currentBlock !== null)
+
+    if($block->trimLeftLength() > 0 && is_scalar($line)
+      && substr($line, 0, $block->trimLeftLength()) === $block->trimLeftStr())
     {
-      $blocks[] = $currentBlock;
+      $line = substr($line, $block->trimLeftLength());
     }
-    return $blocks;
+
+    if($block->allowChildren())
+    {
+      switch($block->contentType())
+      {
+        case Block::TYPE_COMPOUND:
+          $child = $this->getBlock($line, $attributes, $block);
+          if($child !== null && $block->allowChild($child))
+          {
+            $block->addChild($child);
+            $childAdd = $this->_addBlockLine($line, $child, $attributes);
+            //avoid a null return for the child block
+            return $childAdd !== false;
+          }
+        default:
+          $this->_append($block, $line);
+          return true;
+      }
+    }
+
+    return $this->_append($block, $line);
   }
 
-  protected function _detectBlock($line, $subBlock = false): ?BlockInterface
+  protected function _append(Block $block, $line)
   {
-    if(empty($line))
+    if(is_object($line))
+    {
+      $block->addChild($line);
+      return true;
+    }
+
+    $append = null;
+    switch($block->contentType())
+    {
+      case Block::TYPE_SIMPLE:
+      case Block::TYPE_COMPOUND:
+        if(substr($line, -2) == ' +')
+        {
+          $line = substr($line, 0, -2);
+          $append = new LineBreak();
+        }
+        break;
+    }
+
+    $ret = $block->appendLine($this->_context, $line);
+
+    if($append !== null)
+    {
+      $block->addChild($append);
+    }
+
+    if($ret)
+    {
+      //still open to append
+      return true;
+    }
+
+    //return null to complete the block
+    $block->close();
+    return null;
+  }
+
+  public function getBlock(string $line, ?Attributes $attr = null, ?Block $parent = null): ?Block
+  {
+    if($line === '')
     {
       return null;
     }
 
-    if($this->_codeBlock && ($line[0] === "\t" || ($line[0] == ' ' && substr($line, 0, 4) == '    ')))
-    {
-      return new $this->_codeBlock();
-    }
-
-    $line = ltrim($line, "\t\r\n\0\x0B ");
-
-    if(empty($line))
-    {
-      return null;
-    }
-
-    $blockClass = $this->_startCodes[$line[0] . ($line[1] ?? ' ')] ?? null;
-    if($blockClass !== null)
-    {
-      return new $blockClass();
-    }
-
+    $block = null;
     foreach($this->_matchers as $matcher)
     {
-      $locatedBlock = $matcher->match($line, $subBlock);
-      if($locatedBlock)
+      $block = $matcher->match($line, $parent);
+      if($block !== null)
       {
-        return $locatedBlock;
+        if($attr !== null)
+        {
+          $block->setAttributes($attr);
+        }
+        return $block;
       }
     }
 
-    $default = $subBlock ? null : $this->_defaultBlock;
-    return !$default || $line[0] === '<' ? null : new $default();
+    if(!empty(trim($line)))
+    {
+      if($attr && $attr->position(0) == 'source')
+      {
+        $block = new CodeBlock();
+        $block->setCloseOnEmptyLine(true);
+      }
+      else if(substr($line, 0, 2) !== '{{' && substr($line, -2) !== '}}')
+      {
+        $block = new ParagraphBlock();
+      }
+      else
+      {
+        $block = new BasicBlock();
+      }
+    }
+
+    if($attr !== null && $block !== null)
+    {
+      $block->setAttributes($attr);
+    }
+    return $block;
   }
 }

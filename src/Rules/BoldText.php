@@ -5,6 +5,7 @@ class BoldText implements RemarkdRule
 {
   public function apply(string $text): string
   {
-    return preg_replace('/(\*{2}|_{2})(.+?)\1/', '<strong>\2</strong>', $text);
+    $unconstrained = preg_replace('/(\*\*)([^\*]+?)(\*\*)/', '<strong>\2</strong>', $text);
+    return preg_replace('/([^\w])\*([^*]+)\*/', '\1<strong>\2</strong>', $unconstrained);
   }
 }

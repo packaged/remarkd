@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Remarkd\Objects;
 
+use Packaged\Remarkd\Attributes;
 use Packaged\Remarkd\RemarkdContext;
 
 class ObjectEngine
@@ -10,8 +11,7 @@ class ObjectEngine
    */
   protected RemarkdContext $_context;
 
-  const configParse = '/(^|[\s,]+)([^, =}]+)(=((\"([^\"]*)\")|([^\s,}]*)))?/';
-  const objectSelectors = '/{(%TYPES%)(:([^ }]+))?([^}]*|.*?\"(.|\n)*\".*?)}/mi';
+  const objectSelectors = '/{{(%TYPES%)(:([^ }]+))?([^}]*|.*?\"(.|\n)*\".*?)}}/mi';
 
   protected $_selector = '';
 
@@ -43,26 +43,7 @@ class ObjectEngine
       {
         if(isset($this->_objects[$match[1]]))
         {
-          $config = $configMatches = [];
-          if(preg_match_all(self::configParse, $match[4], $configMatches, PREG_SET_ORDER))
-          {
-            foreach($configMatches as $cMatch)
-            {
-              if(isset($cMatch[7]))
-              {
-                $config[$cMatch[2]] = $cMatch[7];
-              }
-              else if(isset($cMatch[6]))
-              {
-                $config[$cMatch[2]] = $cMatch[6];
-              }
-              else if(isset($cMatch[2]))
-              {
-                $config[$cMatch[2]] = true;
-              }
-            }
-          }
-          $o = $this->_objects[$match[1]]->create($this->_context, $config, $match[3]);
+          $o = $this->_objects[$match[1]]->create($this->_context, new Attributes(trim($match[4])), $match[3]);
           $text = str_replace($match[0], $o->render(), $text);
         }
       }

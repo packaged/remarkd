@@ -1,68 +1,63 @@
 <?php
 namespace Packaged\Remarkd\Blocks;
 
+use Packaged\Glimpse\Tags\Div;
+use Packaged\Remarkd\Attributes;
 use Packaged\Remarkd\RemarkdContext;
+use Packaged\Ui\Html\HtmlElement;
 
-class TabBlock implements BlockInterface
+class TabBlock extends BasicBlock implements BlockMatcher
 {
-  protected $_lines = [];
+  protected $_contentType = Block::TYPE_COMPOUND;
+  protected $_tabID = null;
+  protected $_closeOnEmpty = false;
 
-  protected $_properties = [];
-
-  public function __construct($configLine = null)
+  public function tabID()
   {
-    if($configLine !== null)
+    return $this->_tabID;
+  }
+
+  public function match($line, ?Block $parent): ?Block
+  {
+    if(preg_match('/^_\|_#([\w-]+)\s*(.*)\s*$/', $line, $matches))
     {
-      $properties = [];
-      if(preg_match_all('/((\w+)(=([^,}]+))?)/', $configLine, $properties))
+      $block = new static();
+      $block->_tabID = $matches[1];
+      $block->setAttributes(new Attributes($matches[2]));
+
+      if(!(($parent instanceof TabContainer) || ($parent instanceof TabBlock)))
       {
-        foreach($properties[2] as $i => $property)
-        {
-          if($i === 0 && $property == 'TAB')
-          {
-            continue;
-          }
-          $this->_properties[$property] = $properties[4][$i] ?? true;
-        }
+        $parent = new TabContainer();
+        $parent->addChild($block);
+        return $parent;
       }
+      return $block;
     }
+    return null;
   }
 
-  public function name()
+  public function allowLine(string $line): ?bool
   {
-    return $this->_properties['name'] ?? 'Unnamed';
-  }
-
-  public function key()
-  {
-    return $this->_properties['key'] ?? 'tab' . substr(md5($this->name()), 0, 5);
-  }
-
-  public function addNewLine(string $line)
-  {
-    $line = BlockEngine::trimLine($line);
-    if($line == '{ENDTAB}')
+    if(substr($line, 0, 3) === '_|_')
     {
-      return null;
+      return empty($this->_children);
     }
+    return parent::allowLine($line);
+  }
 
-    //Dont add initial tab lines
-    if(empty($this->_lines) && empty($line))
+  public function appendLine(RemarkdContext $ctx, string $line): bool
+  {
+    if(substr($line, 0, 3) == '_|_')
     {
       return true;
     }
 
-    if(substr($line, 0, 4) !== '{TAB')
-    {
-      $this->_lines[] = $line;
-    }
-    return true;
+    return parent::appendLine($ctx, $line);
   }
 
-  public function complete(RemarkdContext $ctx): string
+  protected function _produceElement(): HtmlElement
   {
-    $lines = $ctx->blockEngine()->parseLines($this->_lines, true);
-    return '<div class="tab" data-tab-key="' . $this->key() . '">' . implode("<br/>", $lines) . '</div>';
+    return Div::create(parent::_produceElement())->addClass('tab')->setAttribute('data-tab-key', $this->_tabID);
   }
 
 }
