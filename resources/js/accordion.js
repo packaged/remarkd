@@ -4,7 +4,7 @@ document.addEventListener('click', function (e)
   if(target.classList.contains('accordion'))
   {
     target.classList.toggle('active');
-    const panel = this.nextElementSibling;
+    const panel = target.nextElementSibling;
     panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + 'px';
   }
 });
