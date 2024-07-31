@@ -1,11 +1,10 @@
-const acc = document.getElementsByClassName('accordion');
-
-for(let i = 0; i < acc.length; i++)
+document.addEventListener('click', function (e)
 {
-  acc[i].addEventListener('click', function ()
+  const target = e.target;
+  if(target.classList.contains('accordion'))
   {
     this.classList.toggle('active');
     const panel = this.nextElementSibling;
     panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + 'px';
-  });
-}
+  }
+});
