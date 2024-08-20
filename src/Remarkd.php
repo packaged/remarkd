@@ -53,6 +53,7 @@ use Packaged\Remarkd\Rules\SuperScriptText;
 use Packaged\Remarkd\Rules\TipText;
 use Packaged\Remarkd\Rules\TypographicSymbolRule;
 use Packaged\Remarkd\Rules\UnderlinedText;
+use Packaged\Remarkd\Traits\AbstractTraits;
 use Packaged\Remarkd\Traits\PartialTrait;
 
 class Remarkd
@@ -170,6 +171,11 @@ class Remarkd
   public function registerRule(RemarkdRule $rule)
   {
     return $this->ctx()->ruleEngine()->registerRule($rule);
+  }
+
+  public function registerTrait(AbstractTraits $trait)
+  {
+    return $this->ctx()->traitEngine()->registerTrait($trait);
   }
 
 }
