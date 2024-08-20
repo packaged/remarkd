@@ -3,4 +3,10 @@
 
 t::partial::partial-test-two.remarkd
 
+include::partial-test-three.remarkd[]
+
 {welcome-message}!
+
+Default Payment Method {default-payment-method}
+
+This just includes a variable and this line, the below should say Test Two

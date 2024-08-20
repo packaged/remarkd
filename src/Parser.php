@@ -174,7 +174,7 @@ class Parser
 
   protected function _ifParse($line)
   {
-    if(preg_match('/(end)?if(def|ndef|eval|nempty|empty|true|false)?::([^\[]*)\[([^\]]*)\]/', $line, $matches))
+    if(preg_match('/(end)?if(def|ndef|eval|nempty|empty|true|false)?::([^\[]*)\[([^]]*)]/', $line, $matches))
     {
       if($matches[1] == 'end')
       {
@@ -274,7 +274,7 @@ class Parser
 
   protected function _ifevalValidate($condition)
   {
-    $matched = preg_match('/(.+)(\=\=\=|\=\=|\!\=|\<\=|\<|\>\=|\>)(.+)/', $condition, $matches);
+    $matched = preg_match('/(.+)\s(===|==|!=|<=|<|>=|>|&&|\|\||in|nin)(.+)/', $condition, $matches);
     if(!$matched)
     {
       return false;

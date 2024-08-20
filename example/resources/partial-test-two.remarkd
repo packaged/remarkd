@@ -1,3 +1,12 @@
 :welcome-message: Hello there from Simple Test Two
+:product-fid: soemthing
+:default-payment-method: nil
 
-This just includes a variable and this line, the below should say Test Two
+ifeval::[{product-fid} in FID:123,soemthing]
+:default-payment-method: Apple
+endif::[]
+
+ifeval::[{product-fid} in FID:abc,test]
+:default-payment-method: Google
+endif::[]
+
