@@ -6,20 +6,24 @@ use Packaged\Remarkd\Blocks\BlockEngine;
 use Packaged\Remarkd\Blocks\ModuleBlock;
 use Packaged\Remarkd\Objects\ObjectEngine;
 use Packaged\Remarkd\Rules\RuleEngine;
+use Packaged\Remarkd\Traits\TraitEngine;
 
 class RemarkdContext
 {
-  /** @var \Packaged\Remarkd\Rules\RuleEngine */
+  /** @var RuleEngine */
   protected $_ruleEngine;
 
-  /** @var \Packaged\Remarkd\Blocks\BlockEngine */
+  /** @var BlockEngine */
   protected $_blockEngine;
 
-  /** @var \Packaged\Remarkd\Objects\ObjectEngine */
+  /** @var ObjectEngine */
   protected $_objectEngine;
 
-  /** @var \Packaged\Remarkd\Blocks\ModuleBlock */
+  /** @var ModuleBlock */
   protected $_moduleBlock;
+
+  /** @var TraitEngine */
+  protected $_traitEngine;
 
   protected $_meta = [];
 
@@ -31,6 +35,7 @@ class RemarkdContext
     $this->_ruleEngine = new RuleEngine($this);
     $this->_objectEngine = new ObjectEngine($this);
     $this->_moduleBlock = new ModuleBlock();
+    $this->_traitEngine = new TraitEngine($this);
     $this->_meta = new DataMap($this->_meta);
   }
 
@@ -42,7 +47,9 @@ class RemarkdContext
   }
 
   /**
-   * @param \Packaged\Remarkd\Rules\RuleEngine $ruleEngine
+   * @param RuleEngine $ruleEngine
+   *
+   * @return RemarkdContext
    */
   public function setRuleEngine(RuleEngine $ruleEngine)
   {
@@ -51,7 +58,9 @@ class RemarkdContext
   }
 
   /**
-   * @param \Packaged\Remarkd\Blocks\BlockEngine $blockEngine
+   * @param BlockEngine $blockEngine
+   *
+   * @return RemarkdContext
    */
   public function setBlockEngine(BlockEngine $blockEngine)
   {
@@ -60,7 +69,9 @@ class RemarkdContext
   }
 
   /**
-   * @param \Packaged\Remarkd\Objects\ObjectEngine $objectEngine
+   * @param ObjectEngine $objectEngine
+   *
+   * @return RemarkdContext
    */
   public function setObjectEngine(ObjectEngine $objectEngine)
   {
@@ -78,7 +89,7 @@ class RemarkdContext
   }
 
   /**
-   * @return \Packaged\Remarkd\Rules\RuleEngine
+   * @return RuleEngine
    */
   public function ruleEngine(): RuleEngine
   {
@@ -86,7 +97,7 @@ class RemarkdContext
   }
 
   /**
-   * @return \Packaged\Remarkd\Blocks\BlockEngine
+   * @return BlockEngine
    */
   public function blockEngine(): BlockEngine
   {
@@ -108,14 +119,19 @@ class RemarkdContext
     return $this->_meta;
   }
 
-  public function setProjectRoot(string $projectRoot): RemarkdContext
+  public function setProjectRoot(string $root): self
   {
-    $this->_projectRoot = $projectRoot;
+    $this->_projectRoot = $root;
     return $this;
   }
 
   public function getProjectRoot(): string
   {
     return $this->_projectRoot;
+  }
+
+  public function traitEngine(): TraitEngine
+  {
+    return $this->_traitEngine;
   }
 }

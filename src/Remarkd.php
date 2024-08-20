@@ -53,6 +53,7 @@ use Packaged\Remarkd\Rules\SuperScriptText;
 use Packaged\Remarkd\Rules\TipText;
 use Packaged\Remarkd\Rules\TypographicSymbolRule;
 use Packaged\Remarkd\Rules\UnderlinedText;
+use Packaged\Remarkd\Traits\PartialTrait;
 
 class Remarkd
 {
@@ -68,6 +69,7 @@ class Remarkd
       $this->applyDefaultModules($context->modules());
       $this->applyDefaultRules($context->ruleEngine());
       $this->applyDefaultObjects($context->objectEngine());
+      $this->applyDefaultTraits($context);
     }
     $this->_context = $context;
   }
@@ -75,6 +77,12 @@ class Remarkd
   public function ctx()
   {
     return $this->_context;
+  }
+
+  public function applyDefaultTraits(RemarkdContext $context)
+  {
+    $engine = $context->traitEngine();
+    $engine->registerTrait(new PartialTrait($context));
   }
 
   public function applyDefaultModules(ModuleBlock $block)

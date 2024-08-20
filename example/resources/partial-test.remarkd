@@ -1,6 +1,6 @@
 = Simple Test
 :welcome-message: Hello there from Simple Test One
 
-partial::partial-test-two.remarkd
+t::partial::partial-test-two.remarkd
 
 {welcome-message}!
