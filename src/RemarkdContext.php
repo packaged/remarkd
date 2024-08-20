@@ -23,6 +23,8 @@ class RemarkdContext
 
   protected $_meta = [];
 
+  protected string $_projectRoot = '';
+
   public function __construct()
   {
     $this->_blockEngine = new BlockEngine($this);
@@ -104,5 +106,16 @@ class RemarkdContext
   public function meta(): DataMap
   {
     return $this->_meta;
+  }
+
+  public function setProjectRoot(string $projectRoot): RemarkdContext
+  {
+    $this->_projectRoot = $projectRoot;
+    return $this;
+  }
+
+  public function getProjectRoot(): string
+  {
+    return $this->_projectRoot;
   }
 }

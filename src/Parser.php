@@ -3,6 +3,7 @@ namespace Packaged\Remarkd;
 
 use Packaged\Glimpse\Tags\Div;
 use Packaged\Glimpse\Tags\HorizontalRule;
+use Packaged\Helpers\Path;
 use Packaged\Helpers\Strings;
 use Packaged\Remarkd\Blocks\BlockEngine;
 
@@ -78,6 +79,24 @@ class Parser
     $newBlocks = new BlockEngine($this->_remarkd->ctx());
     $newBlocks->setMatchers($oldBlocks->getMatchers());
     $this->_remarkd->ctx()->setBlockEngine($newBlocks);
+
+    foreach($this->_raw as $key => $line)
+    {
+      if(str_starts_with($line, 'partial::'))
+      {
+        $filename = substr($line, 9);
+        $path = Path::system($this->_remarkd->ctx()->getProjectRoot(), $filename);
+        if(file_exists($path))
+        {
+          $lines = file_get_contents($path);
+          $lines = explode("\n", $lines);
+
+          unset($this->_raw[$key]);
+          array_splice($this->_raw, $key, 0, $lines);
+        }
+      }
+    }
+
     foreach($this->_raw as $line)
     {
       $char1 = $line[0] ?? '';
