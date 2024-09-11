@@ -3,7 +3,6 @@ namespace Packaged\Remarkd;
 
 use Packaged\Glimpse\Tags\Div;
 use Packaged\Glimpse\Tags\HorizontalRule;
-use Packaged\Helpers\Path;
 use Packaged\Helpers\Strings;
 use Packaged\Remarkd\Blocks\BlockEngine;
 
@@ -282,6 +281,18 @@ class Parser
 
     $matches[1] = trim($this->_document->data->replace($matches[1]));
     $matches[3] = trim($this->_document->data->replace($matches[3]));
+
+    if(str_contains($matches[1], 'int'))
+    {
+      $matches[1] = str_replace('"', '', $matches[1]);
+      $matches[1] = (int)str_replace('int', '', $matches[1]);
+    }
+
+    if(str_contains($matches[3], 'int'))
+    {
+      $matches[3] = str_replace('"', '', $matches[3]);
+      $matches[3] = (int)str_replace('int', '', $matches[3]);
+    }
 
     switch($matches[2])
     {

@@ -1,0 +1,40 @@
+= Accordion Test
+:welcome-message: Hello there from Simple Test One
+
+t::partial::partial-test-two.remarkd
+
+include::partial-test-three.remarkd[]
+
+{welcome-message}!
+
+ifeval::[int"1010" <= 1009]
+  Hello
+endif::[]
+
+_-_#mac[name="Apple Mac"]
+
+_|- Mac Section 1
+
+Mac Section 1
+
+-|_
+
+_|- Mac Section 2
+
+Mac Section 2
+
+-|_
+
+_-_#windows[name="Microsoft Windows"]
+
+_|- Windows Section 1
+
+Windows Section 1
+
+-|_
+
+_|- Windows Section 2
+
+Windows Section 2
+
+-|_
