@@ -10,3 +10,6 @@ include::partial-test-three.remarkd[]
 Default Payment Method {default-payment-method}
 
 This just includes a variable and this line, the below should say Test Two
++
++
+{{video:**REDACTED** source="self"}}

@@ -31,10 +31,15 @@ class VideoObject extends AbstractRemarkdObject
     }
     $containerAppend = ' style="padding-top: ' . $padding . '%"';
 
-    switch($this->_config->get('source', 'youtube'))
+    $content = "";
+    switch($this->_config->get('source', ''))
     {
       case 'youtube':
         $content = $this->_completeYoutube($this->_key, $this->_config->get('start', 0), $this->_config->get('end', 0));
+        break;
+      case 'self':
+        $type = $this->_config->get('type', 'video/mp4');
+        $content = '<video controls><source src="' . $this->_key . '" type="' . $type . '"></video>';
         break;
     }
 
