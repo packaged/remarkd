@@ -70,7 +70,7 @@ class Remarkd
       $this->applyDefaultModules($context->modules());
       $this->applyDefaultRules($context->ruleEngine());
       $this->applyDefaultObjects($context->objectEngine());
-      $this->applyDefaultTraits($context);
+//      $this->applyDefaultTraits($context);
     }
     $this->_context = $context;
   }
