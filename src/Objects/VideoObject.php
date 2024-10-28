@@ -32,7 +32,7 @@ class VideoObject extends AbstractRemarkdObject
     $containerAppend = ' style="padding-top: ' . $padding . '%"';
 
     $content = "";
-    switch($this->_config->get('source', ''))
+    switch($this->_config->get('source', 'youtube'))
     {
       case 'youtube':
         $content = $this->_completeYoutube($this->_key, $this->_config->get('start', 0), $this->_config->get('end', 0));
