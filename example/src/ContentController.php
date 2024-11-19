@@ -106,6 +106,7 @@ class ContentController extends Controller
     {
       $remarkd = new Remarkd();
       $remarkd->ctx()->setProjectRoot($dir);
+      $remarkd->ctx()->setResourceRoot($resDir);
       $remarkd->registerModule(IncludeModule::create($remarkd, $dir));
       $cwd = substr(dirname($loc), strlen($resDir));
       $remarkd->ctx()->meta()->set('cwd', $cwd);

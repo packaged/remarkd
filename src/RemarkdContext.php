@@ -29,6 +29,8 @@ class RemarkdContext
 
   protected string $_projectRoot = '';
 
+  protected string $_resourceRoot = '';
+
   public function __construct()
   {
     $this->_blockEngine = new BlockEngine($this);
@@ -128,6 +130,17 @@ class RemarkdContext
   public function getProjectRoot(): string
   {
     return $this->_projectRoot;
+  }
+
+  public function setResourceRoot(string $root): self
+  {
+    $this->_resourceRoot = $root;
+    return $this;
+  }
+
+  public function getResourceRoot(): string
+  {
+    return $this->_resourceRoot;
   }
 
   public function traitEngine(): TraitEngine

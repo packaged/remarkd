@@ -11,13 +11,15 @@
       "Packaged\\Tests\\Remarkd\\": "tests"
     }
   },
+  "suggest": {
+    "packaged/dispatch": "^2.0"
+  },
   "require": {
-    "packaged/dispatch": "^2.0",
     "packaged/map": "^0.4",
     "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.0",
+    "phpunit/phpunit": "^6.0.0",
     "cubex/framework": "4.*",
     "packaged/glimpse": "2.*",
     "packaged/dispatch": "2.*"

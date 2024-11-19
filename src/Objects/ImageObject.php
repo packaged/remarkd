@@ -1,7 +1,6 @@
 <?php
 namespace Packaged\Remarkd\Objects;
 
-use Packaged\Dispatch\ResourceManager;
 use Packaged\Glimpse\Tags\Media\Image;
 
 class ImageObject extends AbstractRemarkdObject
@@ -13,7 +12,15 @@ class ImageObject extends AbstractRemarkdObject
 
   public function render(): string
   {
-    $resMan = ResourceManager::resources();
+    if(class_exists('\Packaged\Dispatch\ResourceManager'))
+    {
+      $resMan = \Packaged\Dispatch\ResourceManager::resources();
+    }
+    else
+    {
+      $resMan = $this->_context->getResourceRoot();
+    }
+
     if($resMan->isExternalUrl($this->_config->get('src')))
     {
       $src = $this->_config->get('src');
@@ -21,7 +28,15 @@ class ImageObject extends AbstractRemarkdObject
     else
     {
       $cwd = $this->_context->meta()->get('cwd');
-      $src = $resMan->getResourceUri($cwd . '/' . ($this->_config->get('src') ?? ''));
+
+      if(class_exists('\Packaged\Dispatch\ResourceManager'))
+      {
+        $src = $resMan->getResourceUri($cwd . DIRECTORY_SEPARATOR . ($this->_config->get('src') ?? ''));
+      }
+      else
+      {
+        $src = $this->_context->getResourceRoot() . DIRECTORY_SEPARATOR . $cwd . DIRECTORY_SEPARATOR . ($this->_config->get('src') ?? '');
+      }
     }
 
     $img = Image::create($src, $this->_config->get("alt"));
