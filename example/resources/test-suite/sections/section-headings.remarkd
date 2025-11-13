@@ -1,0 +1,72 @@
+= Section Headings
+
+Section headings organize content into hierarchical sections.
+
+== Level 1 Heading
+
+== Level 1 Section
+
+Content for level 1 section.
+
+== Level 2 Heading
+
+=== Level 2 Section
+
+Content for level 2 section.
+
+== Level 3 Heading
+
+==== Level 3 Section
+
+Content for level 3 section.
+
+== Level 4 Heading
+
+===== Level 4 Section
+
+Content for level 4 section.
+
+== Level 5 Heading
+
+====== Level 5 Section
+
+Content for level 5 section.
+
+== Section Examples
+
+== Introduction
+
+Introduction content here.
+
+=== Getting Started
+
+Getting started content.
+
+==== Installation
+
+Installation steps.
+
+===== System Requirements
+
+System requirements.
+
+== Main Content
+
+Main content section.
+
+=== Features
+
+Features section.
+
+==== Feature One
+
+Feature one details.
+
+==== Feature Two
+
+Feature two details.
+
+== Conclusion
+
+Conclusion content.
+

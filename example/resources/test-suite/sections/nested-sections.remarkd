@@ -1,0 +1,88 @@
+= Nested Sections
+
+Nested sections create a hierarchical document structure.
+
+== Top Level Section
+
+Content for top level section.
+
+=== Nested Section Level 2
+
+Content for nested section level 2.
+
+==== Nested Section Level 3
+
+Content for nested section level 3.
+
+===== Nested Section Level 4
+
+Content for nested section level 4.
+
+====== Nested Section Level 5
+
+Content for nested section level 5.
+
+== Another Top Level Section
+
+Content for another top level section.
+
+=== Another Nested Section
+
+Content for another nested section.
+
+== Complex Nesting Example
+
+== Chapter One
+
+Introduction to chapter one.
+
+=== Section 1.1
+
+Content for section 1.1.
+
+==== Subsection 1.1.1
+
+Content for subsection 1.1.1.
+
+=== Section 1.2
+
+Content for section 1.2.
+
+== Chapter Two
+
+Introduction to chapter two.
+
+=== Section 2.1
+
+Content for section 2.1.
+
+==== Subsection 2.1.1
+
+Content for subsection 2.1.1.
+
+==== Subsection 2.1.2
+
+Content for subsection 2.1.2.
+
+== Nested Sections with Content
+
+== Main Topic
+
+Main topic content.
+
+=== Subtopic One
+
+Subtopic one content.
+
+=== Subtopic Two
+
+Subtopic two content.
+
+==== Detail One
+
+Detail one content.
+
+==== Detail Two
+
+Detail two content.
+

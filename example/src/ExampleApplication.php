@@ -50,7 +50,7 @@ class ExampleApplication extends Application implements WithContext
     $proxies = $this->getContext()->config()->getItem('serve', 'trusted_proxies');
     if($proxies !== null)
     {
-      Request::setTrustedProxies(ValueAs::arr($proxies), Request::HEADER_X_FORWARDED_ALL);
+      Request::setTrustedProxies(ValueAs::arr($proxies), Request::HEADER_FORWARDED);
     }
 
     yield self::_route(
@@ -65,7 +65,8 @@ class ExampleApplication extends Application implements WithContext
     //Run any generic setup here
     $this->_setupApplication();
 
-    yield self::_route('/', ContentController::class);
+    yield self::_route('/content', ContentController::class);
+    yield self::_route('/', TestSuiteController::class);
 
     //Let the parent application handle routes from here
     return parent::_generateRoutes();

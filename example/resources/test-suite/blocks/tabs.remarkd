@@ -1,0 +1,85 @@
+= Tab Blocks
+
+Tab blocks allow you to organize content into tabs for better presentation.
+
+== Basic Tabs
+
+_|_#tab1[name="First Tab"]
+Content for the first tab.
+
+_|_#tab2[name="Second Tab"]
+Content for the second tab.
+
+_|_#tab3[name="Third Tab"]
+Content for the third tab.
+
+_|_
+
+== Tabs with Multiple Paragraphs
+
+_|_#mac[name="macOS"]
+This is content for macOS.
+
+It can contain multiple paragraphs.
+
+And even lists:
+
+* Item one
+* Item two
+
+_|_#windows[name="Windows"]
+This is content for Windows.
+
+Windows content can also have multiple paragraphs.
+
+_|_#linux[name="Linux"]
+This is content for Linux.
+
+Linux content here.
+
+_|_
+
+== Tabs with Code Blocks
+
+_|_#javascript[name="JavaScript"]
+[source,javascript]
+----
+console.log("Hello from JavaScript");
+----
+
+_|_#python[name="Python"]
+[source,python]
+----
+print("Hello from Python")
+----
+
+_|_#ruby[name="Ruby"]
+[source,ruby]
+----
+puts "Hello from Ruby"
+----
+
+_|_
+
+== Tabs with Mixed Content
+
+_|_#example1[name="Example 1"]
+This tab has *bold* and _italic_ text.
+
+And a code block:
+
+[source]
+----
+example code
+----
+
+_|_#example2[name="Example 2"]
+This tab has different content.
+
+With a list:
+
+* First item
+* Second item
+
+_|_
+

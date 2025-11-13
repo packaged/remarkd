@@ -1,0 +1,54 @@
+= Inline Styles
+
+Inline styles allow you to apply custom CSS classes and styling to text.
+
+== Basic Inline Style
+
+This paragraph contains [.highlight]#highlighted text#.
+
+== Inline Style with Class
+
+This paragraph has [.important]#important text#.
+
+This paragraph has [.warning]#warning text#.
+
+== Inline Style with ID
+
+This paragraph has [#unique-id]#text with ID#.
+
+== Inline Style with Multiple Classes
+
+This paragraph has [.class1.class2]#text with multiple classes#.
+
+== Inline Style with Formatting
+
+This paragraph has [.highlight]#highlighted# and *bold* text.
+
+This paragraph has [.important]#important# and _italic_ text.
+
+== Inline Style in Lists
+
+* Item with [.highlight]#highlighted# text
+* Regular item
+* Another item with [.warning]#warning# text
+
+== Inline Style with Links
+
+Check the [.important]#important section# at https://example.com[here].
+
+== Inline Style Examples
+
+[.user-input]#Type your name here#
+
+[.code]#function example() {}#
+
+[.error]#Error: Something went wrong#
+
+[.success]#Success: Operation completed#
+
+== Inline Style at Boundaries
+
+[.highlight]#Highlighted at start# of paragraph.
+
+[.highlight]#Highlighted at end# of paragraph.
+

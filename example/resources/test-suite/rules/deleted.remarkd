@@ -1,0 +1,40 @@
+= Deleted Text
+
+Deleted text is displayed with a strikethrough effect, useful for showing removed content.
+
+== Basic Deleted Text
+
+This paragraph contains [.line-through]#deleted text# within it.
+
+== Deleted Text Examples
+
+The old price was [.line-through]#$100#. The new price is $75.
+
+The function [.line-through]#oldFunction()# has been replaced with newFunction().
+
+== Deleted Text with Other Formatting
+
+This paragraph has [.line-through]#deleted# and *bold* text.
+
+This paragraph has [.line-through]#deleted# and _italic_ text.
+
+== Deleted Text in Lists
+
+* Item with [.line-through]#deleted# text
+* Regular item
+* Another item with [.line-through]#deleted# content
+
+== Deleted Text with Links
+
+The old link [.line-through]#https://old.example.com# has been replaced.
+
+== Multiple Deleted Sections
+
+This paragraph has [.line-through]#first deleted# and [.line-through]#second deleted# sections.
+
+== Deleted Text in Code Context
+
+The deprecated method [.line-through]#oldMethod()# should not be used.
+
+Use `newMethod()` instead of [.line-through]#oldMethod()#.
+

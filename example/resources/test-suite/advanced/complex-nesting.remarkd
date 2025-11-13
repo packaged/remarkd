@@ -1,0 +1,128 @@
+= Complex Nesting
+
+Complex nesting demonstrates how different elements can be nested together.
+
+== Nested Lists
+
+== Unordered List with Nested Ordered List
+
+* First unordered item
+
+  . First ordered sub-item
+  . Second ordered sub-item
+
+* Second unordered item
+
+  . Another ordered sub-item
+  . Yet another ordered sub-item
+
+== Ordered List with Nested Unordered List
+
+. First ordered item
+
+  * Unordered sub-item
+  * Another unordered sub-item
+
+. Second ordered item
+
+  * More unordered items
+  * And another
+
+== Lists with Blocks
+
+== List with Code Block
+
+* First item
+
+  [source]
+  ----
+  code example
+  ----
+
+* Second item
+
+== List with Example Block
+
+. Step one
+
+  ====
+  Example content here.
+  ====
+
+. Step two
+
+== Lists with Lists and Blocks
+
+* Main item
+
+  . Sub-item one
+
+    [source]
+    ----
+    code here
+    ----
+
+  . Sub-item two
+
+    * Nested unordered item
+    * Another nested item
+
+== Blocks with Lists
+
+====
+Example block with a list:
+
+* First item
+* Second item
+* Third item
+====
+
+== Complex Example
+
+== Section with Everything
+
+This section has multiple elements:
+
+* First list item
+
+  . Ordered sub-item
+
+    [source]
+    ----
+    code example
+    ----
+
+  . Another ordered sub-item
+
+* Second list item
+
+  ====
+  Example block content
+  ====
+
+== Another Complex Example
+
+== Main Section
+
+Content here.
+
+=== Subsection
+
+More content.
+
+====
+Example block:
+
+* Item one
+* Item two
+
+[source]
+----
+code example
+----
+====
+
+=== Another Subsection
+
+Even more content.
+

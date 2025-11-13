@@ -1,0 +1,54 @@
+= Emojis
+
+Emoji support allows you to include emoji characters in your documents.
+
+== Basic Emojis
+
+This paragraph contains :smile: emoji.
+
+This paragraph has :heart: and :star: emojis.
+
+== Common Emojis
+
+:thumbsup: Good job!
+
+:thumbsdown: Not recommended.
+
+:warning: Important notice.
+
+:check: Task completed.
+
+== Emojis with Text
+
+The status is :green_circle: online.
+
+The status is :red_circle: offline.
+
+== Emojis in Lists
+
+* :check: First item
+* :check: Second item
+* :x: Third item (not done)
+
+== Emojis with Other Formatting
+
+This paragraph has :smile: and *bold* text.
+
+This paragraph has :heart: and _italic_ text.
+
+== Emojis with Links
+
+Visit our :globe_with_meridians: website at https://example.com[here].
+
+== Multiple Emojis
+
+This paragraph has :smile: :heart: :star: multiple emojis.
+
+== Emoji Examples
+
+:rocket: Launch
+:fire: Hot
+:zap: Fast
+:muscle: Strong
+:brain: Smart
+

@@ -1,0 +1,64 @@
+= Code Blocks
+
+Code blocks are used to display source code with syntax highlighting and formatting.
+
+== Basic Code Block
+
+[source]
+----
+function hello() {
+  console.log("Hello, World!");
+}
+----
+
+== Code Block with Language
+
+[source,javascript]
+----
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+const message = greet("World");
+console.log(message);
+----
+
+== Code Block with Title
+
+[source,php]
+.Title: Example PHP Code
+----
+<?php
+class Example {
+  public function hello() {
+    return "Hello, World!";
+  }
+}
+----
+
+== Multiple Code Blocks
+
+[source,python]
+----
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+----
+
+[source,ruby]
+----
+def fibonacci(n)
+  return n if n <= 1
+  fibonacci(n-1) + fibonacci(n-2)
+end
+----
+
+== Code Block with ID
+
+[#my-code-block]
+[source,javascript]
+----
+const example = "This code block has an ID";
+----
+

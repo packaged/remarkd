@@ -1,0 +1,45 @@
+= Literal Blocks
+
+Literal blocks output text exactly as entered, similar to listing blocks but with different formatting.
+
+== Basic Literal Block
+
+....
+This is a literal block.
+It preserves text exactly as written.
+    Including indentation.
+....
+
+== Literal Block with Title
+
+.Literal: Sample Text
+....
+This literal block has a title.
+It can contain any text content.
+....
+
+== Literal Block with Special Characters
+
+....
+<HTML>
+  <body>
+    <p>Content</p>
+  </body>
+</HTML>
+....
+
+== Multiple Literal Blocks
+
+....
+First literal block
+....
+
+....
+Second literal block
+with different content
+....
+
+== Literal Block vs Listing Block
+
+Literal blocks (....) and listing blocks (----) are similar but may have different styling in the output.
+

@@ -1,0 +1,76 @@
+= Document Attributes
+
+Document attributes allow you to define reusable values and configuration.
+
+== Basic Attributes
+
+:author: John Doe
+:version: 1.0
+:date: 2024-01-01
+
+Written by {author}, version {version}, dated {date}.
+
+== Attribute Examples
+
+:product-name: Remarkd
+:product-version: 2.0
+:company: Example Corp
+
+Welcome to {product-name} version {product-version} by {company}.
+
+== Boolean Attributes
+
+:toc:
+:icons: font
+:sectnums:
+
+Table of contents, icons, and section numbering are enabled.
+
+== Attribute Substitution
+
+:url-home: https://example.com
+:url-docs: https://docs.example.com
+
+Visit {url-home} for the homepage.
+
+Check {url-docs} for documentation.
+
+== Conditional Attributes
+
+ifeval::[version >= 2.0]
+This content appears for version 2.0 and above.
+endif::[]
+
+== Attribute Examples
+
+:api-url: https://api.example.com
+:api-version: v2
+
+API endpoint: {api-url}/{api-version}/users
+
+== Multiple Attributes
+
+:first-name: John
+:last-name: Doe
+:email: john@example.com
+
+Contact: {first-name} {last-name} <{email}>
+
+== Attribute in Lists
+
+:item1: First item
+:item2: Second item
+:item3: Third item
+
+* {item1}
+* {item2}
+* {item3}
+
+== Complex Attributes
+
+:base-url: https://example.com
+:api-path: /api/v1
+:endpoint: /users
+
+Full URL: {base-url}{api-path}{endpoint}
+

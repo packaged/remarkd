@@ -1,0 +1,29 @@
+= Text Rules
+
+Text rules provide inline formatting and styling for text within your documents.
+
+== Overview
+
+Text rules allow you to apply various formatting styles to text inline, such as bold, italic, monospaced, and more. These rules are processed during document parsing and can be combined for complex formatting.
+
+== Rule Types
+
+This category includes the following text formatting rules:
+
+* *Bold and Italic* - Text emphasis with bold and italic styles
+* *Monospaced* - Fixed-width font for code and technical terms
+* *Underlined* - Underlined text for emphasis
+* *Deleted* - Strikethrough text for removed content
+* *Highlighted* - Background highlighting for important text
+* *Quoted* - Inline quotations and citations
+* *Subscript and Superscript* - Mathematical and scientific notation
+* *Inline Styles* - Custom CSS classes and styling
+* *Keyboard Keys* - Styled keyboard key notation
+* *Emojis* - Emoji character support
+* *Typographic Symbols* - Automatic typographic symbol conversion
+* *Checkboxes* - Interactive checkbox elements
+
+== Usage
+
+Text rules can be combined and nested to create complex formatting. Click on any feature above to see examples and learn how to use them.
+

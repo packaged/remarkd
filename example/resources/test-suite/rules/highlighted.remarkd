@@ -1,0 +1,44 @@
+= Highlighted Text
+
+Highlighted text draws attention with background highlighting.
+
+== Basic Highlighted Text
+
+This paragraph contains #highlighted text# within it.
+
+== Highlighted Text Examples
+
+This is #important information# that needs attention.
+
+The #key point# is highlighted for emphasis.
+
+== Highlighted with Other Formatting
+
+This paragraph has #highlighted# and *bold* text.
+
+This paragraph has #highlighted# and _italic_ text.
+
+== Highlighted in Lists
+
+* Item with #highlighted# text
+* Regular item
+* Another item with #highlighted# content
+
+== Highlighted Text with Links
+
+Check the #important section# at https://example.com[here].
+
+== Multiple Highlighted Sections
+
+This paragraph has #first highlight# and #second highlight# sections.
+
+== Highlighted at Boundaries
+
+#Highlighted at start# of paragraph.
+
+#Highlighted at end# of paragraph.
+
+== Highlighted with Code
+
+The #critical variable# `$config` must be set.
+

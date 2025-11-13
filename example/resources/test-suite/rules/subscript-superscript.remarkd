@@ -1,0 +1,52 @@
+= Subscript and Superscript
+
+Subscript and superscript text for mathematical and scientific notation.
+
+== Basic Subscript
+
+This paragraph contains H~2~O (water).
+
+Chemical formula: C~6~H~12~O~6~ (glucose).
+
+== Basic Superscript
+
+This paragraph contains E=mc^2^ (Einstein's equation).
+
+Mathematical expression: x^2^ + y^2^ = z^2^.
+
+== Subscript Examples
+
+Water molecule: H~2~O
+
+Carbon dioxide: CO~2~
+
+Glucose: C~6~H~12~O~6~
+
+== Superscript Examples
+
+Square: x^2^
+
+Cube: x^3^
+
+Power of ten: 10^6^
+
+== Combined Subscript and Superscript
+
+Mathematical expression: x~i~^2^ + y~j~^2^.
+
+== Subscript and Superscript with Other Formatting
+
+This paragraph has H~2~O and *bold* text.
+
+This paragraph has E=mc^2^ and _italic_ text.
+
+== Subscript and Superscript in Lists
+
+* Item with H~2~O
+* Item with E=mc^2^
+* Regular item
+
+== Subscript and Superscript with Links
+
+Learn more about H~2~O at https://example.com[here].
+

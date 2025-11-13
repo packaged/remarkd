@@ -1,0 +1,62 @@
+= Typographic Symbols
+
+Typographic symbol rules automatically convert text to proper typographic symbols.
+
+== Em Dash
+
+This sentence uses an em dash -- like this.
+
+Word--word creates an em dash.
+
+== Ellipsis
+
+This sentence uses an ellipsis... like this.
+
+== Arrows
+
+This shows a right arrow ->
+
+This shows a double right arrow =>
+
+This shows a left arrow <-
+
+This shows a double left arrow <=
+
+== Apostrophes
+
+It's a contraction.
+
+Don't do that.
+
+== Copyright and Trademark
+
+Copyright (C) 2024
+
+Registered (R) trademark
+
+Trademark (TM) symbol
+
+== Typographic Symbols in Context
+
+The range is 10--20 items.
+
+Use the command... wait for it... then press Enter.
+
+Go to the next page -> and continue.
+
+== Typographic Symbols with Other Formatting
+
+This has an em dash -- and *bold* text.
+
+This has an ellipsis... and _italic_ text.
+
+== Typographic Symbols in Lists
+
+* Item with em dash -- example
+* Item with ellipsis... example
+* Item with arrow -> example
+
+== Typographic Symbols with Links
+
+Visit https://example.com[here] -- it's great!
+

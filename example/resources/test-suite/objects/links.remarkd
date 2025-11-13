@@ -1,0 +1,51 @@
+= Links
+
+Link objects create hyperlinks to external URLs and internal references.
+
+== Basic Link
+
+{{link:https://example.com}}
+
+== Link with Text
+
+{{link:https://example.com text="Example Website"}}
+
+{{link:https://github.com text="GitHub"}}
+
+== Link with Target
+
+{{link:https://example.com text="Example" target=_blank}}
+
+== Link with Hreflang
+
+{{link:https://example.com text="Example" hreflang=en}}
+
+== Link Examples
+
+{{link:https://example.com text="Homepage"}}
+
+{{link:https://docs.example.com text="Documentation"}}
+
+{{link:https://github.com/example text="GitHub Repository"}}
+
+== Link in Paragraphs
+
+This paragraph contains a link: {{link:https://example.com text="click here"}}.
+
+== Multiple Links
+
+Visit {{link:https://example.com text="Example"}} and {{link:https://github.com text="GitHub"}}.
+
+== Link with Attributes
+
+{{link:https://example.com text="Example Website" target=_blank hreflang=en}}
+
+== Link Object Syntax
+
+The link object uses the format: `{{link:url text="Link Text" target=_blank}}`
+
+Where:
+* `url` - The URL or key for the link
+* `text` - Optional link text (defaults to titleized version of the key)
+* `target` - Optional target attribute (e.g., _blank)
+* `hreflang` - Optional language attribute

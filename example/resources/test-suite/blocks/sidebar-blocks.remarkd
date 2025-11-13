@@ -1,0 +1,57 @@
+= Sidebar Blocks
+
+Sidebar blocks contain aside text displayed outside the normal flow of the document.
+
+== Basic Sidebar Block
+
+****
+This is a sidebar block.
+
+It contains aside information that complements the main content.
+****
+
+== Sidebar Block with Title
+
+.Sidebar: Additional Information
+****
+This sidebar has a title.
+
+It can contain multiple paragraphs and other content.
+****
+
+== Sidebar Block with Lists
+
+****
+Here's a sidebar with a list:
+
+* First point
+* Second point
+* Third point
+****
+
+== Sidebar Block with Formatting
+
+****
+This sidebar contains *bold* and _italic_ text.
+
+It can also contain `monospaced` text and links.
+****
+
+== Multiple Sidebar Blocks
+
+****
+First sidebar block.
+****
+
+****
+Second sidebar block with different content.
+****
+
+== Sidebar Block with ID
+
+[#sidebar-1]
+.Sidebar: Reference
+****
+This sidebar has an ID for cross-referencing.
+****
+

@@ -1,0 +1,53 @@
+= Videos
+
+Video objects embed video content in your documents.
+
+== Basic Video
+
+{{video:c0kfUqydnxY}}
+
+== Video with Aspect Ratio
+
+{{video:c0kfUqydnxY aspect=16:9}}
+
+{{video:c0kfUqydnxY aspect=4:3}}
+
+{{video:c0kfUqydnxY aspect=1:1}}
+
+== YouTube Video
+
+{{video:c0kfUqydnxY source=youtube aspect=16:9}}
+
+== Self-Hosted Video
+
+{{video:example.mp4 source=self type=video/mp4}}
+
+== Video with Start Time
+
+{{video:c0kfUqydnxY source=youtube aspect=16:9 start=30}}
+
+== Video with Start and End Time
+
+{{video:c0kfUqydnxY source=youtube aspect=16:9 start=30 end=120}}
+
+== Video Examples
+
+{{video:dQw4w9WgXcQ source=youtube aspect=16:9}}
+
+{{video:tutorial.mp4 source=self type=video/mp4}}
+
+== Video in Paragraphs
+
+This paragraph contains a video: {{video:c0kfUqydnxY aspect=16:9}}
+
+== Video with Different Aspect Ratios
+
+{{video:c0kfUqydnxY aspect=16:9}}
+
+{{video:c0kfUqydnxY aspect=4:3}}
+
+{{video:c0kfUqydnxY aspect=3:2}}
+
+{{video:c0kfUqydnxY aspect=8:5}}
+
+{{video:c0kfUqydnxY aspect=1:1}}

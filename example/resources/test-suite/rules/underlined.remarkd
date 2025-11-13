@@ -1,0 +1,38 @@
+= Underlined Text
+
+Underlined text provides additional emphasis.
+
+== Basic Underlined
+
+This paragraph contains +underlined text+ within it.
+
+== Underlined with Other Formatting
+
+This paragraph has +underlined+ and *bold* text.
+
+This paragraph has +underlined+ and _italic_ text.
+
+== Underlined with Monospaced
+
+This paragraph has +underlined+ and `monospaced` text.
+
+== Underlined in Lists
+
+* Item with +underlined+ text
+* Another item
+* Third item
+
+== Underlined with Links
+
+This paragraph has +underlined+ and a https://example.com[link].
+
+== Multiple Underlined Sections
+
+This paragraph has +first underlined+ and +second underlined+ sections.
+
+== Underlined at Boundaries
+
++Underlined at start+ of paragraph.
+
++Underlined at end+ of paragraph.
+

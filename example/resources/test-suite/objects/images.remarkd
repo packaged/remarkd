@@ -1,0 +1,49 @@
+= Images
+
+Image objects display images in your documents.
+
+== Basic Image
+
+{{img src=example.jpg}}
+
+== Image with Alt Text
+
+{{img src=example.jpg alt="Example Image"}}
+
+== Image with Display Style
+
+{{img src=example.jpg alt="Example Image" display=block}}
+
+{{img src=example.jpg alt="Example Image" display=inline-block}}
+
+== Image with Max Width
+
+{{img src=example.jpg alt="Example Image" max-width=300px}}
+
+== Image with Float
+
+{{img src=example.jpg alt="Example Image" float=left}}
+
+{{img src=example.jpg alt="Example Image" float=right}}
+
+== External Image URL
+
+{{img src=https://example.com/image.jpg alt="External Image"}}
+
+== Image Examples
+
+{{img src=example.jpg alt="First Image" max-width=400px}}
+
+{{img src=example.jpg alt="Second Image" display=block max-width=500px}}
+
+== Image in Paragraphs
+
+This paragraph contains an image: {{img src=example.jpg alt="Icon" display=inline-block}}
+
+== Image with Classes
+
+{{img src=example.jpg alt="Example" class="highlight border"}}
+
+== Image Attributes
+
+{{img src=example.jpg alt="Example Image" display=block max-width=600px float=left class="featured-image"}}

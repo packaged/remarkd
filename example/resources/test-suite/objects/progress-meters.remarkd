@@ -1,0 +1,51 @@
+= Progress Meters
+
+Progress meter objects display progress indicators and meters.
+
+== Basic Progress Meter
+
+{{meter value=50}}
+
+== Progress Meter with Label
+
+{{meter value=75 label="75% Complete"}}
+
+== Progress Meter with Range
+
+{{meter value=25 min=0 max=100}}
+
+{{meter value=50 min=0 max=100}}
+
+{{meter value=75 min=0 max=100}}
+
+{{meter value=100 min=0 max=100 label="100% Complete"}}
+
+== Progress Meter Examples
+
+Installation: {{meter value=30 min=0 max=100 label="30%"}}
+
+Download: {{meter value=75 min=0 max=100 label="75%"}}
+
+Processing: {{meter value=100 min=0 max=100 label="Complete"}}
+
+== Progress Meter in Paragraphs
+
+Current progress: {{meter value=60 min=0 max=100 label="60%"}}
+
+Overall completion: {{meter value=85 min=0 max=100 label="85%"}}
+
+== Progress Meter with Custom Range
+
+{{meter value=5 min=1 max=20 text="1 to 20" label="Progress"}}
+
+== Progress Meter Syntax
+
+The progress meter object uses the format: `{{meter value=50 min=0 max=100 label="Progress"}}`
+
+Where:
+* `value` - Current value (default: 0)
+* `min` - Minimum value (default: 0)
+* `max` - Maximum value (default: 100)
+* `label` - Optional label text
+* `text` - Optional text content
+* `id` - Optional ID attribute

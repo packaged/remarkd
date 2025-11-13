@@ -1,7 +1,9 @@
 <?php
 namespace Packaged\Remarkd;
 
-class Attributes
+use ArrayAccess;
+
+class Attributes implements ArrayAccess
 {
   protected $_position = [];
   protected $_named = [];
@@ -69,5 +71,47 @@ class Attributes
       }
     }
     return $classes;
+  }
+
+  // ArrayAccess implementation to allow array-like read access
+  public function offsetExists($offset): bool
+  {
+    if(is_int($offset))
+    {
+      return array_key_exists($offset, $this->_position);
+    }
+    if(is_string($offset))
+    {
+      return $this->has($offset);
+    }
+    return false;
+  }
+
+  public function offsetGet($offset):mixed
+  {
+    if(is_int($offset))
+    {
+      // Behave like position($pos)
+      return $this->position($offset);
+    }
+    if(is_string($offset))
+    {
+      // Behave like get($key)
+      return $this->get($offset);
+    }
+    return null;
+  }
+
+  public function offsetSet($offset, $value): void
+  {
+    // Attributes are intended to be immutable after construction in current design.
+    // Disallow mutation via array access to avoid inconsistent state.
+    throw new \LogicException('Attributes are read-only via array access');
+  }
+
+  public function offsetUnset($offset): void
+  {
+    // See note in offsetSet
+    throw new \LogicException('Attributes are read-only via array access');
   }
 }

@@ -1,0 +1,24 @@
+= Objects
+
+Objects are special macros that create interactive and media elements in your documents.
+
+== Overview
+
+Objects extend the functionality of Remarkd by providing macros for links, images, videos, and other special content types. They can be used inline or as block elements.
+
+== Object Types
+
+This category includes the following object types:
+
+* *Links* - Hyperlinks to external URLs and internal references
+* *Images* - Image display with various attributes
+* *Videos* - Video embedding with poster images
+* *Anchors* - Anchor points for internal linking
+* *References* - Cross-references to document sections
+* *Progress Meters* - Progress indicators and meters
+* *Line Breaks* - Explicit line breaks in text
+
+== Usage
+
+Objects use specific syntax patterns and can accept various attributes for customization. Click on any feature above to see examples and learn how to use them in your documents.
+

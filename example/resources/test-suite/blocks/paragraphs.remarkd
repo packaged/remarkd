@@ -1,0 +1,77 @@
+= Paragraphs
+
+Paragraphs are the basic building blocks of text content.
+
+== Basic Paragraphs
+
+This is a paragraph. It contains regular text that flows naturally.
+
+This is another paragraph, separated by a blank line.
+
+== Paragraphs with Formatting
+
+This paragraph contains *bold* text, _italic_ text, and `monospaced` text.
+
+This paragraph has a https://example.com[link] in it.
+
+== Paragraphs with Line Breaks
+
+This is a paragraph with a line break. +
+The plus sign creates a hard line break.
+
+== Paragraphs with Special Characters
+
+This paragraph contains special characters: -- (em dash), ... (ellipsis), and -> (arrow).
+
+== Paragraphs with Lists
+
+This paragraph comes before a list:
+
+* List item one
+* List item two
+
+This paragraph comes after the list.
+
+== Paragraphs with Code Blocks
+
+This paragraph introduces a code block:
+
+[source]
+----
+function example() {
+  return "Hello";
+}
+----
+
+This paragraph follows the code block.
+
+== Paragraphs with Block Quotes
+
+This paragraph introduces a quote:
+
+[quote]
+____
+This is a block quote.
+It can span multiple lines.
+____
+
+This paragraph follows the quote.
+
+== Paragraphs with Attributes
+
+[.highlight]
+This paragraph has a CSS class applied to it.
+
+[#special-paragraph]
+This paragraph has an ID.
+
+== Multiple Paragraphs
+
+First paragraph.
+
+Second paragraph.
+
+Third paragraph.
+
+Each separated by blank lines.
+

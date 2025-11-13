@@ -1,0 +1,60 @@
+= Include Module
+
+The include module allows you to include content from other files.
+
+== Basic Include
+
+include::example-file.remarkd[]
+
+== Include with Attributes
+
+include::example-file.remarkd[lines=1..10]
+
+== Include Examples
+
+include::header.remarkd[]
+
+include::footer.remarkd[]
+
+== Include in Sections
+
+== Included Content
+
+include::content-section.remarkd[]
+
+== Include with Formatting
+
+This paragraph introduces included content:
+
+include::example.remarkd[]
+
+== Include in Lists
+
+* First item
+* include::list-item.remarkd[]
+* Third item
+
+== Include Examples
+
+include::introduction.remarkd[]
+
+include::main-content.remarkd[]
+
+include::conclusion.remarkd[]
+
+== Include with Conditional Content
+
+ifeval::[version >= 2.0]
+include::new-features.remarkd[]
+endif::[]
+
+== Include Module Usage
+
+The include module is useful for:
+
+* Reusing common content
+* Organizing large documents
+* Maintaining consistency
+
+include::common-content.remarkd[]
+

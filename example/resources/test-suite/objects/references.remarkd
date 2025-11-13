@@ -1,0 +1,42 @@
+= References
+
+Reference objects create numbered references that appear in the document.
+
+== Basic Reference
+
+This is a reference {{ref code="REF1" content="Reference content here"}}.
+
+== Reference with Link
+
+This reference {{ref code="REF2" link="https://example.com"}} links to an external URL.
+
+== Reference with Content
+
+According to the study {{ref code="STUDY1" content="Smith et al. (2024). Important Research Study."}}, this is significant.
+
+== Multiple References
+
+First reference {{ref code="REF1" content="First reference content"}}.
+
+Second reference {{ref code="REF2" content="Second reference content"}}.
+
+Third reference {{ref code="REF3" link="https://example.com"}}.
+
+== Reference Examples
+
+The theory {{ref code="THEORY1" content="Einstein's Theory of Relativity"}} is well established.
+
+Recent research {{ref code="RESEARCH1" link="https://example.com/research"}} shows new findings.
+
+== Reference in Paragraphs
+
+This paragraph contains a reference {{ref code="PARA1" content="Paragraph reference"}} to additional information.
+
+== Reference Syntax
+
+The reference object uses the format: `{{ref code="REF1" content="Reference text"}}` or `{{ref code="REF1" link="https://url"}}`
+
+Where:
+* `code` - Optional reference code (defaults to numbered code)
+* `content` - Reference content text
+* `link` - Alternative to content - creates a link reference

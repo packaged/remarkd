@@ -1,0 +1,81 @@
+= Step Blocks
+
+Step blocks are used to create numbered step-by-step instructions.
+
+== Basic Steps
+
+[step]
+====
+Step 1: First action
+
+This is the first step in the process.
+====
+
+[step]
+====
+Step 2: Second action
+
+This is the second step.
+====
+
+[step]
+====
+Step 3: Third action
+
+This is the third step.
+====
+
+== Steps with Titles
+
+[step]
+====
+.Title: Initialize Project
+Create a new project directory and initialize it.
+====
+
+[step]
+====
+.Title: Install Dependencies
+Install all required dependencies.
+====
+
+[step]
+====
+.Title: Configure Settings
+Set up configuration files.
+====
+
+== Steps with Multiple Paragraphs
+
+[step]
+====
+Step with multiple paragraphs.
+
+Here's the second paragraph.
+
+And a third paragraph with more details.
+====
+
+== Steps with Lists
+
+[step]
+====
+Step with a list:
+
+* First item
+* Second item
+* Third item
+====
+
+== Steps with Code
+
+[step]
+====
+Step with code block:
+
+[source]
+----
+npm install
+----
+====
+

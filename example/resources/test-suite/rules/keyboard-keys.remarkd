@@ -1,0 +1,53 @@
+= Keyboard Keys
+
+Keyboard key notation displays keys in a styled format.
+
+== Basic Keyboard Keys
+
+Press kbd:[Enter] to submit the form.
+
+Use kbd:[Ctrl+C] to copy text.
+
+== Keyboard Key Combinations
+
+Use kbd:[Ctrl+Shift+N] to open a new window.
+
+Press kbd:[Alt+F4] to close the application.
+
+== Common Keyboard Shortcuts
+
+* kbd:[Ctrl+S] - Save
+* kbd:[Ctrl+Z] - Undo
+* kbd:[Ctrl+Y] - Redo
+* kbd:[Ctrl+F] - Find
+
+== Keyboard Keys with Other Formatting
+
+Press kbd:[Enter] and then *click* the button.
+
+Use kbd:[Ctrl+C] to _copy_ the text.
+
+== Keyboard Keys in Instructions
+
+Step 1: Press kbd:[Ctrl+N] to create a new file.
+
+Step 2: Type your content.
+
+Step 3: Press kbd:[Ctrl+S] to save.
+
+== Keyboard Keys with Links
+
+Learn more keyboard shortcuts at https://example.com[here].
+
+== Multiple Keyboard Keys
+
+Use kbd:[Ctrl+C] to copy and kbd:[Ctrl+V] to paste.
+
+== Special Keys
+
+Press kbd:[Esc] to cancel.
+
+Use kbd:[Tab] to move to the next field.
+
+Press kbd:[Space] to continue.
+

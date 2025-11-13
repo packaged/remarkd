@@ -1,0 +1,61 @@
+= Line Breaks
+
+Line break objects create explicit line breaks in text.
+
+== Basic Line Break
+
+This is line one. {{br}}
+This is line two.
+
+== Line Break Examples
+
+First line. {{br}}
+Second line. {{br}}
+Third line.
+
+== Line Break with Formatting
+
+This line has *bold* text. {{br}}
+This line has _italic_ text.
+
+== Line Breaks in Paragraphs
+
+This is a paragraph with a line break. {{br}}
+The text continues on the next line.
+
+== Line Breaks with Lists
+
+* First item {{br}}
+  Continuation of first item
+* Second item
+
+== Line Breaks with Code
+
+This is code: `example` {{br}}
+This is more code: `another example`
+
+== Line Break Examples
+
+Line one. {{br}}
+Line two. {{br}}
+Line three.
+
+== Line Breaks with Links
+
+Visit {{link:https://example.com text="Example"}}. {{br}}
+Then check {{link:https://github.com text="GitHub"}}.
+
+== Multiple Line Breaks
+
+First paragraph.
+
+Second paragraph with line break. {{br}}
+Continuation.
+
+Third paragraph.
+
+== Line Break Syntax
+
+The line break object uses the format: `{{br}}`
+
+This creates a simple HTML `<br>` tag for explicit line breaks.

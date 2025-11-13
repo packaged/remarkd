@@ -1,0 +1,67 @@
+= Comment Blocks
+
+Comment blocks allow you to add notes that won't appear in the rendered output.
+
+== Single Line Comments
+
+// This is a single line comment that won't be rendered.
+
+This paragraph will be visible.
+
+// Another single line comment.
+
+== Multi-line Comment Blocks
+
+////
+This is a multi-line comment block.
+It can span multiple lines.
+
+And paragraphs.
+
+It won't appear in the output.
+////
+
+This content will be visible.
+
+////
+Another comment block.
+////
+
+== Comments Around Content
+
+// Comment before paragraph
+
+This paragraph is visible.
+
+// Comment after paragraph
+
+== Comments in Lists
+
+* First item // inline comment
+* Second item
+// Comment between items
+* Third item
+
+== Comments with Code
+
+[source]
+----
+code here
+----
+
+// Comment about the code above
+
+== Comments with Blocks
+
+////
+Comment before block
+////
+
+====
+Example block content
+====
+
+////
+Comment after block
+////
+

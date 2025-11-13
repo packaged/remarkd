@@ -1,0 +1,49 @@
+= Callout Blocks
+
+Callout blocks are used to highlight specific parts of content, often used with code blocks.
+
+== Basic Callouts
+
+This is regular text with a callout <1> at the end.
+
+<1> This is the explanation for callout 1.
+
+== Callouts with Code Blocks
+
+[source]
+----
+function example() {
+  return "Hello"; // <1>
+}
+
+const result = example(); // <2>
+----
+<1> This function returns a greeting
+<2> Call the function and store the result
+
+== Multiple Callouts
+
+[source]
+----
+if (condition) { // <1>
+  doSomething(); // <2>
+} else { // <3>
+  doSomethingElse(); // <4>
+}
+----
+<1> Check the condition
+<2> Execute if true
+<3> Otherwise
+<4> Execute alternative
+
+== Callout Blocks
+
+You can also use callout blocks to create standalone callouts:
+
+[callout]
+====
+This is a callout block that can contain multiple paragraphs and other content.
+
+It's useful for highlighting important information that doesn't fit inline.
+====
+

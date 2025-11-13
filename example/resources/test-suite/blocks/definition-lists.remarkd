@@ -1,0 +1,63 @@
+= Definition Lists
+
+Definition lists pair terms with their definitions or descriptions.
+
+== Basic Definition List
+
+CPU:: The brain of the computer.
+RAM:: Temporarily stores information the CPU uses during operation.
+Hard drive:: Permanent storage for operating system and/or user files.
+
+== Definition List with Title
+
+.Definition List: Computer Components
+CPU:: Central Processing Unit - executes instructions
+RAM:: Random Access Memory - temporary storage
+SSD:: Solid State Drive - fast permanent storage
+
+== Horizontal Definition List
+
+[horizontal]
+CPU:: The brain of the computer.
+RAM:: Temporarily stores information.
+Hard drive:: Permanent storage.
+
+== Definition List with Multiple Definitions
+
+Term:: First definition
+Term:: Second definition
+Term:: Third definition
+
+== Definition List with Complex Content
+
+Operating System::
+An operating system manages computer hardware and software resources.
+
+It provides common services for computer programs.
+
+Programming Language::
+A programming language is a formal language used to write computer programs.
+
+Examples include:
+* Python
+* JavaScript
+* Ruby
+
+== Nested Definition Lists
+
+Computer::
+Hardware:: Physical components of a computer
+Software:: Programs and data that run on hardware
+
+Software::
+Operating System:: Manages hardware resources
+Applications:: Programs for specific tasks
+
+== Definition List with Formatting
+
+*Bold Term*:: Definition with *bold* and _italic_ text.
+
+`Code Term`:: Definition explaining the code term.
+
+Link Term:: Definition with a https://example.com[link].
+

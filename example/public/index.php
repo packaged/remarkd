@@ -13,6 +13,7 @@ try
 }
 catch(Throwable $e)
 {
+  echo '<pre>';
   print_r($e);
 }
 finally

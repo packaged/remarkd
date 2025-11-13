@@ -1,0 +1,125 @@
+= Mixed Content
+
+Mixed content demonstrates combining various elements together.
+
+== Paragraphs with Formatting
+
+This paragraph has *bold*, _italic_, `monospaced`, and https://example.com[link] text.
+
+== Lists with Formatting
+
+* Item with *bold* text
+* Item with _italic_ text
+* Item with `monospaced` text
+* Item with https://example.com[link]
+
+== Blocks with Formatting
+
+====
+Example block with *bold* and _italic_ text.
+
+And a https://example.com[link] too.
+====
+
+== Code Blocks with Comments
+
+[source]
+----
+function example() { // <1>
+  return "Hello"; // <2>
+}
+----
+<1> Function definition
+<2> Return statement
+
+== Sections with Multiple Elements
+
+== Complete Example
+
+This section demonstrates mixed content:
+
+* First item with *bold* text
+
+  [source]
+  ----
+  code example
+  ----
+
+* Second item with _italic_ text
+
+  ====
+  Example block content
+  ====
+
+* Third item with `monospaced` text
+
+== Paragraphs, Lists, and Blocks
+
+This is a paragraph with *bold* text.
+
+Here's a list:
+
+* First item
+* Second item
+* Third item
+
+And an example block:
+
+====
+Example content here.
+====
+
+== Formatting Combinations
+
+This paragraph combines:
+* *Bold* text
+* _Italic_ text
+* `Monospaced` text
+* https://example.com[Links]
+* :smile: Emojis
+* kbd:[Ctrl+C] Keyboard keys
+
+== Complex Mixed Content
+
+== Introduction
+
+Introduction with *important* information.
+
+=== Getting Started
+
+Getting started section:
+
+. Step one
+
+  [source]
+  ----
+  npm install
+  ----
+
+. Step two
+
+  ====
+  Example output
+  ====
+
+== Main Content
+
+Main content with various elements:
+
+* Feature one
+
+  [source]
+  ----
+  code example
+  ----
+
+* Feature two
+
+  ====
+  Example content
+  ====
+
+== Conclusion
+
+Conclusion with final thoughts.
+

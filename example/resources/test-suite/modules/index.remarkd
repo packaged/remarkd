@@ -1,0 +1,18 @@
+= Modules
+
+Modules extend the core functionality of Remarkd with additional features and capabilities.
+
+== Overview
+
+Modules provide extended functionality beyond the core parser features. They can be registered with the Remarkd instance to add new capabilities.
+
+== Module Types
+
+This category includes the following modules:
+
+* *Include Module* - Include content from other files
+
+== Usage
+
+Modules must be registered with the Remarkd instance before use. Click on any feature above to see examples and learn how to use modules in your documents.
+

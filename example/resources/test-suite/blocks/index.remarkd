@@ -1,0 +1,32 @@
+= Blocks
+
+Blocks are structural elements that organize content into distinct sections with specific formatting and behavior.
+
+== Overview
+
+Blocks provide a way to structure your document with various content types, each with its own rendering and substitution rules. They can contain paragraphs, lists, code, and other content elements.
+
+== Block Types
+
+This category includes the following block types:
+
+* *Admonitions* - Callout blocks for notes, tips, warnings, and cautions
+* *Callouts* - Numbered callouts for referencing specific parts of content
+* *Code Blocks* - Source code with syntax highlighting
+* *Example Blocks* - Example content with normal substitutions
+* *Listing Blocks* - Preformatted text preserving whitespace
+* *Literal Blocks* - Text output exactly as entered
+* *Sidebar Blocks* - Aside content displayed outside the main flow
+* *Tab Blocks* - Content organized into tabs
+* *Accordion Blocks* - Collapsible sections of content
+* *Step Blocks* - Numbered step-by-step instructions
+* *Comment Blocks* - Comments that don't appear in output
+* *Ordered Lists* - Numbered lists
+* *Unordered Lists* - Bulleted lists
+* *Definition Lists* - Term-definition pairs
+* *Paragraphs* - Basic text paragraphs
+
+== Usage
+
+Each block type has its own syntax and use cases. Click on any feature above to see examples and learn how to use them in your documents.
+

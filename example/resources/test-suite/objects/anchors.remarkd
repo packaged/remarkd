@@ -1,0 +1,56 @@
+= Anchors
+
+Anchor objects create anchor points for internal linking.
+
+== Basic Anchor
+
+{{anchor name="anchor-point"}}
+
+This section has an anchor point.
+
+== Anchor with Name
+
+{{anchor name="my-anchor"}}
+
+This is a section with an anchor.
+
+== Multiple Anchors
+
+{{anchor name="anchor-1"}}
+
+First section with anchor.
+
+{{anchor name="anchor-2"}}
+
+Second section with anchor.
+
+== Anchor Examples
+
+{{anchor name="introduction"}}
+
+== Introduction
+
+Content here.
+
+{{anchor name="main-content"}}
+
+== Main Content
+
+More content.
+
+{{anchor name="conclusion"}}
+
+== Conclusion
+
+Final content.
+
+== Linking to Anchors
+
+You can link to anchors using HTML anchor links: `<a href="#anchor-name">Link</a>`
+
+== Anchor Syntax
+
+The anchor object uses the format: `{{anchor name="anchor-name"}}`
+
+Where:
+* `name` - Required anchor name attribute

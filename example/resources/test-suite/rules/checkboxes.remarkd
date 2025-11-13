@@ -1,0 +1,56 @@
+= Checkboxes
+
+Checkbox rules create interactive checkbox elements.
+
+== Basic Checkboxes
+
+- [ ] Unchecked checkbox
+- [x] Checked checkbox
+
+== Checkboxes in Lists
+
+* [ ] First unchecked item
+* [x] Second checked item
+* [ ] Third unchecked item
+
+== Checkboxes with Text
+
+- [ ] Task one: Complete the first task
+- [x] Task two: This task is done
+- [ ] Task three: Still pending
+
+== Checkboxes with Formatting
+
+- [x] Task with *bold* text
+- [ ] Task with _italic_ text
+- [x] Task with `monospaced` text
+
+== Checkboxes with Links
+
+- [ ] Read the https://example.com[documentation]
+- [x] Complete the setup
+- [ ] Test the application
+
+== Nested Checkboxes
+
+* [ ] Main task
+** [x] Sub-task one
+** [ ] Sub-task two
+* [x] Another main task
+
+== Checkboxes in Ordered Lists
+
+. [ ] First step
+. [x] Second step (completed)
+. [ ] Third step
+
+== Checkboxes with Other Content
+
+- [x] Completed task
+
+  Additional details about this task.
+
+- [ ] Pending task
+
+  More information here.
+

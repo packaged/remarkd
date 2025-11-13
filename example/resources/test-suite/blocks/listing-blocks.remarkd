@@ -1,0 +1,61 @@
+= Listing Blocks
+
+Listing blocks preserve text exactly as written, including whitespace and special characters.
+
+== Basic Listing Block
+
+----
+This is a listing block.
+It preserves all whitespace and formatting.
+    Indentation is maintained.
+----
+
+== Listing Block with Code
+
+----
+#!/bin/bash
+echo "Hello, World!"
+cd /path/to/directory
+ls -la
+----
+
+== Listing Block with Title
+
+.Listing: Sample Configuration
+----
+database:
+  host: localhost
+  port: 5432
+  name: myapp
+----
+
+== Listing Block with ID
+
+[#config-listing]
+.Listing: Environment Variables
+----
+NODE_ENV=production
+API_KEY=secret123
+DEBUG=false
+----
+
+== Multiple Listing Blocks
+
+----
+First listing block
+----
+
+----
+Second listing block
+with different content
+----
+
+== Listing Block with Special Characters
+
+----
+<tag>content</tag>
+&entity;
+"quoted text"
+'single quotes'
+----
+

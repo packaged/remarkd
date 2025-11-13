@@ -1,0 +1,54 @@
+= Bold and Italic Text
+
+Text formatting rules for bold and italic emphasis.
+
+== Bold Text
+
+This paragraph contains *bold text* within it.
+
+This paragraph has **unconstrained bold** text in the middle.
+
+== Italic Text
+
+This paragraph contains _italic text_ within it.
+
+This paragraph has __unconstrained italic__ text in the middle.
+
+== Combined Formatting
+
+This paragraph has *_bold italic_* text.
+
+This paragraph has **__bold italic__** unconstrained text.
+
+== Bold and Italic Together
+
+This is *bold* and this is _italic_ in the same paragraph.
+
+This is **bold** and this is __italic__ unconstrained.
+
+== Bold with Other Formatting
+
+This paragraph has *bold* and `monospaced` text together.
+
+This paragraph has *bold* and a https://example.com[link].
+
+== Italic with Other Formatting
+
+This paragraph has _italic_ and `monospaced` text together.
+
+This paragraph has _italic_ and a https://example.com[link].
+
+== Nested Formatting
+
+This paragraph has *bold with _italic inside_* it.
+
+This paragraph has _italic with *bold inside*_ it.
+
+== Edge Cases
+
+*Bold at start* of paragraph.
+
+_Bold at end_ of paragraph.
+
+*Single asterisk* and _single underscore_ work too.
+

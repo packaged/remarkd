@@ -1,0 +1,86 @@
+= Accordion Blocks
+
+Accordion blocks allow you to create collapsible sections of content.
+
+== Basic Accordion
+
+_-_#accordion1[name="First Section"]
+Content for the first accordion section.
+
+_-_#accordion2[name="Second Section"]
+Content for the second accordion section.
+
+_-_#accordion3[name="Third Section"]
+Content for the third accordion section.
+
+_-_
+
+== Accordion with Multiple Paragraphs
+
+_-_#section1[name="Section One"]
+This accordion section has multiple paragraphs.
+
+Here's the second paragraph.
+
+And a third paragraph.
+
+_-_#section2[name="Section Two"]
+This is another section.
+
+With its own content.
+
+_-_
+
+== Accordion with Lists
+
+_-_#list-section[name="List Section"]
+This section contains a list:
+
+* First item
+* Second item
+* Third item
+
+_-_#code-section[name="Code Section"]
+This section contains code:
+
+[source]
+----
+function example() {
+  return "Hello";
+}
+----
+
+_-_
+
+== Accordion with Mixed Content
+
+_-_#mixed[name="Mixed Content"]
+This accordion has *bold* and _italic_ text.
+
+And a code block:
+
+[source]
+----
+example code
+----
+
+And a list:
+
+* Item one
+* Item two
+
+_-_
+
+== Nested Accordions
+
+_-_#parent[name="Parent Section"]
+Parent content here.
+
+_-_#child1[name="Child Section 1"]
+Child content one.
+
+_-_#child2[name="Child Section 2"]
+Child content two.
+
+_-_
+

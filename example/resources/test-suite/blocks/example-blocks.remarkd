@@ -1,0 +1,59 @@
+= Example Blocks
+
+Example blocks are used to display example content with normal substitutions applied.
+
+== Basic Example Block
+
+====
+This is an example block.
+
+It can contain *bold* and _italic_ text, as well as other formatting.
+
+Example blocks are useful for demonstrating concepts or showing sample output.
+====
+
+== Example Block with Title
+
+.Example: Sample Output
+====
+User logged in successfully
+Session ID: abc123
+Timestamp: 2024-01-01 12:00:00
+====
+
+== Example Block with ID
+
+[#example-1]
+.Example: Configuration
+====
+server {
+  listen 80;
+  server_name example.com;
+  root /var/www/html;
+}
+====
+
+== Multiple Example Blocks
+
+====
+First example block with some content.
+====
+
+====
+Second example block with different content.
+
+This one has multiple paragraphs.
+====
+
+== Example Block with Lists
+
+====
+Here's an example with a list:
+
+* First item
+* Second item
+* Third item
+
+And some more text after the list.
+====
+

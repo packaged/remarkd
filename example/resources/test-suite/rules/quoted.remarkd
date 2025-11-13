@@ -1,0 +1,44 @@
+= Quoted Text
+
+Quoted text is used for inline quotations and citations.
+
+== Basic Quoted Text
+
+This paragraph contains "quoted text" within it.
+
+== Quoted Text Examples
+
+As the saying goes, "practice makes perfect."
+
+The user said, "this is a quote."
+
+== Quoted Text with Attribution
+
+"To be or not to be" -- Shakespeare
+
+== Quoted Text with Other Formatting
+
+This paragraph has "quoted" and *bold* text.
+
+This paragraph has "quoted" and _italic_ text.
+
+== Quoted Text in Lists
+
+* Item with "quoted text"
+* Another item
+* Third item with "another quote"
+
+== Quoted Text with Links
+
+The document states, "see https://example.com[here] for details."
+
+== Multiple Quoted Sections
+
+This paragraph has "first quote" and "second quote" sections.
+
+== Quoted Text at Boundaries
+
+"Quote at start" of paragraph.
+
+"Quote at end" of paragraph.
+

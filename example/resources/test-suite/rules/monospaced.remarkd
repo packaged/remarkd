@@ -1,0 +1,52 @@
+= Monospaced Text
+
+Monospaced text is displayed in a fixed-width font, typically used for code.
+
+== Basic Monospaced
+
+This paragraph contains `monospaced text` within it.
+
+This paragraph has ``unconstrained monospaced`` text.
+
+== Monospaced with Code
+
+Use `console.log()` to output to the console.
+
+The function `getElementById()` returns an element.
+
+== Monospaced with Formatting
+
+This paragraph has `*bold monospaced*` text.
+
+This paragraph has `_italic monospaced_` text.
+
+== Monospaced File Paths
+
+The file is located at `/path/to/file.txt`.
+
+Windows path: `C:\Users\Documents\file.txt`.
+
+== Monospaced Commands
+
+Run the command `npm install` to install dependencies.
+
+Use `git status` to check the repository status.
+
+== Monospaced Variables
+
+The variable `$username` contains the user's name.
+
+Set `$config` to configure the application.
+
+== Monospaced in Lists
+
+* Item with `monospaced` text
+* Another item with ``monospaced`` text
+* Third item
+
+== Monospaced with Links
+
+Visit `https://example.com` for more information.
+
+Check the `README.md` file for details.
+

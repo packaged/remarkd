@@ -1,0 +1,48 @@
+= Admonitions
+
+Admonitions are callout blocks that draw attention to important information.
+
+== NOTE Admonition
+
+NOTE: This is a note admonition. Use it to provide additional information that is helpful but not critical.
+
+== TIP Admonition
+
+TIP: This is a tip admonition. Use it to provide helpful hints or best practices.
+
+== IMPORTANT Admonition
+
+IMPORTANT: This is an important admonition. Use it to highlight critical information that users must be aware of.
+
+== WARNING Admonition
+
+WARNING: This is a warning admonition. Use it to alert users about potential problems or dangers.
+
+== CAUTION Admonition
+
+CAUTION: This is a caution admonition. Use it to warn users about actions that could cause problems.
+
+== Admonition Blocks
+
+Admonitions can also be used as blocks to contain multiple paragraphs or other content:
+
+[NOTE]
+====
+This is a note block that can contain multiple paragraphs.
+
+It can also contain lists:
+
+* Item one
+* Item two
+* Item three
+
+And even code blocks or other elements.
+====
+
+[WARNING]
+====
+This is a warning block with multiple paragraphs.
+
+Use admonition blocks when you need to include complex content within an admonition.
+====
+

@@ -38,6 +38,7 @@ class ImageObject extends AbstractRemarkdObject
         $src = $this->_context->getResourceRoot() . DIRECTORY_SEPARATOR . $cwd . DIRECTORY_SEPARATOR . ($this->_config->get('src') ?? '');
       }
     }
+    error_log(print_r($src, true));
 
     $img = Image::create($src, $this->_config->get("alt"));
 

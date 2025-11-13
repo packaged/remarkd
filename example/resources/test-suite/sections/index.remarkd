@@ -1,0 +1,21 @@
+= Sections
+
+Sections organize your document into a hierarchical structure with headings and navigation.
+
+== Overview
+
+Sections provide the structural backbone of your document, creating a clear hierarchy that helps readers navigate and understand the content organization.
+
+== Section Features
+
+This category includes the following section-related features:
+
+* *Document Header* - Title, author, revision, and document attributes
+* *Section Headings* - Hierarchical headings from level 1 to level 5
+* *Nested Sections* - Creating complex document structures
+* *Section IDs* - Anchor points and cross-referencing
+
+== Usage
+
+Sections create the document outline and enable features like table of contents and cross-referencing. Click on any feature above to see examples and learn how to structure your documents.
+
