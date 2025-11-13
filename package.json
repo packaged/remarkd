@@ -1,0 +1,12 @@
+{
+  "name": "remarkd-js",
+  "version": "1.0.0",
+  "description": "JavaScript bundler for Remarkd library",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.0"
+  }
+}
+

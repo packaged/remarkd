@@ -38,3 +38,4 @@ The deprecated method [.line-through]#oldMethod()# should not be used.
 
 Use `newMethod()` instead of [.line-through]#oldMethod()#.
 
+

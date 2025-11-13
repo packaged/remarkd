@@ -8,233 +8,346 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
-    
-    .test-suite-container {
-      display: flex;
-      min-height: 100vh;
-    }
-    
-    .test-suite-sidebar {
-      width: 300px;
-      background: #fff;
-      border-right: 1px solid #e0e0e0;
-      padding: 20px;
-      overflow-y: auto;
-      position: fixed;
-      height: 100vh;
-      left: 0;
-      top: 0;
-    }
-    
-    .test-suite-main {
-      margin-left: 300px;
-      flex: 1;
-      padding: 40px;
-      max-width: 100%;
-    }
-    
-    .feature-catalog {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    
-    .feature-catalog > li {
-      margin-bottom: 20px;
-    }
-    
-    .category-link {
-      display: block;
-      font-weight: 600;
-      font-size: 16px;
-      color: #333;
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      transition: background 0.2s;
-    }
-    
-    .category-link:hover {
-      background: #f0f0f0;
-    }
-    
-    .category-link.active {
-      background: #0070c9;
-      color: #fff;
-    }
-    
-    .category-description {
-      display: block;
-      font-size: 12px;
-      color: #666;
-      margin-top: 4px;
-      padding: 0 12px;
-    }
-    
-    .feature-list {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 0 0;
-    }
-    
-    .feature-list li {
-      margin: 4px 0;
-    }
-    
-    .feature-link {
-      display: block;
-      font-size: 14px;
-      color: #555;
-      text-decoration: none;
-      padding: 6px 12px 6px 24px;
-      border-radius: 4px;
-      transition: background 0.2s;
-    }
-    
-    .feature-link:hover {
-      background: #f0f0f0;
-    }
-    
-    .feature-link.active {
-      background: #e3f2fd;
-      color: #0070c9;
-      font-weight: 500;
-    }
-    
-    .test-suite-index {
-      background: #fff;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .test-suite-index h1 {
-      margin-top: 0;
-      color: #333;
-    }
-    
-    .test-suite-feature {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    
-    .back-link {
-      display: inline-block;
-      margin: 20px;
-      color: #0070c9;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .back-link:hover {
-      text-decoration: underline;
-    }
-    
-    .feature-viewer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border-top: 1px solid #e0e0e0;
-    }
-    
-    .source-panel,
-    .output-panel {
-      padding: 20px;
-      overflow-x: auto;
-    }
-    
-    .source-panel {
-      background: #f8f8f8;
-      border-right: 1px solid #e0e0e0;
-    }
-    
-    .output-panel {
-      background: #fff;
-    }
-    
-    .source-panel h2,
-    .output-panel h2 {
-      margin-top: 0;
-      font-size: 18px;
-      color: #333;
-      border-bottom: 2px solid #0070c9;
-      padding-bottom: 8px;
-    }
-    
-    .source-code {
-      background: #2d2d2d;
-      color: #f8f8f2;
-      padding: 16px;
-      border-radius: 4px;
-      overflow-x: auto;
-      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-      font-size: 13px;
-      line-height: 1.5;
-      margin: 0;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-    
-    .output-content {
-      padding: 0;
-    }
-    
-    .test-suite-error {
-      background: #fff;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    
-    @media (max-width: 1200px) {
-      .feature-viewer {
-        grid-template-columns: 1fr;
+      * {
+          box-sizing: border-box;
       }
-      
-      .source-panel {
-        border-right: none;
-        border-bottom: 1px solid #e0e0e0;
+
+      body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background: #f5f5f5;
       }
-    }
-    
-    @media (max-width: 768px) {
+
+      .test-suite-container {
+          display: flex;
+          min-height: 100vh;
+      }
+
       .test-suite-sidebar {
-        width: 100%;
-        position: relative;
-        height: auto;
+          width: 300px;
+          background: #fff;
+          border-right: 1px solid #e0e0e0;
+          padding: 20px;
+          overflow-y: auto;
+          position: fixed;
+          height: 100vh;
+          left: 0;
+          top: 0;
       }
-      
+
       .test-suite-main {
-        margin-left: 0;
+          margin-left: 300px;
+          flex: 1;
+          padding: 40px;
+          max-width: 100%;
       }
-    }
+
+      .feature-catalog {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+      }
+
+      .feature-catalog > li {
+          margin-bottom: 20px;
+      }
+
+      .category-link {
+          display: block;
+          font-weight: 600;
+          font-size: 16px;
+          color: #333;
+          text-decoration: none;
+          padding: 8px 12px;
+          border-radius: 4px;
+          transition: background 0.2s;
+      }
+
+      .category-link:hover {
+          background: #f0f0f0;
+      }
+
+      .category-link.active {
+          background: #0070c9;
+          color: #fff;
+      }
+
+      .category-description {
+          display: block;
+          font-size: 12px;
+          color: #666;
+          margin-top: 4px;
+          padding: 0 12px;
+      }
+
+      .feature-list {
+          list-style: none;
+          padding: 0;
+          margin: 8px 0 0 0;
+      }
+
+      .feature-list li {
+          margin: 4px 0;
+      }
+
+      .feature-link {
+          display: block;
+          font-size: 14px;
+          color: #555;
+          text-decoration: none;
+          padding: 6px 12px 6px 24px;
+          border-radius: 4px;
+          transition: background 0.2s;
+      }
+
+      .feature-link:hover {
+          background: #f0f0f0;
+      }
+
+      .feature-link.active {
+          background: #e3f2fd;
+          color: #0070c9;
+          font-weight: 500;
+      }
+
+      .test-suite-index {
+          background: #fff;
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-suite-index h1 {
+          margin-top: 0;
+          color: #333;
+      }
+
+      .test-suite-feature {
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+      }
+
+      .back-link {
+          display: inline-block;
+          margin: 20px;
+          color: #0070c9;
+          text-decoration: none;
+          font-weight: 500;
+      }
+
+      .back-link:hover {
+          text-decoration: underline;
+      }
+
+      .feature-viewer {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 0;
+          border-top: 1px solid #e0e0e0;
+      }
+
+      .source-panel,
+      .output-panel,
+      .js-output-panel {
+          padding: 20px;
+          overflow-x: auto;
+      }
+
+      .source-panel {
+          background: #f8f8f8;
+          border-right: 1px solid #e0e0e0;
+      }
+
+      .output-panel {
+          background: #fff;
+          border-right: 1px solid #e0e0e0;
+      }
+
+      .js-output-panel {
+          background: #f9f9ff;
+      }
+
+      .source-panel h2,
+      .output-panel h2,
+      .js-output-panel h2 {
+          margin-top: 0;
+          font-size: 18px;
+          color: #333;
+          border-bottom: 2px solid #0070c9;
+          padding-bottom: 8px;
+      }
+
+      .js-output-panel h2 {
+          border-bottom-color: #6c5ce7;
+      }
+
+      .error {
+          color: #d32f2f;
+          padding: 10px;
+          background: #ffebee;
+          border-radius: 4px;
+      }
+
+      .source-code {
+          background: #2d2d2d;
+          color: #f8f8f2;
+          padding: 16px;
+          border-radius: 4px;
+          overflow-x: auto;
+          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+          font-size: 13px;
+          line-height: 1.5;
+          margin: 0;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+      }
+
+      .output-content {
+          padding: 0;
+      }
+
+      .test-suite-error {
+          background: #fff;
+          padding: 40px;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          text-align: center;
+      }
+
+      @media (max-width: 1600px) {
+          .feature-viewer {
+              grid-template-columns: 1fr 1fr;
+          }
+
+          .js-output-panel {
+              grid-column: 1 / -1;
+              border-top: 1px solid #e0e0e0;
+              border-right: none;
+          }
+      }
+
+      @media (max-width: 1200px) {
+          .feature-viewer {
+              grid-template-columns: 1fr;
+          }
+
+          .source-panel,
+          .output-panel {
+              border-right: none;
+              border-bottom: 1px solid #e0e0e0;
+          }
+
+          .js-output-panel {
+              border-top: 1px solid #e0e0e0;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .test-suite-sidebar {
+              width: 100%;
+              position: relative;
+              height: auto;
+          }
+
+          .test-suite-main {
+              margin-left: 0;
+          }
+      }
   </style>
 </head>
 <body>
-  <div class="test-suite-container">
-    <?php if($this->_sidebar): ?>
+<div class="test-suite-container">
+  <?php if($this->_sidebar): ?>
     <div class="test-suite-sidebar">
       <h2 style="margin-top: 0;">Feature Catalog</h2>
       <?= $this->_sidebar; ?>
     </div>
-    <?php endif; ?>
-    <div class="test-suite-main">
-      <?= $this->_content; ?>
-    </div>
+  <?php endif; ?>
+  <div class="test-suite-main">
+    <?= $this->_content; ?>
   </div>
+</div>
+<script type="text/javascript">
+  function renderRemarkd() {
+    const element = document.getElementById('current-remarkd-content');
+    const outputElement = document.getElementById('js-output-content');
+    
+    if (!outputElement) {
+      return;
+    }
+    
+    if (!window.Remarkd) {
+      outputElement.innerHTML = '<div class="error">Remarkd library not loaded</div>';
+      return;
+    }
+    
+    if (element) {
+      window.Remarkd.parse(element.textContent || element.innerText).then(parsed => {
+        outputElement.innerHTML = parsed;
+      }).catch(err => {
+        outputElement.innerHTML = '<div class="error">Error: ' + err.message + '</div>';
+      });
+    } else {
+      outputElement.innerHTML = '<div class="error">No Remarkd Content Found</div>';
+    }
+  }
+  
+  // Wait for DOM and Remarkd library to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if Remarkd is already loaded, otherwise wait for it
+      if (window.Remarkd) {
+        renderRemarkd();
+      } else {
+        // Poll for Remarkd to be available (in case script loads after DOMContentLoaded)
+        const checkRemarkd = setInterval(function() {
+          if (window.Remarkd) {
+            clearInterval(checkRemarkd);
+            renderRemarkd();
+          }
+        }, 50);
+        
+        // Give up after 5 seconds
+        setTimeout(function() {
+          clearInterval(checkRemarkd);
+          if (!window.Remarkd) {
+            const outputElement = document.getElementById('js-output-content');
+            if (outputElement) {
+              outputElement.innerHTML = '<div class="error">Remarkd library failed to load</div>';
+            }
+          }
+        }, 5000);
+      }
+    });
+  } else {
+    // DOM already loaded
+    if (window.Remarkd) {
+      renderRemarkd();
+    } else {
+      // Wait for Remarkd
+      const checkRemarkd = setInterval(function() {
+        if (window.Remarkd) {
+          clearInterval(checkRemarkd);
+          renderRemarkd();
+        }
+      }, 50);
+      
+      setTimeout(function() {
+        clearInterval(checkRemarkd);
+        if (!window.Remarkd) {
+          const outputElement = document.getElementById('js-output-content');
+          if (outputElement) {
+            outputElement.innerHTML = '<div class="error">Remarkd library failed to load</div>';
+          }
+        }
+      }, 5000);
+    }
+  }
+</script>
 </body>
 </html>
+
 

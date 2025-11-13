@@ -12,6 +12,7 @@ class TestSuitePage extends TemplatedHtmlElement implements ContextAware
   protected $_content;
   protected $_sidebar;
   protected $_title;
+  protected $_jsScript;
 
   public function setTitle($title)
   {
@@ -36,9 +37,16 @@ class TestSuitePage extends TemplatedHtmlElement implements ContextAware
     return $this;
   }
 
+  public function setJsScript($script)
+  {
+    $this->_jsScript = $script;
+    return $this;
+  }
+
   protected function _getTemplateFile()
   {
     return __DIR__ . '/TestSuitePage.phtml';
   }
 }
+
 

@@ -45,6 +45,7 @@ class TestSuiteController extends Controller
     $rmpm->requireCss('resources/css/remarkd-theme.css');
     $rmpm->requireJs('resources/js/tabs.js');
     $rmpm->requireJs('resources/js/accordion.js');
+    $rmpm->requireJs('resources/js/remarkd.js');
 
     $page = new TestSuitePage();
     $page->setTitle('Remarkd Test Suite - Feature Catalog');
@@ -75,6 +76,7 @@ class TestSuiteController extends Controller
     $rmpm->requireCss('resources/css/remarkd-theme.css');
     $rmpm->requireJs('resources/js/tabs.js');
     $rmpm->requireJs('resources/js/accordion.js');
+    $rmpm->requireJs('resources/js/remarkd.js');
 
     $category = $this->routeData()->get('category') ?? '';
     $feature = $this->routeData()->get('feature') ?? '';
@@ -140,13 +142,24 @@ class TestSuiteController extends Controller
                   ->appendContent([
                       HeadingTwo::create('Source (.remarkd)'),
                       PreFormattedText::create($rawContent)
-                        ->addClass('source-code'),
+                        ->addClass('source-code')->setId('current-remarkd-content'),
                     ]
                   ),
                 Div::create()
                   ->addClass('output-panel')
                   ->appendContent([
+                      HeadingTwo::create('PHP Output'),
                       Div::create(new SafeHtml($htmlContent))
+                        ->addClass('remarkd remarkd-styled output-content'),
+                    ]
+                  ),
+                Div::create()
+                  ->addClass('js-output-panel')
+                  ->setId('js-output-panel')
+                  ->appendContent([
+                      HeadingTwo::create('JavaScript Output'),
+                      Div::create()
+                        ->setId('js-output-content')
                         ->addClass('remarkd remarkd-styled output-content'),
                     ]
                   ),
@@ -377,7 +390,7 @@ class TestSuiteController extends Controller
                     ->appendContent([
                         HeadingTwo::create('Source (.remarkd)'),
                         PreFormattedText::create($rawContent)
-                          ->addClass('source-code'),
+                          ->addClass('source-code')->setId('current-remarkd-content'),
                       ]
                     ),
                   Div::create()
