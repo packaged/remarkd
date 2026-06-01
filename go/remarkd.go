@@ -631,6 +631,9 @@ func (p *parser) parseTable(title string, attr *attrs) string {
 		body += "</tr>"
 	}
 	tableClass := "remarkd-table"
+	if enabled(attr, "striped", false) {
+		tableClass += " remarkd-table--striped"
+	}
 	if prosCons {
 		tableClass += " pros-cons-table"
 		if enabled(attr, "background-colour", true) && enabled(attr, "background-color", true) {

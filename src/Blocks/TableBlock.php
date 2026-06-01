@@ -84,6 +84,10 @@ class TableBlock extends BasicBlock implements BlockMatcher
   {
     $table = new CustomHtmlTag('table');
     $table->addClass('remarkd-table');
+    if($this->_enabled('striped', false))
+    {
+      $table->addClass('remarkd-table--striped');
+    }
     if($this->_isProsCons())
     {
       $table->addClass('pros-cons-table');

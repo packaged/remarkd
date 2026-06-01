@@ -209,6 +209,10 @@
   padding: 3px 6px;
 }
 
+.remarkd .remarkd-table--striped tbody tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
 .remarkd .pros-cons-table th {
   background: #2367a6;
   color: #fff;
@@ -228,6 +232,14 @@
 
 .remarkd .pros-cons-table--background .pros-cons-cell--pro {
   background: #e8f4ec;
+}
+
+.remarkd .pros-cons-table--background.remarkd-table--striped tbody tr:nth-child(even) .pros-cons-cell--con {
+  background: #f5d8d5;
+}
+
+.remarkd .pros-cons-table--background.remarkd-table--striped tbody tr:nth-child(even) .pros-cons-cell--pro {
+  background: #d4eadb;
 }
 
 .remarkd .pros-cons-table--text-color .pros-cons-cell--con {

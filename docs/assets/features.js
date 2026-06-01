@@ -480,27 +480,32 @@ Content
     slug: "table",
     title: "Table",
     group: "tables",
-    desc: "|=== fences delimit a table; the first row is the header. A leading .Title names it.",
+    desc: "|=== fences delimit a table; the first row is the header. A leading .Title names it. Use striped=true for alternating rows.",
     source: `.Data
+[striped=true]
 |===
 |Name |Value
 
 |Alpha |1
+
+|Beta |2
 |===`,
-    expected: `<div class="remarkd-section section--level0 section--with-content"><div class="table-block"><div class="title">Data</div><table class="remarkd-table"><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>Alpha</td><td>1</td></tr></tbody></table></div></div>`,
+    expected: `<div class="remarkd-section section--level0 section--with-content"><div class="table-block"><div class="title">Data</div><table class="remarkd-table remarkd-table--striped"><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>Alpha</td><td>1</td></tr><tr><td>Beta</td><td>2</td></tr></tbody></table></div></div>`,
   },
   {
     slug: "pros-cons",
     title: "Pros/Cons table",
     group: "tables",
-    desc: "[pros-cons] styles a two-column table as con/pro guidance. Configure header-icons, background-colour, text-colour, pro-icon, and con-icon.",
-    source: `[pros-cons header-icons=true background-colour=true text-colour=true pro-icon="✅" con-icon="❌"]
+    desc: "[pros-cons] styles a two-column table as con/pro guidance. Configure header-icons, background-colour, text-colour, striped, pro-icon, and con-icon.",
+    source: `[pros-cons header-icons=true background-colour=true text-colour=true striped=true pro-icon="✅" con-icon="❌"]
 |===
 |Cons |Pros
 
 |Higher setup time |Clearer long-term maintenance
 
 |Extra review step |Fewer production surprises
+
+|More initial decisions |Better shared expectations
 |===
 
 [pros-cons header-icons=false background-colour=false text-colour=false]
@@ -516,7 +521,7 @@ Content
 
 |Manual process |Automated check
 |===`,
-    expected: `<div class="remarkd-section section--level0 section--with-content"><table class="remarkd-table pros-cons-table pros-cons-table--background pros-cons-table--text-color pros-cons-table--header-icons"><thead><tr><th class="pros-cons-cell pros-cons-cell--con"><span class="pros-cons-icon">❌</span> Cons</th><th class="pros-cons-cell pros-cons-cell--pro"><span class="pros-cons-icon">✅</span> Pros</th></tr></thead><tbody><tr><td class="pros-cons-cell pros-cons-cell--con">Higher setup time</td><td class="pros-cons-cell pros-cons-cell--pro">Clearer long-term maintenance</td></tr><tr><td class="pros-cons-cell pros-cons-cell--con">Extra review step</td><td class="pros-cons-cell pros-cons-cell--pro">Fewer production surprises</td></tr></tbody></table><table class="remarkd-table pros-cons-table"><thead><tr><th class="pros-cons-cell pros-cons-cell--con">Cons</th><th class="pros-cons-cell pros-cons-cell--pro">Pros</th></tr></thead><tbody><tr><td class="pros-cons-cell pros-cons-cell--con">Plain header</td><td class="pros-cons-cell pros-cons-cell--pro">No colour emphasis</td></tr></tbody></table><table class="remarkd-table pros-cons-table pros-cons-table--background pros-cons-table--text-color pros-cons-table--header-icons"><thead><tr><th class="pros-cons-cell pros-cons-cell--con"><span class="pros-cons-icon">NO</span> Avoid</th><th class="pros-cons-cell pros-cons-cell--pro"><span class="pros-cons-icon">YES</span> Prefer</th></tr></thead><tbody><tr><td class="pros-cons-cell pros-cons-cell--con">Manual process</td><td class="pros-cons-cell pros-cons-cell--pro">Automated check</td></tr></tbody></table></div>`,
+    expected: `<div class="remarkd-section section--level0 section--with-content"><table class="remarkd-table remarkd-table--striped pros-cons-table pros-cons-table--background pros-cons-table--text-color pros-cons-table--header-icons"><thead><tr><th class="pros-cons-cell pros-cons-cell--con"><span class="pros-cons-icon">❌</span> Cons</th><th class="pros-cons-cell pros-cons-cell--pro"><span class="pros-cons-icon">✅</span> Pros</th></tr></thead><tbody><tr><td class="pros-cons-cell pros-cons-cell--con">Higher setup time</td><td class="pros-cons-cell pros-cons-cell--pro">Clearer long-term maintenance</td></tr><tr><td class="pros-cons-cell pros-cons-cell--con">Extra review step</td><td class="pros-cons-cell pros-cons-cell--pro">Fewer production surprises</td></tr><tr><td class="pros-cons-cell pros-cons-cell--con">More initial decisions</td><td class="pros-cons-cell pros-cons-cell--pro">Better shared expectations</td></tr></tbody></table><table class="remarkd-table pros-cons-table"><thead><tr><th class="pros-cons-cell pros-cons-cell--con">Cons</th><th class="pros-cons-cell pros-cons-cell--pro">Pros</th></tr></thead><tbody><tr><td class="pros-cons-cell pros-cons-cell--con">Plain header</td><td class="pros-cons-cell pros-cons-cell--pro">No colour emphasis</td></tr></tbody></table><table class="remarkd-table pros-cons-table pros-cons-table--background pros-cons-table--text-color pros-cons-table--header-icons"><thead><tr><th class="pros-cons-cell pros-cons-cell--con"><span class="pros-cons-icon">NO</span> Avoid</th><th class="pros-cons-cell pros-cons-cell--pro"><span class="pros-cons-icon">YES</span> Prefer</th></tr></thead><tbody><tr><td class="pros-cons-cell pros-cons-cell--con">Manual process</td><td class="pros-cons-cell pros-cons-cell--pro">Automated check</td></tr></tbody></table></div>`,
   },
 
   // ---- Media ---------------------------------------------------------------

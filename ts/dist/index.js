@@ -358,6 +358,8 @@ ${child}` : ""}</li></ol>`;
     const body = rows.slice(1);
     const prosCons = isProsCons(attrs);
     const tableClasses = ["remarkd-table"];
+    if (enabled(attrs, "striped", false))
+      tableClasses.push("remarkd-table--striped");
     if (prosCons) {
       tableClasses.push("pros-cons-table");
       if (enabled(attrs, "background-colour", true) && enabled(attrs, "background-color", true))

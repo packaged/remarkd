@@ -1,10 +1,12 @@
-[pros-cons header-icons=true background-colour=true text-colour=true pro-icon="✅" con-icon="❌"]
+[pros-cons header-icons=true background-colour=true text-colour=true striped=true pro-icon="✅" con-icon="❌"]
 |===
 |Cons |Pros
 
 |Higher setup time |Clearer long-term maintenance
 
 |Extra review step |Fewer production surprises
+
+|More initial decisions |Better shared expectations
 |===
 
 [pros-cons header-icons=false background-colour=false text-colour=false]
