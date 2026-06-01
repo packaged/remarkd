@@ -468,6 +468,12 @@ ${child}` : ""}</li></ol>`;
         const hreflang = attrs.named.hreflang ? ` hreflang="${attrs.named.hreflang}"` : "";
         return `<a href="${attrs.named.href || key}"${target}${hreflang}>${text}</a>`;
       }
+      case "button": {
+        const text = attrs.named.text || titleize(key);
+        const color = attrs.named.color || "gray";
+        const target = attrs.named.target ? ` target="${attrs.named.target}"` : "";
+        return `<a href="${attrs.named.href || `#${key}`}" class="btn btn--${color}"${target}>${text}</a>`;
+      }
       case "br":
         return "<br>";
       case "anchor":

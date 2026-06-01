@@ -23,6 +23,92 @@
   padding: 0 4px;
 }
 
+.remarkd .btn {
+  align-items: center;
+  background: #f4f6f8;
+  border: 1px solid #cfd6df;
+  border-radius: 6px;
+  color: #263241;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  gap: 6px;
+  justify-content: center;
+  line-height: 1.2;
+  margin: 2px 4px 2px 0;
+  min-height: 36px;
+  padding: 8px 14px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
+  vertical-align: middle;
+}
+
+.remarkd .btn:hover,
+.remarkd .btn:focus {
+  background: #e9edf2;
+  border-color: #b9c3cf;
+  color: #182230;
+  text-decoration: none;
+}
+
+.remarkd .btn:focus {
+  box-shadow: 0 0 0 3px rgba(35, 103, 200, 0.22);
+  outline: none;
+}
+
+.remarkd .btn--primary {
+  background: #2367c8;
+  border-color: #2367c8;
+  color: #fff;
+}
+
+.remarkd .btn--primary:hover,
+.remarkd .btn--primary:focus {
+  background: #1d58ad;
+  border-color: #1d58ad;
+  color: #fff;
+}
+
+.remarkd .btn--secondary {
+  background: #263241;
+  border-color: #263241;
+  color: #fff;
+}
+
+.remarkd .btn--secondary:hover,
+.remarkd .btn--secondary:focus {
+  background: #1a2430;
+  border-color: #1a2430;
+  color: #fff;
+}
+
+.remarkd .btn--success {
+  background: #177245;
+  border-color: #177245;
+  color: #fff;
+}
+
+.remarkd .btn--success:hover,
+.remarkd .btn--success:focus {
+  background: #105d37;
+  border-color: #105d37;
+  color: #fff;
+}
+
+.remarkd .btn--danger {
+  background: #b42318;
+  border-color: #b42318;
+  color: #fff;
+}
+
+.remarkd .btn--danger:hover,
+.remarkd .btn--danger:focus {
+  background: #971b12;
+  border-color: #971b12;
+  color: #fff;
+}
+
 .remarkd .hint-tip {
   position: relative;
   margin: 16px 0;

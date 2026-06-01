@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T14:39:22.474Z",
+  "generatedAt": "2026-06-01T14:43:55.221Z",
   "available": {
     "php": true,
     "go": true,
@@ -37,6 +37,11 @@
       "ts": true
     },
     "blockquotes": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "button-object": {
       "php": true,
       "go": true,
       "ts": true

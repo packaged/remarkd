@@ -26,6 +26,7 @@ use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Modules\IncludeModule;
 use Packaged\Remarkd\Modules\RemarkdModule;
 use Packaged\Remarkd\Objects\AnchorObject;
+use Packaged\Remarkd\Objects\ButtonObject;
 use Packaged\Remarkd\Objects\ImageObject;
 use Packaged\Remarkd\Objects\LineBreakObject;
 use Packaged\Remarkd\Objects\LinkObject;
@@ -127,6 +128,7 @@ class Remarkd
   public function applyDefaultObjects(ObjectEngine $engine)
   {
     $engine->registerObject(new ProgressMeterObject());
+    $engine->registerObject(new ButtonObject());
     $engine->registerObject(new LinkObject());
     $engine->registerObject(new LineBreakObject());
     $engine->registerObject(new ReferenceObject());

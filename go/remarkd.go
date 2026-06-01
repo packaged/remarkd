@@ -843,6 +843,16 @@ func (p *parser) renderObject(kind, key string, attr attrs) string {
 			hreflang = ` hreflang="` + attr.named["hreflang"] + `"`
 		}
 		return `<a href="` + first(attr.named["href"], key) + `"` + target + hreflang + `>` + text + `</a>`
+	case "button":
+		text := attr.named["text"]
+		if text == "" {
+			text = titleize(key)
+		}
+		target := ""
+		if attr.named["target"] != "" {
+			target = ` target="` + attr.named["target"] + `"`
+		}
+		return `<a href="` + first(attr.named["href"], "#"+key) + `" class="btn btn--` + first(attr.named["color"], "gray") + `"` + target + `>` + text + `</a>`
 	case "br":
 		return "<br>"
 	case "anchor":
