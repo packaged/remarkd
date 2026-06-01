@@ -10,6 +10,7 @@ class RequirementsTest extends TestCase
   public function testSharedRequirementFixtures(string $feature, string $input, string $expected): void
   {
     $remarkd = new Remarkd();
+    $remarkd->ctx()->setProjectRoot(dirname(__DIR__));
 
     self::assertSame($expected, $remarkd->parse($input), $feature);
   }

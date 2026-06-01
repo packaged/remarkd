@@ -4,8 +4,15 @@
 
 import { Remarkd } from "./remarkd.js";
 
+const PARTIALS = {
+  "requirements/features/include/content.remarkd": `Included **content**
+Second line`,
+  "requirements/features/partial/content.remarkd": `Partial **content**
+Second line`,
+};
+
 export function parse(source) {
-  return Remarkd.parse(source);
+  return Remarkd.parse(source, false, { partials: PARTIALS });
 }
 
 export function escapeHtml(value) {

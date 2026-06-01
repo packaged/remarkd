@@ -74,6 +74,45 @@ html := remarkd.Parse(text, true)       // Go
 const html = Remarkd.parse(text, true); // TS
 ```
 
+### Includes And Partials
+
+Use `include::path/to/file.remarkd[]` to render another Remarkd document in
+place. The included file is parsed as its own document, so its section wrapper is
+preserved.
+
+```remarkd
+include::shared/intro.remarkd[]
+```
+
+Remarkd includes local partials with `t::partial::path/to/file.remarkd`.
+Paths resolve from the parser's project root, or from the current process path
+when no project root is set.
+
+```php
+$remarkd = new Remarkd();
+$remarkd->ctx()->setProjectRoot(__DIR__ . '/docs');
+
+$html = $remarkd->parse("t::partial::shared/intro.remarkd");
+```
+```go
+html := remarkd.ParseWithOptions(
+  "t::partial::shared/intro.remarkd",
+  remarkd.Options{ProjectRoot: "docs"},
+)
+```
+```ts
+const html = Remarkd.parse("t::partial::shared/intro.remarkd", false, {
+  projectRoot: "docs",
+});
+```
+
+For document-shaped partials, use explicit options to remove a leading document
+title and trailing lines:
+
+```remarkd
+t::partial::shared/page.remarkd[strip-title,drop-last=3]
+```
+
 This repository includes PHP, Go, and TypeScript parsers. All three
 implementations are kept aligned with the shared fixtures in
 `requirements/features`.

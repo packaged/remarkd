@@ -1,20 +1,21 @@
 // ts/src/index.ts
 var Remarkd = class {
-  parse(markdown, detectHeaders = false) {
-    return parse(markdown, detectHeaders);
+  parse(markdown, detectHeaders = false, options = {}) {
+    return parse(markdown, detectHeaders, options);
   }
-  static parse(markdown, detectHeaders = false) {
-    return parse(markdown, detectHeaders);
+  static parse(markdown, detectHeaders = false, options = {}) {
+    return parse(markdown, detectHeaders, options);
   }
 };
-function parse(markdown, detectHeaders = false) {
-  const parser = new Parser(markdown, detectHeaders);
+function parse(markdown, detectHeaders = false, options = {}) {
+  const parser = new Parser(markdown, detectHeaders, options);
   return parser.parse();
 }
-var Parser = class {
-  constructor(markdown, detectHeaders) {
+var Parser = class _Parser {
+  constructor(markdown, detectHeaders, options = {}) {
     this.detectHeaders = detectHeaders;
-    this.lines = preprocessMarkdown(markdown);
+    this.options = options;
+    this.lines = preprocessPartials(preprocessMarkdown(markdown), options);
   }
   lines;
   index = 0;
@@ -162,6 +163,8 @@ var Parser = class {
       return this.parseCompound(line, "sidebar-block");
     if (/^!![\w-]+!!$/.test(line))
       return this.parseId(line);
+    if (/^include::[^\[]+\[.*]\s*$/.test(line))
+      return this.parseInclude(line);
     if (/^[^:]+:: .+/.test(line))
       return this.parseDefinitions(line);
     if (/^(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])/.test(line))
@@ -192,6 +195,20 @@ var Parser = class {
       return this.inline(line);
     }
     return this.parseParagraph(line, title, attrs);
+  }
+  parseInclude(line) {
+    this.index++;
+    const match = line.match(/^include::([^\[]+)\[.*]\s*$/);
+    const filename = match?.[1]?.trim() ?? "";
+    const content = readPartialFile(this.options, filename);
+    if (content === null)
+      return `<!-- unable to include ${filename}-->`;
+    const parser = new _Parser(content, false, this.options);
+    parser.attrs = this.attrs;
+    parser.references = this.references;
+    const output = parser.parse();
+    this.references = parser.references;
+    return output;
   }
   parseParagraph(first, title, attrs) {
     const hardbreaks = !!attrs?.pos.includes("%hardbreaks");
@@ -541,7 +558,7 @@ ${child}` : ""}</li></ol>`;
     }));
   }
   isBlockStart(line) {
-    return line === "```" || line === "____" || line === "|===" || /^[-=*.!]{4,10}$/.test(line) || /^#{1,6} /.test(line) || /^={2,6} /.test(line) || line.trim() === "<<<" || /^((\d*\.)+) /.test(line) || /^((\*|-){1,10}) /.test(line) || /^(end)?if(def|ndef|eval|nempty|empty|true|false)?::/.test(line) || /^!![\w-]+!!$/.test(line) || line.startsWith("_|_#") || line.startsWith("_-_#") || line.startsWith("_|- ") || /^[^:]+:: .+/.test(line) || /^(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])/.test(line) || /^<(\d+|\d+\.\d+|\w|[^>])> /.test(line) || /^-{3}$/.test(line.trim());
+    return line === "```" || line === "____" || line === "|===" || /^[-=*.!]{4,10}$/.test(line) || /^#{1,6} /.test(line) || /^={2,6} /.test(line) || line.trim() === "<<<" || /^((\d*\.)+) /.test(line) || /^((\*|-){1,10}) /.test(line) || /^(end)?if(def|ndef|eval|nempty|empty|true|false)?::/.test(line) || /^!![\w-]+!!$/.test(line) || /^include::[^\[]+\[.*]\s*$/.test(line) || line.startsWith("_|_#") || line.startsWith("_-_#") || line.startsWith("_|- ") || /^[^:]+:: .+/.test(line) || /^(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])/.test(line) || /^<(\d+|\d+\.\d+|\w|[^>])> /.test(line) || /^-{3}$/.test(line.trim());
   }
 };
 function preprocessMarkdown(markdown) {
@@ -557,9 +574,87 @@ function preprocessMarkdown(markdown) {
   return lines;
 }
 function parseFragment(markdown, parent) {
-  const parser = new Parser(markdown, false);
+  const parser = new Parser(
+    markdown,
+    false,
+    parent.options
+  );
   parser.attrs = parent.attrs;
   return parser.parse().replace(/^<div class="remarkd-section section--level0 section--with-content">/, "").replace(/<\/div>$/, "");
+}
+function preprocessPartials(lines, options, depth = 0) {
+  if (depth > 10)
+    return lines;
+  const result = [];
+  for (const line of lines) {
+    const match = line.match(/^t::partial::(.*)$/);
+    if (!match) {
+      result.push(line);
+      continue;
+    }
+    const [filename, attrs] = parsePartialTarget(match[1] ?? "");
+    const content = readPartialFile(options, filename);
+    if (content === null) {
+      result.push(`File not found: ${filename}`);
+      continue;
+    }
+    let partialLines = preprocessMarkdown(content);
+    if (partialEnabled(attrs, "strip-title") && (partialLines[0] ?? "").startsWith("=")) {
+      partialLines = partialLines.slice(1);
+    }
+    while (partialLines.length && partialLines[partialLines.length - 1].trim() === "") {
+      partialLines.pop();
+    }
+    const dropLast = Number.parseInt(attrs["drop-last"] ?? "0", 10);
+    if (dropLast > 0) {
+      partialLines.splice(-dropLast);
+    }
+    result.push(...preprocessPartials(partialLines, options, depth + 1));
+  }
+  return result;
+}
+function parsePartialTarget(raw) {
+  let filename = raw.trim();
+  const attrs = {};
+  const match = filename.match(/^(.*?)\[([^\]]*)]$/);
+  if (match) {
+    filename = match[1].trim();
+    for (const item of match[2].split(",")) {
+      const attr = item.trim();
+      if (!attr)
+        continue;
+      const eq = attr.indexOf("=");
+      if (eq === -1) {
+        attrs[attr] = "true";
+      } else {
+        attrs[attr.slice(0, eq).trim()] = attr.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+      }
+    }
+  }
+  return [filename, attrs];
+}
+function partialEnabled(attrs, key) {
+  if (!(key in attrs))
+    return false;
+  return !["0", "false", "no"].includes(attrs[key].toLowerCase());
+}
+function readPartialFile(options, filename) {
+  if (options.partials && Object.prototype.hasOwnProperty.call(options.partials, filename)) {
+    return options.partials[filename];
+  }
+  const proc = globalThis.process;
+  const fs = proc?.getBuiltinModule?.("node:fs");
+  if (!fs?.existsSync || !fs?.readFileSync)
+    return null;
+  const path = joinPath(options.projectRoot || proc?.cwd?.() || "", filename);
+  if (!fs.existsSync(path))
+    return null;
+  return fs.readFileSync(path, "utf8");
+}
+function joinPath(root, filename) {
+  if (/^(\/|[A-Za-z]:[\\/])/.test(filename) || !root)
+    return filename;
+  return `${root.replace(/[\\/]+$/, "")}/${filename.replace(/^[\\/]+/, "")}`;
 }
 function parseAttrs(raw) {
   const clean = raw.trim().replace(/^\[/, "").replace(/]$/, "");

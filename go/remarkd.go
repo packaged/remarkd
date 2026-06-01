@@ -2,11 +2,18 @@ package remarkd
 
 import (
 	"html"
+	"os"
+	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
 type Remarkd struct{}
+
+type Options struct {
+	ProjectRoot string
+}
 
 type attrs struct {
 	pos   []string
@@ -20,11 +27,12 @@ type reference struct {
 }
 
 type parser struct {
-	lines      []string
-	index      int
-	attrs      map[string]string
-	references []reference
-	conditions []bool
+	lines       []string
+	index       int
+	attrs       map[string]string
+	references  []reference
+	conditions  []bool
+	projectRoot string
 }
 
 func New() *Remarkd {
@@ -32,7 +40,11 @@ func New() *Remarkd {
 }
 
 func (r *Remarkd) Parse(markdown string, detectHeaders ...bool) string {
-	p := newParser(markdown)
+	return r.ParseWithOptions(markdown, Options{}, detectHeaders...)
+}
+
+func (r *Remarkd) ParseWithOptions(markdown string, options Options, detectHeaders ...bool) string {
+	p := newParser(markdown, options)
 	if len(detectHeaders) > 0 && detectHeaders[0] {
 		p.processDocumentHeader()
 	}
@@ -41,6 +53,10 @@ func (r *Remarkd) Parse(markdown string, detectHeaders ...bool) string {
 
 func Parse(markdown string, detectHeaders ...bool) string {
 	return New().Parse(markdown, detectHeaders...)
+}
+
+func ParseWithOptions(markdown string, options Options, detectHeaders ...bool) string {
+	return New().ParseWithOptions(markdown, options, detectHeaders...)
 }
 
 func (p *parser) wrapDocument(body string) string {
@@ -63,7 +79,20 @@ func (p *parser) wrapDocument(body string) string {
 	return `<div class="remarkd-section section--level0 section--` + state + `">` + body + `</div>`
 }
 
-func newParser(markdown string) *parser {
+func newParser(markdown string, options ...Options) *parser {
+	parserOptions := Options{}
+	if len(options) > 0 {
+		parserOptions = options[0]
+	}
+	lines := preprocessMarkdown(markdown)
+	return &parser{
+		lines:       preprocessPartials(lines, parserOptions.ProjectRoot, 0),
+		attrs:       map[string]string{"plus": "+"},
+		projectRoot: parserOptions.ProjectRoot,
+	}
+}
+
+func preprocessMarkdown(markdown string) []string {
 	markdown = strings.TrimRight(strings.ReplaceAll(markdown, "\r\n", "\n"), "\n")
 	rawLines := []string{}
 	if markdown != "" {
@@ -79,7 +108,88 @@ func newParser(markdown string) *parser {
 			lines = append(lines, line)
 		}
 	}
-	return &parser{lines: lines, attrs: map[string]string{"plus": "+"}}
+	return lines
+}
+
+func preprocessPartials(lines []string, projectRoot string, depth int) []string {
+	if depth > 10 {
+		return lines
+	}
+	out := []string{}
+	for _, line := range lines {
+		m := regexp.MustCompile(`^t::partial::(.*)$`).FindStringSubmatch(line)
+		if len(m) == 0 {
+			out = append(out, line)
+			continue
+		}
+
+		filename, attr := parsePartialTarget(m[1])
+		content, ok := readPartialFile(projectRoot, filename)
+		if !ok {
+			out = append(out, "File not found: "+filename)
+			continue
+		}
+
+		partial := preprocessMarkdown(content)
+		if partialEnabled(attr, "strip-title") && len(partial) > 0 && strings.HasPrefix(partial[0], "=") {
+			partial = partial[1:]
+		}
+		for len(partial) > 0 && strings.TrimSpace(partial[len(partial)-1]) == "" {
+			partial = partial[:len(partial)-1]
+		}
+		if dropLast, err := strconv.Atoi(attr["drop-last"]); err == nil && dropLast > 0 {
+			if dropLast > len(partial) {
+				partial = []string{}
+			} else {
+				partial = partial[:len(partial)-dropLast]
+			}
+		}
+		out = append(out, preprocessPartials(partial, projectRoot, depth+1)...)
+	}
+	return out
+}
+
+func parsePartialTarget(raw string) (string, map[string]string) {
+	filename := strings.TrimSpace(raw)
+	attr := map[string]string{}
+	m := regexp.MustCompile(`^(.*?)\[([^]]*)]$`).FindStringSubmatch(filename)
+	if len(m) > 0 {
+		filename = strings.TrimSpace(m[1])
+		for _, item := range strings.Split(m[2], ",") {
+			item = strings.TrimSpace(item)
+			if item == "" {
+				continue
+			}
+			parts := strings.SplitN(item, "=", 2)
+			if len(parts) == 1 {
+				attr[item] = "true"
+			} else {
+				attr[strings.TrimSpace(parts[0])] = strings.Trim(strings.TrimSpace(parts[1]), `"'`)
+			}
+		}
+	}
+	return filename, attr
+}
+
+func partialEnabled(attr map[string]string, key string) bool {
+	value, ok := attr[key]
+	if !ok {
+		return false
+	}
+	value = strings.ToLower(value)
+	return value != "0" && value != "false" && value != "no"
+}
+
+func readPartialFile(projectRoot, filename string) (string, bool) {
+	path := filename
+	if projectRoot != "" && !filepath.IsAbs(filename) {
+		path = filepath.Join(projectRoot, filename)
+	}
+	content, err := os.ReadFile(path)
+	if err != nil {
+		return "", false
+	}
+	return string(content), true
 }
 
 func (p *parser) processDocumentHeader() {
@@ -211,6 +321,8 @@ func (p *parser) parseBlock(line, title string, attr *attrs) string {
 		return p.parseCompound(line, "sidebar-block")
 	case regexp.MustCompile(`^!![\w-]+!!$`).MatchString(line):
 		return p.parseID(line)
+	case regexp.MustCompile(`^include::[^\[]+\[.*]\s*$`).MatchString(line):
+		return p.parseInclude(line)
 	case regexp.MustCompile(`^[^:]+:: .+`).MatchString(line):
 		return p.parseDefinitions(line)
 	case regexp.MustCompile(`^(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])`).MatchString(line):
@@ -240,6 +352,25 @@ func (p *parser) parseBlock(line, title string, attr *attrs) string {
 	default:
 		return p.parseParagraph(line, title, attr)
 	}
+}
+
+func (p *parser) parseInclude(line string) string {
+	p.index++
+	match := regexp.MustCompile(`^include::([^\[]+)\[.*]\s*$`).FindStringSubmatch(line)
+	if len(match) == 0 {
+		return ""
+	}
+	filename := strings.TrimSpace(match[1])
+	content, ok := readPartialFile(p.projectRoot, filename)
+	if !ok {
+		return `<!-- unable to include ` + filename + `-->`
+	}
+	child := newParser(content, Options{ProjectRoot: p.projectRoot})
+	child.attrs = p.attrs
+	child.references = p.references
+	out := child.wrapDocument(child.parseBlocks("", 0))
+	p.references = child.references
+	return out
 }
 
 func (p *parser) parseParagraph(first, title string, attr *attrs) string {
@@ -586,7 +717,7 @@ func (p *parser) parseSteps() string {
 }
 
 func (p *parser) parseFragment(markdown string) string {
-	child := newParser(markdown)
+	child := newParser(markdown, Options{ProjectRoot: p.projectRoot})
 	child.attrs = p.attrs
 	child.references = p.references
 	out := child.parseBlocks("", 0)
@@ -877,7 +1008,7 @@ func (p *parser) validateCondition(kind, condition, expression string) bool {
 
 func (p *parser) isBlockStart(line string) bool {
 	return line == "```" || line == "____" || line == "|===" ||
-		regexp.MustCompile(`^[-=*.!]{4,10}$|^#{1,6} |^={2,6} |^((\d*\.)+) |^((\*|-){1,10}) |^(end)?if(def|ndef|eval|nempty|empty|true|false)?::|^!![\w-]+!!$|^[^:]+:: .+|^(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])|^<(\d+|\d+\.\d+|\w|[^>])> `).MatchString(line) ||
+		regexp.MustCompile(`^[-=*.!]{4,10}$|^#{1,6} |^={2,6} |^((\d*\.)+) |^((\*|-){1,10}) |^(end)?if(def|ndef|eval|nempty|empty|true|false)?::|^!![\w-]+!!$|^include::[^\[]+\[.*]\s*$|^[^:]+:: .+|^(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])|^<(\d+|\d+\.\d+|\w|[^>])> `).MatchString(line) ||
 		strings.HasPrefix(line, "_|_#") || strings.HasPrefix(line, "_-_#") || strings.HasPrefix(line, "_|- ") || strings.TrimSpace(line) == "---" || strings.TrimSpace(line) == "<<<"
 }
 

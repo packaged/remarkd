@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T13:57:03.827Z",
+  "generatedAt": "2026-06-01T14:39:22.474Z",
   "available": {
     "php": true,
     "go": true,
@@ -136,6 +136,11 @@
       "go": true,
       "ts": true
     },
+    "include": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
     "inline-advanced": {
       "php": true,
       "go": true,
@@ -197,6 +202,11 @@
       "ts": true
     },
     "paragraphs": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "partial": {
       "php": true,
       "go": true,
       "ts": true

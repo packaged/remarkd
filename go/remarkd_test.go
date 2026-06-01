@@ -29,7 +29,7 @@ func TestSharedRequirements(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			got := Parse(strings.TrimRight(string(input), "\r\n"))
+			got := ParseWithOptions(strings.TrimRight(string(input), "\r\n"), Options{ProjectRoot: ".."})
 			want := strings.TrimRight(string(expected), "\r\n")
 			if got != want {
 				t.Fatalf("unexpected html\nwant: %s\n got: %s", want, got)

@@ -7,7 +7,6 @@ use Packaged\Remarkd\Objects\References\ReferenceListObject;
 use Packaged\Remarkd\Objects\References\ReferenceObject;
 use Packaged\Remarkd\Parser;
 use Packaged\Remarkd\Remarkd;
-use Packaged\Remarkd\Traits\PartialTrait;
 use PHPUnit\Framework\TestCase;
 
 class ParserCoverageHarness extends Parser
@@ -94,11 +93,42 @@ class ParserCoverageTest extends TestCase
 
     $remarkd = new Remarkd();
     $remarkd->ctx()->setProjectRoot($root);
-    $remarkd->registerTrait(new PartialTrait($remarkd->ctx()));
 
     self::assertSame(
       '<div class="remarkd-section section--level0 section--with-content"><p>Partial <strong>content</strong>' . "\n" . 'Second line</p></div>',
       $remarkd->parse('t::partial::partial.remarkd')
+    );
+  }
+
+  public function testPartialTraitRendersMissingFileFallback(): void
+  {
+    $root = sys_get_temp_dir() . '/remarkd-partial-' . uniqid('', true);
+    mkdir($root);
+
+    $remarkd = new Remarkd();
+    $remarkd->ctx()->setProjectRoot($root);
+
+    self::assertSame(
+      '<div class="remarkd-section section--level0 section--with-content"><p>File not found: missing.remarkd</p></div>',
+      $remarkd->parse('t::partial::missing.remarkd')
+    );
+  }
+
+  public function testPartialTraitSupportsExplicitContentTrimming(): void
+  {
+    $root = sys_get_temp_dir() . '/remarkd-partial-' . uniqid('', true);
+    mkdir($root);
+    file_put_contents(
+      $root . '/document.remarkd',
+      "= Partial Title\n\nBody **content**\nFooter one\nFooter two\nFooter three\n\n"
+    );
+
+    $remarkd = new Remarkd();
+    $remarkd->ctx()->setProjectRoot($root);
+
+    self::assertSame(
+      '<div class="remarkd-section section--level0 section--with-content"><p>Body <strong>content</strong></p></div>',
+      $remarkd->parse('t::partial::document.remarkd[strip-title,drop-last=3]')
     );
   }
 

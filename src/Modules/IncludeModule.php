@@ -27,8 +27,9 @@ class IncludeModule extends AbstractRemarkdModule
 
   public function produceSafeHTML(): SafeHtml
   {
-    $path = Path::system($this->_root, $this->_key);
-    if(file_exists($path))
+    $root = $this->_root ?: $this->_remarkd->ctx()->getProjectRoot();
+    $path = Path::system($root, $this->_key);
+    if(is_file($path))
     {
       $d = new Parser(file($path), $this->_remarkd);
       return $d->parse()->produceSafeHTML();

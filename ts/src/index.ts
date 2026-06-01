@@ -1,18 +1,19 @@
 export class Remarkd {
-  parse(markdown: string, detectHeaders = false): string {
-    return parse(markdown, detectHeaders);
+  parse(markdown: string, detectHeaders = false, options: RemarkdOptions = {}): string {
+    return parse(markdown, detectHeaders, options);
   }
 
-  static parse(markdown: string, detectHeaders = false): string {
-    return parse(markdown, detectHeaders);
+  static parse(markdown: string, detectHeaders = false, options: RemarkdOptions = {}): string {
+    return parse(markdown, detectHeaders, options);
   }
 }
 
 type Attrs = { raw: string; pos: string[]; named: Record<string, string> };
 type Reference = { code: string; content: string; num: number };
+export type RemarkdOptions = { projectRoot?: string; partials?: Record<string, string> };
 
-export function parse(markdown: string, detectHeaders = false): string {
-  const parser = new Parser(markdown, detectHeaders);
+export function parse(markdown: string, detectHeaders = false, options: RemarkdOptions = {}): string {
+  const parser = new Parser(markdown, detectHeaders, options);
   return parser.parse();
 }
 
@@ -23,8 +24,8 @@ class Parser {
   private references: Reference[] = [];
   private conditions: boolean[] = [];
 
-  constructor(markdown: string, private readonly detectHeaders: boolean) {
-    this.lines = preprocessMarkdown(markdown);
+  constructor(markdown: string, private readonly detectHeaders: boolean, private readonly options: RemarkdOptions = {}) {
+    this.lines = preprocessPartials(preprocessMarkdown(markdown), options);
   }
 
   parse(): string {
@@ -162,6 +163,7 @@ class Parser {
     if (/^={4,10}$/.test(line)) return this.parseCompound(line, "example-block");
     if (/^\*{4,10}$/.test(line)) return this.parseCompound(line, "sidebar-block");
     if (/^!![\w-]+!!$/.test(line)) return this.parseId(line);
+    if (/^include::[^\[]+\[.*]\s*$/.test(line)) return this.parseInclude(line);
     if (/^[^:]+:: .+/.test(line)) return this.parseDefinitions(line);
     if (/^(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])/.test(line)) return this.parseAdmonition(line);
     if (/^<(\d+|\d+\.\d+|\w|[^>])> /.test(line)) return this.parseCalloutBlock(line);
@@ -186,6 +188,20 @@ class Parser {
       return this.inline(line);
     }
     return this.parseParagraph(line, title, attrs);
+  }
+
+  private parseInclude(line: string): string {
+    this.index++;
+    const match = line.match(/^include::([^\[]+)\[.*]\s*$/);
+    const filename = match?.[1]?.trim() ?? "";
+    const content = readPartialFile(this.options, filename);
+    if (content === null) return `<!-- unable to include ${filename}-->`;
+    const parser = new Parser(content, false, this.options);
+    (parser as unknown as { attrs: Record<string, string | boolean> }).attrs = this.attrs;
+    (parser as unknown as { references: Reference[] }).references = this.references;
+    const output = parser.parse();
+    this.references = (parser as unknown as { references: Reference[] }).references;
+    return output;
   }
 
   private parseParagraph(first: string, title: string | null, attrs: Attrs | null): string {
@@ -537,7 +553,7 @@ class Parser {
     return line === "```" || line === "____" || line === "|===" || /^[-=*.!]{4,10}$/.test(line)
       || /^#{1,6} /.test(line) || /^={2,6} /.test(line) || line.trim() === "<<<" || /^((\d*\.)+) /.test(line) || /^((\*|-){1,10}) /.test(line)
       || /^(end)?if(def|ndef|eval|nempty|empty|true|false)?::/.test(line)
-      || /^!![\w-]+!!$/.test(line) || line.startsWith("_|_#") || line.startsWith("_-_#") || line.startsWith("_|- ")
+      || /^!![\w-]+!!$/.test(line) || /^include::[^\[]+\[.*]\s*$/.test(line) || line.startsWith("_|_#") || line.startsWith("_-_#") || line.startsWith("_|- ")
       || /^[^:]+:: .+/.test(line) || /^(SUCCESS|WARNING|CAUTION|NOTE|NOTICE|IMPORTANT|DANGER|TIP)([:|)])/.test(line)
       || /^<(\d+|\d+\.\d+|\w|[^>])> /.test(line) || /^-{3}$/.test(line.trim());
   }
@@ -557,9 +573,90 @@ function preprocessMarkdown(markdown: string): string[] {
 }
 
 function parseFragment(markdown: string, parent: Parser): string {
-  const parser = new Parser(markdown, false);
+  const parser = new Parser(
+    markdown,
+    false,
+    (parent as unknown as { options: RemarkdOptions }).options,
+  );
   (parser as unknown as { attrs: Record<string, string | boolean> }).attrs = (parent as unknown as { attrs: Record<string, string | boolean> }).attrs;
   return parser.parse().replace(/^<div class="remarkd-section section--level0 section--with-content">/, "").replace(/<\/div>$/, "");
+}
+
+function preprocessPartials(lines: string[], options: RemarkdOptions, depth = 0): string[] {
+  if (depth > 10) return lines;
+  const result: string[] = [];
+  for (const line of lines) {
+    const match = line.match(/^t::partial::(.*)$/);
+    if (!match) {
+      result.push(line);
+      continue;
+    }
+
+    const [filename, attrs] = parsePartialTarget(match[1] ?? "");
+    const content = readPartialFile(options, filename);
+    if (content === null) {
+      result.push(`File not found: ${filename}`);
+      continue;
+    }
+
+    let partialLines = preprocessMarkdown(content);
+    if (partialEnabled(attrs, "strip-title") && (partialLines[0] ?? "").startsWith("=")) {
+      partialLines = partialLines.slice(1);
+    }
+    while (partialLines.length && partialLines[partialLines.length - 1].trim() === "") {
+      partialLines.pop();
+    }
+    const dropLast = Number.parseInt(attrs["drop-last"] ?? "0", 10);
+    if (dropLast > 0) {
+      partialLines.splice(-dropLast);
+    }
+    result.push(...preprocessPartials(partialLines, options, depth + 1));
+  }
+  return result;
+}
+
+function parsePartialTarget(raw: string): [string, Record<string, string>] {
+  let filename = raw.trim();
+  const attrs: Record<string, string> = {};
+  const match = filename.match(/^(.*?)\[([^\]]*)]$/);
+  if (match) {
+    filename = match[1].trim();
+    for (const item of match[2].split(",")) {
+      const attr = item.trim();
+      if (!attr) continue;
+      const eq = attr.indexOf("=");
+      if (eq === -1) {
+        attrs[attr] = "true";
+      } else {
+        attrs[attr.slice(0, eq).trim()] = attr.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+      }
+    }
+  }
+  return [filename, attrs];
+}
+
+function partialEnabled(attrs: Record<string, string>, key: string): boolean {
+  if (!(key in attrs)) return false;
+  return !["0", "false", "no"].includes(attrs[key].toLowerCase());
+}
+
+function readPartialFile(options: RemarkdOptions, filename: string): string | null {
+  if (options.partials && Object.prototype.hasOwnProperty.call(options.partials, filename)) {
+    return options.partials[filename];
+  }
+
+  const proc = (globalThis as unknown as { process?: { cwd?: () => string; getBuiltinModule?: (name: string) => unknown } }).process;
+  const fs = proc?.getBuiltinModule?.("node:fs") as { existsSync?: (path: string) => boolean; readFileSync?: (path: string, encoding: string) => string } | undefined;
+  if (!fs?.existsSync || !fs?.readFileSync) return null;
+
+  const path = joinPath(options.projectRoot || proc?.cwd?.() || "", filename);
+  if (!fs.existsSync(path)) return null;
+  return fs.readFileSync(path, "utf8");
+}
+
+function joinPath(root: string, filename: string): string {
+  if (/^(\/|[A-Za-z]:[\\/])/.test(filename) || !root) return filename;
+  return `${root.replace(/[\\/]+$/, "")}/${filename.replace(/^[\\/]+/, "")}`;
 }
 
 function parseAttrs(raw: string): Attrs {

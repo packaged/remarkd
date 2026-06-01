@@ -35,7 +35,7 @@ for (const feature of readdirSync(featuresDir).sort()) {
 
   const input = readFileSync(inputPath, "utf8");
   const expected = readFileSync(expectedPath, "utf8").trim();
-  const actual = Remarkd.parse(input).trim();
+  const actual = Remarkd.parse(input, false, { projectRoot: repoRoot }).trim();
 
   assert.equal(actual, expected, feature);
   passed++;

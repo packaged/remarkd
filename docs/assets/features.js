@@ -591,6 +591,28 @@ ifndef::missing[Inline shown]`,
     expected: `<div class="remarkd-section section--level0 section--with-content">Fact<sup class="reference"><a id="rmdref-bdy-src1" href="#rmdref-ft-src1">[1]</a></sup><h1>References</h1><ol class="reference"><li id="rmdref-ft-src1"><a href="#rmdref-bdy-src1" class="reference-tobody">^</a> Source</li></ol></div>`,
   },
   {
+    slug: "include",
+    title: "Includes",
+    group: "document",
+    desc: "include::file[] renders another Remarkd file in place.",
+    source: `include::requirements/features/include/content.remarkd[]
+
+After the include.`,
+    expected: `<div class="remarkd-section section--level0 section--with-content"><div class="remarkd-section section--level0 section--with-content"><p>Included <strong>content</strong>
+Second line</p></div><p>After the include.</p></div>`,
+  },
+  {
+    slug: "partial",
+    title: "Partials",
+    group: "document",
+    desc: "t::partial::file injects another Remarkd file before parsing.",
+    source: `t::partial::requirements/features/partial/content.remarkd
+
+After the partial.`,
+    expected: `<div class="remarkd-section section--level0 section--with-content"><p>Partial <strong>content</strong>
+Second line</p><p>After the partial.</p></div>`,
+  },
+  {
     slug: "conditionals-advanced",
     title: "Conditionals",
     group: "document",

@@ -58,14 +58,14 @@ npm run test:ts                                 # TypeScript</code></pre>
           <tr><td>Hard breaks / line continuation</td><td><code>[%hardbreaks]</code>, trailing <code>\</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
           <tr><td>Passthrough (curly-bang)</td><td><code>{!text!}</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
           <tr><td>Passthrough (triple-plus)</td><td><code>+++text+++</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
-          <tr><td>Include module</td><td><code>include::file[]</code></td><td class="warn">⚠︎</td><td class="no">—</td><td class="no">—</td></tr>
-          <tr><td>Partial trait</td><td><code>t::partial::file</code></td><td class="warn">⚠︎</td><td class="no">—</td><td class="no">—</td></tr>
+          <tr><td>Include module</td><td><code>include::file[]</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Partial trait</td><td><code>t::partial::file</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
         </tbody>
       </table>
     </div>
     <p class="support-legend">
       <strong>✓</strong> supported &nbsp;·&nbsp; <strong>—</strong> not implemented &nbsp;·&nbsp;
-      <strong>⚠︎</strong> implemented but not registered by the default parser (a host application must enable it).
+      <strong>⚠︎</strong> implemented but requires host application configuration.
     </p>
   </section>
 

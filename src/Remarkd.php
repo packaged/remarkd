@@ -23,6 +23,7 @@ use Packaged\Remarkd\Blocks\StepBlock;
 use Packaged\Remarkd\Blocks\TabBlock;
 use Packaged\Remarkd\Blocks\TableBlock;
 use Packaged\Remarkd\Blocks\UnorderedListBlock;
+use Packaged\Remarkd\Modules\IncludeModule;
 use Packaged\Remarkd\Modules\RemarkdModule;
 use Packaged\Remarkd\Objects\AnchorObject;
 use Packaged\Remarkd\Objects\ImageObject;
@@ -73,7 +74,7 @@ class Remarkd
       $this->applyDefaultModules($context->modules());
       $this->applyDefaultRules($context->ruleEngine());
       $this->applyDefaultObjects($context->objectEngine());
-//      $this->applyDefaultTraits($context);
+      $this->applyDefaultTraits($context);
     }
     $this->_context = $context;
   }
@@ -97,6 +98,7 @@ class Remarkd
 
   public function applyDefaultModules(ModuleBlock $block)
   {
+    $block->registerModule(IncludeModule::create($this));
   }
 
   public function applyDefaultBlocks(BlockEngine $engine)
