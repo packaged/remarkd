@@ -209,6 +209,40 @@
   padding: 3px 6px;
 }
 
+.remarkd .pros-cons-table th {
+  background: #2367a6;
+  color: #fff;
+}
+
+.remarkd .pros-cons-table {
+  table-layout: fixed;
+}
+
+.remarkd .pros-cons-table .pros-cons-cell {
+  width: 50%;
+}
+
+.remarkd .pros-cons-table--background .pros-cons-cell--con {
+  background: #fae9e7;
+}
+
+.remarkd .pros-cons-table--background .pros-cons-cell--pro {
+  background: #e8f4ec;
+}
+
+.remarkd .pros-cons-table--text-color .pros-cons-cell--con {
+  color: #a62b25;
+}
+
+.remarkd .pros-cons-table--text-color .pros-cons-cell--pro {
+  color: #155d30;
+}
+
+.remarkd .pros-cons-table .pros-cons-icon {
+  display: inline-block;
+  margin-right: 8px;
+}
+
 .remarkd ul.tab-header {
   display: flex;
   border-bottom: 1px solid #d8dee4;

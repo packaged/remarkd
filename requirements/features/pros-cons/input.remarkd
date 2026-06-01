@@ -1,0 +1,22 @@
+[pros-cons header-icons=true background-colour=true text-colour=true pro-icon="✅" con-icon="❌"]
+|===
+|Cons |Pros
+
+|Higher setup time |Clearer long-term maintenance
+
+|Extra review step |Fewer production surprises
+|===
+
+[pros-cons header-icons=false background-colour=false text-colour=false]
+|===
+|Cons |Pros
+
+|Plain header |No colour emphasis
+|===
+
+[pros-cons pro-icon="YES" con-icon="NO"]
+|===
+|Avoid |Prefer
+
+|Manual process |Automated check
+|===

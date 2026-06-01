@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T14:43:55.221Z",
+  "generatedAt": "2026-06-01T17:02:34.312Z",
   "available": {
     "php": true,
     "go": true,
@@ -217,6 +217,11 @@
       "ts": true
     },
     "passthrough": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "pros-cons": {
       "php": true,
       "go": true,
       "ts": true

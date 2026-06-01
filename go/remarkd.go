@@ -304,7 +304,7 @@ func (p *parser) parseBlock(line, title string, attr *attrs) string {
 	case strings.HasPrefix(line, "_|- "):
 		return p.parseSteps()
 	case line == "|===":
-		return p.parseTable(title)
+		return p.parseTable(title, attr)
 	case line == "____":
 		return p.parseDelimited(attr)
 	case line == "```":
@@ -584,7 +584,7 @@ func (p *parser) parseOrderedList() string {
 	return nested(0)
 }
 
-func (p *parser) parseTable(title string) string {
+func (p *parser) parseTable(title string, attr *attrs) string {
 	p.index++
 	rows := [][]string{}
 	row := []string{}
@@ -612,22 +612,44 @@ func (p *parser) parseTable(title string) string {
 		p.index++
 	}
 	head := ""
+	prosCons := isProsCons(attr)
 	if len(rows) > 0 {
-		for _, cell := range rows[0] {
-			head += "<th>" + cell + "</th>"
+		for idx, cell := range rows[0] {
+			content := cell
+			if prosCons && enabled(attr, "header-icons", true) {
+				content = prosConsIcon(attr, idx) + " " + cell
+			}
+			head += "<th" + prosConsCellClass(prosCons, idx) + ">" + content + "</th>"
 		}
 	}
 	body := ""
 	for _, row := range rows[1:] {
 		body += "<tr>"
-		for _, cell := range row {
-			body += "<td>" + cell + "</td>"
+		for idx, cell := range row {
+			body += "<td" + prosConsCellClass(prosCons, idx) + ">" + cell + "</td>"
 		}
 		body += "</tr>"
 	}
-	table := `<table class="remarkd-table"><thead><tr>` + head + `</tr></thead><tbody>` + body + `</tbody></table>`
+	tableClass := "remarkd-table"
+	if prosCons {
+		tableClass += " pros-cons-table"
+		if enabled(attr, "background-colour", true) && enabled(attr, "background-color", true) {
+			tableClass += " pros-cons-table--background"
+		}
+		if enabled(attr, "text-colour", true) && enabled(attr, "text-color", true) {
+			tableClass += " pros-cons-table--text-color"
+		}
+		if enabled(attr, "header-icons", true) {
+			tableClass += " pros-cons-table--header-icons"
+		}
+	}
+	table := `<table class="` + tableClass + `"><thead><tr>` + head + `</tr></thead><tbody>` + body + `</tbody></table>`
 	if title != "" {
-		return `<div class="table-block"><div class="title">` + title + `</div>` + table + `</div>`
+		blockClass := "table-block"
+		if prosCons {
+			blockClass += " pros-cons-block"
+		}
+		return `<div class="` + blockClass + `"><div class="title">` + title + `</div>` + table + `</div>`
 	}
 	return table
 }
@@ -1036,6 +1058,58 @@ func parseAttrs(raw string) attrs {
 		result.named[key] = val
 	}
 	return result
+}
+
+func isProsCons(attr *attrs) bool {
+	if attr == nil {
+		return false
+	}
+	if len(attr.pos) > 0 && (attr.pos[0] == "pros-cons" || attr.pos[0] == "proscons") {
+		return true
+	}
+	_, hasHyphen := attr.named["pros-cons"]
+	_, hasPlain := attr.named["proscons"]
+	return hasHyphen || hasPlain
+}
+
+func enabled(attr *attrs, key string, fallback bool) bool {
+	if attr == nil {
+		return fallback
+	}
+	value, ok := attr.named[key]
+	if !ok {
+		return fallback
+	}
+	switch strings.ToLower(value) {
+	case "0", "false", "no", "off":
+		return false
+	default:
+		return true
+	}
+}
+
+func prosConsIcon(attr *attrs, idx int) string {
+	icon := "✅"
+	key := "pro-icon"
+	if idx == 0 {
+		icon = "❌"
+		key = "con-icon"
+	}
+	if attr != nil && attr.named[key] != "" {
+		icon = attr.named[key]
+	}
+	return `<span class="pros-cons-icon">` + html.EscapeString(icon) + `</span>`
+}
+
+func prosConsCellClass(prosCons bool, idx int) string {
+	if !prosCons {
+		return ""
+	}
+	side := "pro"
+	if idx == 0 {
+		side = "con"
+	}
+	return ` class="pros-cons-cell pros-cons-cell--` + side + `"`
 }
 
 func titleize(value string) string {

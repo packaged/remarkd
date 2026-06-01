@@ -120,7 +120,7 @@ implementations are kept aligned with the shared fixtures in
 ## Shared Requirements
 
 Each requirement fixture contains `input.remarkd` and `expected.html`. The
-current suite covers 51 user-facing syntax features. Run the language-specific
+current suite covers 57 user-facing syntax features. Run the language-specific
 conformance checks with:
 
 ```sh

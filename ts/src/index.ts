@@ -154,7 +154,7 @@ class Parser {
     if (line.startsWith("_|_#")) return this.parseTabs();
     if (line.startsWith("_-_#")) return this.parseAccordion();
     if (line.startsWith("_|- ")) return this.parseSteps();
-    if (line === "|===") return this.parseTable(title);
+    if (line === "|===") return this.parseTable(title, attrs);
     if (line === "____") return this.parseDelimited(attrs);
     if (line === "```") return this.parseVerbatim("```", "code");
     if (line === "....") return this.parseVerbatim("....", "code");
@@ -335,7 +335,7 @@ class Parser {
     return nested(0);
   }
 
-  private parseTable(title: string | null): string {
+  private parseTable(title: string | null, attrs: Attrs | null): string {
     this.index++;
     const rows: string[][] = [];
     let row: string[] = [];
@@ -353,8 +353,25 @@ class Parser {
     if (this.index < this.lines.length) this.index++;
     const head = rows[0] ?? [];
     const body = rows.slice(1);
-    const html = `<table class="remarkd-table"><thead><tr>${head.map((cell) => `<th>${cell}</th>`).join("")}</tr></thead><tbody>${body.map((cells) => `<tr>${cells.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
-    return title ? `<div class="table-block"><div class="title">${title}</div>${html}</div>` : html;
+    const prosCons = isProsCons(attrs);
+    const tableClasses = ["remarkd-table"];
+    if (prosCons) {
+      tableClasses.push("pros-cons-table");
+      if (enabled(attrs, "background-colour", true) && enabled(attrs, "background-color", true)) tableClasses.push("pros-cons-table--background");
+      if (enabled(attrs, "text-colour", true) && enabled(attrs, "text-color", true)) tableClasses.push("pros-cons-table--text-color");
+      if (enabled(attrs, "header-icons", true)) tableClasses.push("pros-cons-table--header-icons");
+    }
+    const sideClass = (idx: number) => (idx === 0 ? "pros-cons-cell--con" : "pros-cons-cell--pro");
+    const classAttr = (idx: number) => (prosCons ? ` class="pros-cons-cell ${sideClass(idx)}"` : "");
+    const headerCell = (cell: string, idx: number) => {
+      const content = prosCons && enabled(attrs, "header-icons", true) ? `${prosConsIcon(attrs, idx)} ${cell}` : cell;
+      return `<th${classAttr(idx)}>${content}</th>`;
+    };
+    const bodyCell = (cell: string, idx: number) => `<td${classAttr(idx)}>${cell}</td>`;
+    const html = `<table class="${tableClasses.join(" ")}"><thead><tr>${head.map(headerCell).join("")}</tr></thead><tbody>${body.map((cells) => `<tr>${cells.map(bodyCell).join("")}</tr>`).join("")}</tbody></table>`;
+    if (!title) return html;
+    const blockClass = prosCons ? "table-block pros-cons-block" : "table-block";
+    return `<div class="${blockClass}"><div class="title">${title}</div>${html}</div>`;
   }
 
   private parseTabs(): string {
@@ -678,6 +695,20 @@ function parseAttrs(raw: string): Attrs {
     named[key] = value;
   }
   return { raw: clean, pos, named };
+}
+
+function isProsCons(attrs: Attrs | null): boolean {
+  return !!attrs && (attrs.pos[0] === "pros-cons" || attrs.pos[0] === "proscons" || "pros-cons" in attrs.named || "proscons" in attrs.named);
+}
+
+function enabled(attrs: Attrs | null, key: string, fallback: boolean): boolean {
+  if (!attrs || !(key in attrs.named)) return fallback;
+  return !["0", "false", "no", "off"].includes((attrs.named[key] || "").toLowerCase());
+}
+
+function prosConsIcon(attrs: Attrs | null, index: number): string {
+  const icon = index === 0 ? attrs?.named["con-icon"] || "❌" : attrs?.named["pro-icon"] || "✅";
+  return `<span class="pros-cons-icon">${escapeHtml(icon)}</span>`;
 }
 
 const emojiAliases: Record<string, string> = {
