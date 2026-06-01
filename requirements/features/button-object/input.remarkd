@@ -1,0 +1,1 @@
+{{button:download text="Download now" href=/download color=primary}} {{button:read-more color=secondary}} {{button:external text=Docs href=https://example.com target=_blank}}
