@@ -1,23 +1,18 @@
 <?php
 
 use Packaged\Remarkd\Remarkd;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class BasicSyntaxTest extends TestCase
 {
   // Best practices from https://www.markdownguide.org/basic-syntax/
 
-  /**
-   * @dataProvider providerHeaders
-   * @dataProvider providerParagraphs
-   * @dataProvider providerBlockQuotes
-   * @dataProvider providerOrderedLists
-   * @dataProvider providerImages
-   *
-   * @param $testName
-   * @param $markdown
-   * @param $expected
-   */
+  #[DataProvider('providerHeaders')]
+  #[DataProvider('providerParagraphs')]
+  #[DataProvider('providerBlockQuotes')]
+  #[DataProvider('providerOrderedLists')]
+  #[DataProvider('providerImages')]
   public function testBestPractice($testName, $markdown, $expected)
   {
     $remarkd = new Remarkd();
@@ -25,7 +20,7 @@ class BasicSyntaxTest extends TestCase
     self::assertEquals($expected, $result, $testName);
   }
 
-  public function providerHeaders()
+  public static function providerHeaders()
   {
     return [
       ['Heading 1', '# Heading level 1', '<h1 id="heading-level-1">Heading level 1</h1>'],
@@ -46,7 +41,7 @@ class BasicSyntaxTest extends TestCase
     ];
   }
 
-  public function providerParagraphs()
+  public static function providerParagraphs()
   {
     return [
       [
@@ -67,7 +62,7 @@ And this is the second line.',
     ];
   }
 
-  public function providerImages()
+  public static function providerImages()
   {
     return [
       [
@@ -88,7 +83,7 @@ And this is the second line.',
     ];
   }
 
-  public function providerBlockQuotes()
+  public static function providerBlockQuotes()
   {
     return [
       [
@@ -142,7 +137,7 @@ And this is the second line.',
     ];
   }
 
-  public function providerOrderedLists()
+  public static function providerOrderedLists()
   {
     return [
       [

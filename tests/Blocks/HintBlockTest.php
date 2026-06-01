@@ -4,13 +4,12 @@ namespace Blocks;
 use Packaged\Remarkd\Blocks\HintBlock;
 use Packaged\Remarkd\Remarkd;
 use Packaged\Remarkd\RemarkdContext;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class HintBlockTest extends TestCase
 {
-  /**
-   * @dataProvider hintStyleProvider
-   */
+  #[DataProvider('hintStyleProvider')]
   public function testBasic($style)
   {
     $styleL = strtolower($style);
@@ -30,9 +29,7 @@ HTML;
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
 
-  /**
-   * @dataProvider hintStyleProvider
-   */
+  #[DataProvider('hintStyleProvider')]
   public function testCaptioned($style)
   {
     $styleL = strtolower($style);
@@ -52,9 +49,7 @@ HTML;
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
 
-  /**
-   * @dataProvider hintStyleProvider
-   */
+  #[DataProvider('hintStyleProvider')]
   public function testMultiLine($style)
   {
     $styleL = strtolower($style);
@@ -94,9 +89,7 @@ HTML;
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
 
-  /**
-   * @dataProvider hintStyleProvider
-   */
+  #[DataProvider('hintStyleProvider')]
   public function testCaptionedMultiLine($style)
   {
     $styleL = strtolower($style);
@@ -118,7 +111,7 @@ HTML;
     self::assertEquals($expect, $remarkd->parse($markdown));
   }
 
-  public function hintStyleProvider()
+  public static function hintStyleProvider()
   {
     return [
       ['SUCCESS'],

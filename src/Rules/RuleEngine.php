@@ -32,10 +32,31 @@ class RuleEngine
 
   public function parse(string $text): string
   {
+    $passthrough = [];
+    $text = $this->_extractPassthrough($text, $passthrough);
+
     foreach($this->_rules as $rule)
     {
       $text = $rule->apply($text);
     }
+    return strtr($text, $passthrough);
+  }
+
+  protected function _extractPassthrough(string $text, array &$passthrough): string
+  {
+    foreach(['/\bpass:\[([^\]]*)]/s', '/\+\+\+(.+?)\+\+\+/s'] as $pattern)
+    {
+      $text = preg_replace_callback(
+        $pattern,
+        function ($match) use (&$passthrough) {
+          $token = "\x1ARMDPASS" . count($passthrough) . "\x1A";
+          $passthrough[$token] = $match[1];
+          return $token;
+        },
+        $text
+      );
+    }
+
     return $text;
   }
 }

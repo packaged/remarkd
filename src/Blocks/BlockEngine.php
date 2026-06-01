@@ -61,6 +61,21 @@ class BlockEngine
     return $this;
   }
 
+  public function registerBlock(BlockMatcher $matcher)
+  {
+    return $this->addMatcher($matcher);
+  }
+
+  public function setDefaultBlock($matcher)
+  {
+    return $this;
+  }
+
+  public static function trimLeftSpace(string $line, int $maxLength = 2): string
+  {
+    return preg_replace('/^ {0,' . $maxLength . '}/', '', $line);
+  }
+
   public function addLine($line, string $title = null, ?Attributes $attribute = null)
   {
     $append = false;

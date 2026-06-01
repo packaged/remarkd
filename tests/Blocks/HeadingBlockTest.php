@@ -4,11 +4,12 @@ namespace Blocks;
 use Packaged\Remarkd\Blocks\HeadingBlock;
 use Packaged\Remarkd\Remarkd;
 use Packaged\Remarkd\RemarkdContext;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class HeadingBlockTest extends TestCase
 {
-  public function levels()
+  public static function levels()
   {
     return [
       [1],
@@ -20,9 +21,7 @@ class HeadingBlockTest extends TestCase
     ];
   }
 
-  /**
-   * @dataProvider levels
-   */
+  #[DataProvider('levels')]
   public function testBasic($level)
   {
     $markdown = str_repeat('#', $level) . ' Heading ' . $level;

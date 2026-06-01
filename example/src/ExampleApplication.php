@@ -78,7 +78,8 @@ class ExampleApplication extends Application implements WithContext
     // Convert errors into exceptions
     set_error_handler(
       function ($errno, $errstr, $errfile, $errline) {
-        if((error_reporting() & $errno) && !($errno & E_NOTICE))
+        if((error_reporting() & $errno)
+          && !($errno & (E_NOTICE | E_DEPRECATED | E_USER_DEPRECATED)))
         {
           throw new \ErrorException($errstr, 0, $errno, str_replace(dirname(__DIR__), '', $errfile), $errline);
         }

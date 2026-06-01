@@ -43,7 +43,7 @@ class Parser
     $appendNext = false;
     foreach($rawLines as $line)
     {
-      $line = trim($line, "\r\n\0\x0B ");
+      $line = trim($line, "\r\n\0\x0B");
       // If the line ends with a backslash, then it's a continuation of the previous line
 
       if($appendNext)

@@ -9,6 +9,7 @@ use Packaged\Remarkd\Blocks\CalloutBlock;
 use Packaged\Remarkd\Blocks\CodeBlock;
 use Packaged\Remarkd\Blocks\CommentBlock;
 use Packaged\Remarkd\Blocks\DefinitionListBlock;
+use Packaged\Remarkd\Blocks\DelimitedTextBlock;
 use Packaged\Remarkd\Blocks\ExampleBlock;
 use Packaged\Remarkd\Blocks\IDBlock;
 use Packaged\Remarkd\Blocks\ListingBlock;
@@ -20,6 +21,7 @@ use Packaged\Remarkd\Blocks\OrderedListBlock;
 use Packaged\Remarkd\Blocks\SidebarBlock;
 use Packaged\Remarkd\Blocks\StepBlock;
 use Packaged\Remarkd\Blocks\TabBlock;
+use Packaged\Remarkd\Blocks\TableBlock;
 use Packaged\Remarkd\Blocks\UnorderedListBlock;
 use Packaged\Remarkd\Modules\RemarkdModule;
 use Packaged\Remarkd\Objects\AnchorObject;
@@ -37,6 +39,7 @@ use Packaged\Remarkd\Rules\CalloutText;
 use Packaged\Remarkd\Rules\CheckboxRule;
 use Packaged\Remarkd\Rules\DeletedText;
 use Packaged\Remarkd\Rules\EmojiRule;
+use Packaged\Remarkd\Rules\FootnoteText;
 use Packaged\Remarkd\Rules\HighlightText;
 use Packaged\Remarkd\Rules\Image;
 use Packaged\Remarkd\Rules\InlineStyleText;
@@ -60,7 +63,7 @@ class Remarkd
 {
   protected RemarkdContext $_context;
 
-  public function __construct(RemarkdContext $context = null)
+  public function __construct(?RemarkdContext $context = null)
   {
     if($context === null)
     {
@@ -80,6 +83,12 @@ class Remarkd
     return $this->_context;
   }
 
+  public function parse(string $markdown, bool $detectHeaders = false): string
+  {
+    $parser = new Parser(explode("\n", $markdown), $this);
+    return (string)$parser->parse($detectHeaders)->produceSafeHTML();
+  }
+
   public function applyDefaultTraits(RemarkdContext $context)
   {
     $engine = $context->traitEngine();
@@ -93,6 +102,7 @@ class Remarkd
   public function applyDefaultBlocks(BlockEngine $engine)
   {
     $engine->addMatcher(new CommentBlock());
+    $engine->addMatcher(new DelimitedTextBlock());
     $engine->addMatcher(new Admonition());
     $engine->addMatcher(new CalloutBlock());
     $engine->addMatcher(new ListingBlock());
@@ -105,6 +115,7 @@ class Remarkd
     $engine->addMatcher(new StepBlock());
     $engine->addMatcher(new LiteralBlock());
     $engine->addMatcher(new MarkdownHeaderBlock());
+    $engine->addMatcher(new TableBlock());
     $engine->addMatcher(new OrderedListBlock());
     $engine->addMatcher(new DefinitionListBlock());
     $engine->addMatcher(new UnorderedListBlock());
@@ -140,6 +151,7 @@ class Remarkd
     $engine->registerRule(new Image());
     $engine->registerRule(new LinkText());
     $engine->registerRule(new SectionLinkText());
+    $engine->registerRule(new FootnoteText());
     $engine->registerRule(new BoldText());
     $engine->registerRule(new ItalicText());
     $engine->registerRule(new DeletedText());

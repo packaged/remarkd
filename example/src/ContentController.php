@@ -15,6 +15,7 @@ use Packaged\Remarkd\Modules\IncludeModule;
 use Packaged\Remarkd\Parser;
 use Packaged\Remarkd\Remarkd;
 use Packaged\Remarkd\Section;
+use Packaged\Remarkd\Traits\PartialTrait;
 use Packaged\RemarkdExample\Layout\DocPage;
 use Packaged\RemarkdExample\Layout\Wrap;
 use Packaged\Ui\Renderable;
@@ -108,6 +109,7 @@ class ContentController extends Controller
       $remarkd->ctx()->setProjectRoot($dir);
       $remarkd->ctx()->setResourceRoot($resDir);
       $remarkd->registerModule(IncludeModule::create($remarkd, $dir));
+      $remarkd->registerTrait(new PartialTrait($remarkd->ctx()));
       $cwd = substr(dirname($loc), strlen($resDir));
       $remarkd->ctx()->meta()->set('cwd', $cwd);
 

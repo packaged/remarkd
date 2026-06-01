@@ -6,6 +6,7 @@ class Image implements RemarkdRule
   public function apply(string $text): string
   {
     /** @noinspection HtmlUnknownTarget */
+    $text = preg_replace_callback('/image::([^\[]+)\[([^\]]*)]/', [$this, '_createAsciiDocTag'], $text);
     return preg_replace_callback('/!\[([^\]]*)\]\((.*?)\s*("(?:.*[^"])")?\s*\)/', [$this, '_createTag'], $text);
   }
 
@@ -32,5 +33,26 @@ class Image implements RemarkdRule
     }
 
     return sprintf('<img %s/>', implode(' ', $attr));
+  }
+
+  protected function _createAsciiDocTag($raw)
+  {
+    $parts = array_map('trim', explode(',', $raw[2]));
+    $attr = ['src="' . $this->_imageUrl($raw[1]) . '"'];
+
+    if(!empty($parts[0]))
+    {
+      $attr[] = 'alt="' . $parts[0] . '"';
+    }
+    if(!empty($parts[1]))
+    {
+      $attr[] = 'width="' . $parts[1] . '"';
+    }
+    if(!empty($parts[2]))
+    {
+      $attr[] = 'height="' . $parts[2] . '"';
+    }
+
+    return sprintf('<img class="block" %s/>', implode(' ', $attr));
   }
 }
