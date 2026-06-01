@@ -1,0 +1,12 @@
+:flag:
+
+ifdef::flag[]
+Shown
+endif::[]
+
+ifndef::flag[]
+Hidden
+endif::[]
+
+ifdef::missing[Inline hidden]
+ifndef::missing[Inline shown]

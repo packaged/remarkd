@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playground · Remarkd</title>
+  <meta name="description" content="Type Remarkd and see it render live in your browser, powered by the bundled TypeScript parser.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/remarkd-output.css">
+</head>
+<body>
+<main class="content content--playground" data-page="playground">
+  <div class="pg-toolbar">
+    <div class="pg-toolbar-title">
+      <strong>Playground</strong>
+      <span>Runs in your browser. A document header (<code>= Title</code>, <code>:attributes:</code>) is processed and hidden; its attributes still fill <code>{substitutions}</code>.</span>
+    </div>
+    <div class="sample-actions" aria-label="Load a sample">
+      <button type="button" data-sample="basics">Basics</button>
+      <button type="button" data-sample="guide">Guide</button>
+      <button type="button" data-sample="table">Table</button>
+      <button type="button" data-sample="tabs">Tabs</button>
+      <button type="button" data-sample="steps">Steps</button>
+      <button type="button" data-sample="references">References</button>
+      <button type="button" data-sample="document">Document header</button>
+    </div>
+  </div>
+
+  <div class="pg-split">
+    <label class="pg-input">
+      <span class="pg-pane-label">Remarkd input</span>
+      <textarea id="playground-input" spellcheck="false"></textarea>
+    </label>
+
+    <div class="pg-output">
+      <div class="pg-tabs" role="tablist" aria-label="Output view">
+        <button type="button" role="tab" data-pane="preview" class="active" aria-selected="true">Rendered</button>
+        <button type="button" role="tab" data-pane="html" aria-selected="false">HTML</button>
+      </div>
+      <div id="playground-preview" class="pg-pane remarkd-rendered" data-pane="preview"></div>
+      <pre id="playground-html-pane" class="pg-pane" data-pane="html" hidden><code id="playground-html"></code></pre>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="playground.js"></script>
+<script type="module" src="assets/site.js"></script>
+</body>
+</html>

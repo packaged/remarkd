@@ -12,16 +12,16 @@ class VideoObject extends AbstractRemarkdObject
   {
     switch($this->_config->get('aspect'))
     {
-      case '1:1';
+      case '1:1':
         $padding = '100';
         break;
-      case '4:3';
+      case '4:3':
         $padding = '75';
         break;
-      case '3:2';
+      case '3:2':
         $padding = '66.66';
         break;
-      case '8:5';
+      case '8:5':
         $padding = '62.5';
         break;
       case '16:9':

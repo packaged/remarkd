@@ -1,0 +1,1 @@
+{{link:https://example.com text=Example target=_blank hreflang=en}} {{img src=https://example.com/logo.png alt=Logo .hero float=right}} {{video:/media/demo.mp4 source=self type=video/webm aspect=1:1}}

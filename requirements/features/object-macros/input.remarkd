@@ -1,0 +1,1 @@
+{{link:https://example.com text=Example target=_blank}} {{br}} {{anchor name=top}} {{meter id=progress min=1 max=10 value=5 text=Half label=Progress}}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature Reference · Remarkd</title>
+  <meta name="description" content="Every Remarkd syntax feature, grouped by topic, with the source, a live rendered preview, and the exact HTML output.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/remarkd-output.css">
+</head>
+<body>
+<main class="content" data-page="reference">
+  <section class="hero">
+    <p class="eyebrow">Feature reference</p>
+    <h1>Every feature, with source, preview, and HTML.</h1>
+    <p class="lead">
+      Each entry below shows the Remarkd source, a live preview rendered in your browser by the TypeScript
+      parser, and a toggle to reveal the exact HTML produced. Every example mirrors a fixture in
+      <code>requirements/features</code>.
+    </p>
+    <p class="note-callout">
+      The previews need JavaScript and the bundled parser (<code>assets/remarkd.js</code>). If they appear
+      blank, run <code>npm run build:docs</code> to generate the bundle.
+    </p>
+  </section>
+
+  <div id="reference-root"></div>
+</main>
+
+<script type="module" src="assets/reference.js"></script>
+<script type="module" src="assets/site.js"></script>
+</body>
+</html>

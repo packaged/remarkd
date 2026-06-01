@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conformance · Remarkd</title>
+  <meta name="description" content="The shared fixture suite that keeps the PHP, Go, and TypeScript parsers aligned, with a live byte-for-byte check of the TypeScript parser.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/remarkd-output.css">
+</head>
+<body>
+<main class="content" data-page="conformance">
+  <section class="hero">
+    <p class="eyebrow">Conformance</p>
+    <h1>One spec, three parsers, byte-for-byte.</h1>
+    <p class="lead">
+      Remarkd's behaviour is defined by fixtures, not by any single implementation. Each parser must reproduce
+      the exact expected HTML for every fixture — so a feature behaves identically in PHP, Go, and TypeScript.
+    </p>
+  </section>
+
+  <section id="how-it-works">
+    <h2>How the suite works</h2>
+    <p>
+      Every feature lives in <code>requirements/features/&lt;name&gt;/</code> and contains exactly two files:
+    </p>
+    <ul>
+      <li><code>input.remarkd</code> — the Remarkd source for the feature.</li>
+      <li><code>expected.html</code> — the exact HTML string the parser must return.</li>
+    </ul>
+    <p>
+      Each implementation has a conformance test that discovers these folders, parses every
+      <code>input.remarkd</code>, and asserts the result equals <code>expected.html</code> byte-for-byte. Keeping
+      fixtures small and focused means a failure points at one behaviour:
+    </p>
+    <pre><code>vendor/bin/phpunit tests/RequirementsTest.php   # PHP
+go test ./go                                    # Go
+npm run test:ts                                 # TypeScript</code></pre>
+  </section>
+
+  <section id="parity">
+    <h2>Feature support across parsers</h2>
+    <p>
+      Every default-parser feature in the <a href="reference.html">reference</a> is covered by a shared fixture
+      and behaves identically in PHP, Go, and TypeScript. Implementation-specific extension hooks are intentionally
+      outside the shared parser contract.
+    </p>
+    <div class="table-scroll">
+      <table class="support-table">
+        <thead>
+          <tr><th>Feature</th><th>Syntax</th><th>PHP</th><th>Go</th><th>TS</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Conditionals</td><td><code>ifdef::</code> / <code>ifndef::</code> / <code>endif::</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>AsciiDoc section headings</td><td><code>== Title</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Page break</td><td><code>&lt;&lt;&lt;</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Generic container block</td><td><code>!!!!</code> … <code>!!!!</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Hard breaks / line continuation</td><td><code>[%hardbreaks]</code>, trailing <code>\</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Passthrough (curly-bang)</td><td><code>{!text!}</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Passthrough (triple-plus)</td><td><code>+++text+++</code></td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Include module</td><td><code>include::file[]</code></td><td class="warn">⚠︎</td><td class="no">—</td><td class="no">—</td></tr>
+          <tr><td>Partial trait</td><td><code>t::partial::file</code></td><td class="warn">⚠︎</td><td class="no">—</td><td class="no">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="support-legend">
+      <strong>✓</strong> supported &nbsp;·&nbsp; <strong>—</strong> not implemented &nbsp;·&nbsp;
+      <strong>⚠︎</strong> implemented but not registered by the default parser (a host application must enable it).
+    </p>
+  </section>
+
+  <section id="live-check">
+    <h2>Conformance results</h2>
+    <p>
+      Every fixture is rendered below with each parser's result. The <strong>TypeScript</strong> column is
+      computed <em>live in your browser</em> — the bundled parser runs on each source and its output is compared,
+      exactly, with the expected HTML. <strong>PHP</strong> and <strong>Go</strong> cannot run in a browser, so
+      their columns come from a local build step (<code>npm run build:conformance</code>) that runs those parsers
+      and writes <code>docs/assets/conformance-status.json</code>. Refresh it after any parser change; a
+      <strong>?</strong> means that language's results have not been built yet.
+    </p>
+    <p id="conformance-summary" class="note-callout">Running the TypeScript parser…</p>
+    <div class="legend" aria-label="Status legend">
+      <span><span class="status-pass" aria-hidden="true">✓</span> matches expected</span>
+      <span><span class="status-fail" aria-hidden="true">✗</span> mismatch</span>
+      <span><span class="status-unknown" aria-hidden="true">?</span> not built</span>
+    </div>
+    <div id="conformance-root"></div>
+  </section>
+</main>
+
+<script type="module" src="assets/conformance.js"></script>
+<script type="module" src="assets/site.js"></script>
+</body>
+</html>

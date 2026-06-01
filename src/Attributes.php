@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\Remarkd;
 
-class Attributes
+class Attributes implements \ArrayAccess
 {
   protected $_position = [];
   protected $_named = [];
@@ -69,5 +69,28 @@ class Attributes
       }
     }
     return $classes;
+  }
+
+  public function offsetExists(mixed $offset): bool
+  {
+    return $this->has((string)$offset);
+  }
+
+  public function offsetGet(mixed $offset): mixed
+  {
+    return $this->get((string)$offset);
+  }
+
+  public function offsetSet(mixed $offset, mixed $value): void
+  {
+    if($offset !== null)
+    {
+      $this->_named[(string)$offset] = $value;
+    }
+  }
+
+  public function offsetUnset(mixed $offset): void
+  {
+    unset($this->_named[(string)$offset]);
   }
 }

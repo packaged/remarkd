@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Getting Started · Remarkd</title>
+  <meta name="description" content="A writer's quick-start for Remarkd: write your first document and learn the everyday syntax with live examples.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/remarkd-output.css">
+</head>
+<body>
+<main class="content" data-page="getting-started">
+  <section class="hero">
+    <p class="eyebrow">Getting started</p>
+    <h1>Write your first Remarkd document.</h1>
+    <p class="lead">
+      Remarkd reads like plain notes and renders like a polished page. If you can write a text message, you can
+      write Remarkd — there is nothing to install. This guide walks through the everyday syntax with live
+      examples; each shows what you type and what you get.
+    </p>
+    <p class="note-callout">
+      Writing for a site or app that already uses Remarkd? You only need this guide. Developers wiring the
+      parser into PHP, Go, or a JavaScript project will find install and API instructions in the
+      <a href="https://github.com/packaged/remarkd#readme" rel="noopener">project README</a>.
+    </p>
+  </section>
+
+  <section id="first">
+    <h2>Your first document</h2>
+    <p>
+      Start with a heading, write a paragraph, and add a list or a note where it helps. That is already a
+      complete document:
+    </p>
+    <div class="guide-mount" data-example="firstdoc"></div>
+    <p>Open this in the <a href="playground.html">playground</a> and change a few words to see how it responds.</p>
+  </section>
+
+  <section id="basics">
+    <h2>The basics</h2>
+
+    <h3>Paragraphs</h3>
+    <p>Lines next to each other form one paragraph. Leave a blank line to start a new one.</p>
+    <div class="guide-mount" data-example="paragraphs"></div>
+
+    <h3>Headings</h3>
+    <p>Begin a line with <code>#</code> for a top-level heading; add more <code>#</code> for deeper levels.</p>
+    <div class="guide-mount" data-example="headings"></div>
+
+    <h3>Emphasis</h3>
+    <p>
+      Wrap text to style it: <code>**bold**</code>, <code>__italic__</code>, <code>`code`</code>, and
+      <code>~~strikethrough~~</code>.
+    </p>
+    <div class="guide-mount" data-example="emphasis"></div>
+
+    <h3>Lists</h3>
+    <p>
+      Start lines with <code>-</code> for a bullet list. Begin lines with <code>1.</code>, <code>2.</code>, … for
+      a numbered list. Add <code>[ ]</code> or <code>[x]</code> for checkable tasks.
+    </p>
+    <div class="guide-mount" data-example="lists"></div>
+    <div class="guide-mount" data-example="tasks"></div>
+
+    <h3>Links</h3>
+    <p>Write a link as <code>[label](url)</code>.</p>
+    <div class="guide-mount" data-example="links"></div>
+  </section>
+
+  <section id="structure">
+    <h2>Adding structure</h2>
+
+    <h3>Notes &amp; callouts</h3>
+    <p>
+      Lead a line with a label such as <code>NOTE:</code>, <code>TIP:</code>, or <code>WARNING:</code> to draw the
+      reader's attention.
+    </p>
+    <div class="guide-mount" data-example="notes"></div>
+
+    <h3>Quotes</h3>
+    <p>Wrap text in lines of four underscores to set it apart as a quote.</p>
+    <div class="guide-mount" data-example="quote"></div>
+
+    <h3>Code</h3>
+    <p>Fence commands or code in triple backticks to keep them exactly as typed.</p>
+    <div class="guide-mount" data-example="code"></div>
+
+    <h3>Tables</h3>
+    <p>
+      Open and close a table with <code>|===</code>. The first row is the header; separate data rows with a blank
+      line. A <code>.Title</code> line above names the table.
+    </p>
+    <div class="guide-mount" data-example="table"></div>
+  </section>
+
+  <section id="model">
+    <h2>How blocks fit together</h2>
+    <p>
+      Two simple rules explain most of Remarkd. <strong>Blank lines separate blocks</strong> — that is how the
+      parser knows where a paragraph, list, or quote ends. And <strong>two one-line prefixes decorate the next
+      block</strong>: a line starting with a dot gives it a title, and a bracketed line such as
+      <code>[.lead]</code> adds a styling role.
+    </p>
+    <div class="guide-mount" data-example="titled"></div>
+    <p>That is enough to write real documents. When you want the deeper model, read the
+    <a href="concepts.html">Concepts</a> guide.</p>
+  </section>
+
+  <section id="next">
+    <h2>Where to next</h2>
+    <div class="next-steps">
+      <a class="card" href="reference.html"><strong>Feature Reference</strong>Every feature with a live preview and the exact HTML.</a>
+      <a class="card" href="concepts.html"><strong>Concepts</strong>Attributes, conditionals, macros, and how it all composes.</a>
+      <a class="card" href="playground.html"><strong>Playground</strong>Write freely and watch it render as you type.</a>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="assets/getting-started.js"></script>
+<script type="module" src="assets/site.js"></script>
+</body>
+</html>

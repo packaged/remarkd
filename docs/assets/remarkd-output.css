@@ -1,0 +1,459 @@
+/*
+ * remarkd-output.css — styles for *rendered* Remarkd HTML.
+ *
+ * Every rule is scoped under `.remarkd-rendered` so it can be applied two ways:
+ *   1. Inline preview containers on the Reference / Conformance pages.
+ *   2. The playground iframe, whose <body> carries the `remarkd-rendered` class.
+ *
+ * Class names match the parser output exactly (hint-note, accordion-container,
+ * tab-group, steps-container, remarkd-table, …), so styling stays in lockstep
+ * with the fixtures.
+ */
+
+.remarkd-rendered {
+  --rmd-accent: #2367c8;
+  --rmd-border: #d9dee7;
+  --rmd-muted: #5f6d80;
+  --rmd-soft: #eef5ff;
+  --rmd-code-bg: #0f1626;
+  --rmd-code-text: #f5f8ff;
+  color: #18202f;
+  font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif;
+  word-wrap: break-word;
+}
+
+.remarkd-rendered > .remarkd-section > :first-child,
+.remarkd-rendered > :first-child {
+  margin-top: 0;
+}
+
+.remarkd-rendered p {
+  margin: 0 0 12px;
+}
+
+.remarkd-rendered h1,
+.remarkd-rendered h2,
+.remarkd-rendered h3,
+.remarkd-rendered h4 {
+  line-height: 1.2;
+  margin: 18px 0 10px;
+}
+
+.remarkd-rendered h1 {
+  font-size: 26px;
+}
+
+.remarkd-rendered h2 {
+  font-size: 21px;
+}
+
+.remarkd-rendered h3 {
+  font-size: 17px;
+}
+
+.remarkd-rendered a {
+  color: var(--rmd-accent);
+}
+
+/* Inline decorations ------------------------------------------------------ */
+.remarkd-rendered .monospace,
+.remarkd-rendered kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.remarkd-rendered .monospace {
+  background: #eef2f7;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.remarkd-rendered kbd {
+  background: #f6f8fb;
+  border: 1px solid var(--rmd-border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 6px;
+}
+
+.remarkd-rendered mark.highlight {
+  background: #fff3bf;
+  border-radius: 3px;
+  padding: 0 3px;
+}
+
+.remarkd-rendered .tooltip {
+  border-bottom: 1px dotted var(--rmd-muted);
+  cursor: help;
+}
+
+.remarkd-rendered sup.footnote,
+.remarkd-rendered sup.reference {
+  color: var(--rmd-accent);
+  font-size: 0.75em;
+}
+
+/* Lists ------------------------------------------------------------------- */
+.remarkd-rendered ul,
+.remarkd-rendered ol {
+  margin: 0 0 12px;
+  padding-left: 24px;
+}
+
+.remarkd-rendered li > p {
+  margin: 0 0 4px;
+}
+
+.remarkd-rendered input[type="checkbox"] {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.remarkd-rendered dl {
+  margin: 0 0 12px;
+}
+
+.remarkd-rendered dt {
+  font-weight: 700;
+}
+
+.remarkd-rendered dd {
+  margin: 0 0 8px 18px;
+  color: var(--rmd-muted);
+}
+
+/* Quotes & admonitions ---------------------------------------------------- */
+.remarkd-rendered blockquote {
+  margin: 0 0 12px;
+  padding: 4px 16px;
+  border-left: 4px solid var(--rmd-border);
+  color: var(--rmd-muted);
+}
+
+.remarkd-rendered .hint-note {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--rmd-accent);
+  background: var(--rmd-soft);
+  border-radius: 0 6px 6px 0;
+}
+
+.remarkd-rendered .hint-caption {
+  color: var(--rmd-accent);
+}
+
+/* Admonition variants (NOTE/TIP/WARNING/IMPORTANT/CAUTION/DANGER/SUCCESS/NOTICE). */
+.remarkd-rendered .hint-tip,
+.remarkd-rendered .hint-warning,
+.remarkd-rendered .hint-important,
+.remarkd-rendered .hint-caution,
+.remarkd-rendered .hint-danger,
+.remarkd-rendered .hint-success,
+.remarkd-rendered .hint-notice {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--rmd-accent);
+  background: #f6f8fb;
+  border-radius: 0 6px 6px 0;
+}
+
+.remarkd-rendered .hint-tip,
+.remarkd-rendered .hint-success {
+  border-left-color: #1f9d57;
+  background: #eafaf1;
+}
+.remarkd-rendered .hint-tip .hint-caption,
+.remarkd-rendered .hint-success .hint-caption {
+  color: #1f7a47;
+}
+
+.remarkd-rendered .hint-warning,
+.remarkd-rendered .hint-caution {
+  border-left-color: #b7791f;
+  background: #fdf6e3;
+}
+.remarkd-rendered .hint-warning .hint-caption,
+.remarkd-rendered .hint-caution .hint-caption {
+  color: #8a5a07;
+}
+
+.remarkd-rendered .hint-danger {
+  border-left-color: #c0392b;
+  background: #fdecea;
+}
+.remarkd-rendered .hint-danger .hint-caption {
+  color: #a02b1f;
+}
+
+.remarkd-rendered .verse-block {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  background: #f6f8fb;
+  border-radius: 6px;
+  font-family: inherit;
+  white-space: pre-wrap;
+}
+
+/* Code & literal ---------------------------------------------------------- */
+.remarkd-rendered code {
+  display: block;
+  margin: 0 0 12px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: var(--rmd-code-bg);
+  color: var(--rmd-code-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.remarkd-rendered .listing-block {
+  margin: 0 0 12px;
+  border: 1px solid var(--rmd-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.remarkd-rendered .listing-block .content {
+  padding: 14px 16px;
+  background: #f6f8fb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+
+.remarkd-rendered .callout {
+  list-style: none;
+  margin: 0 0 6px;
+  padding-left: 28px;
+  position: relative;
+  color: var(--rmd-muted);
+}
+
+.remarkd-rendered .callout::before {
+  content: attr(data-marker);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--rmd-accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Containers -------------------------------------------------------------- */
+.remarkd-rendered .example-block,
+.remarkd-rendered .sidebar-block {
+  margin: 0 0 12px;
+  border: 1px solid var(--rmd-border);
+  border-radius: 8px;
+}
+
+.remarkd-rendered .example-block .content,
+.remarkd-rendered .sidebar-block .content {
+  padding: 14px 16px;
+}
+
+.remarkd-rendered .sidebar-block {
+  background: #f6f8fb;
+}
+
+.remarkd-rendered .title {
+  font-weight: 700;
+  color: var(--rmd-muted);
+  margin-bottom: 6px;
+}
+
+/* Accordion */
+.remarkd-rendered .accordion-container {
+  margin: 0 0 12px;
+  border: 1px solid var(--rmd-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.remarkd-rendered button.accordion {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 11px 14px;
+  border: 0;
+  border-top: 1px solid var(--rmd-border);
+  background: #f6f8fb;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.remarkd-rendered button.accordion:first-child {
+  border-top: 0;
+}
+
+.remarkd-rendered .accordion-container .panel {
+  padding: 12px 14px;
+}
+
+/* Tabs */
+.remarkd-rendered .tab-group {
+  margin: 0 0 12px;
+  border: 1px solid var(--rmd-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.remarkd-rendered .tab-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 6px 6px 0;
+  list-style: none;
+  background: #f6f8fb;
+  border-bottom: 1px solid var(--rmd-border);
+}
+
+.remarkd-rendered .tab-header a {
+  display: block;
+  padding: 7px 12px;
+  border-radius: 6px 6px 0 0;
+  text-decoration: none;
+  color: var(--rmd-muted);
+  font-weight: 650;
+}
+
+.remarkd-rendered .tab-header a.active {
+  background: #fff;
+  color: var(--rmd-accent);
+}
+
+.remarkd-rendered .tabs .tab {
+  padding: 14px;
+}
+
+/* When inert (no JS), reveal only the first tab so the preview is clean. */
+.remarkd-rendered .tabs .tab + .tab {
+  border-top: 1px dashed var(--rmd-border);
+}
+
+/* Steps */
+.remarkd-rendered .steps-container {
+  margin: 0 0 12px;
+  counter-reset: rmd-step;
+}
+
+.remarkd-rendered .step {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rmd-border);
+}
+
+.remarkd-rendered .step:first-child {
+  border-top: 0;
+}
+
+.remarkd-rendered .step-content {
+  flex: 1;
+}
+
+.remarkd-rendered .step-content h3 {
+  margin: 0 0 6px;
+  counter-increment: rmd-step;
+}
+
+.remarkd-rendered .step-content h3::before {
+  content: counter(rmd-step) ". ";
+  color: var(--rmd-accent);
+}
+
+.remarkd-rendered .step-image img {
+  max-width: 120px;
+  border-radius: 6px;
+}
+
+/* Tables ------------------------------------------------------------------ */
+.remarkd-rendered .table-block {
+  margin: 0 0 12px;
+}
+
+.remarkd-rendered .remarkd-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.remarkd-rendered .remarkd-table th,
+.remarkd-rendered .remarkd-table td {
+  border: 1px solid var(--rmd-border);
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.remarkd-rendered .remarkd-table th {
+  background: #eef2f7;
+}
+
+/* Media ------------------------------------------------------------------- */
+.remarkd-rendered img {
+  max-width: 100%;
+}
+
+.remarkd-rendered img.block {
+  display: block;
+  margin: 0 0 12px;
+}
+
+.remarkd-rendered .video-container {
+  position: relative;
+  width: 100%;
+  margin: 0 0 12px;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.remarkd-rendered .video-container iframe,
+.remarkd-rendered .video-container video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* References -------------------------------------------------------------- */
+.remarkd-rendered ol.reference {
+  font-size: 0.9em;
+  color: var(--rmd-muted);
+}
+
+.remarkd-rendered .reference-tobody {
+  text-decoration: none;
+  margin-right: 4px;
+}
+
+/* Meter ------------------------------------------------------------------- */
+.remarkd-rendered .remarkd-meter-label {
+  display: block;
+  font-size: 0.85em;
+  color: var(--rmd-muted);
+}
+
+.remarkd-rendered .remarkd-meter {
+  width: 180px;
+  max-width: 100%;
+}
+
+.remarkd-rendered hr {
+  border: 0;
+  border-top: 1px solid var(--rmd-border);
+  margin: 18px 0;
+}

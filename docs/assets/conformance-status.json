@@ -1,0 +1,275 @@
+{
+  "generatedAt": "2026-06-01T13:57:03.827Z",
+  "available": {
+    "php": true,
+    "go": true,
+    "ts": true
+  },
+  "features": {
+    "accordion": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "admonition": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "asciidoc-image": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "asciidoc-section": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "attributes-title": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "autolink": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "blockquotes": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "callout-block": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "checkboxes": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "code-fence": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "comments": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "conditionals": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "conditionals-advanced": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "cross-reference": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "curly-bang-passthrough": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "definition-list": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "document-attributes": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "emoji-aliases": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "example-block": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "footnote": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "generic-container": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "hardbreaks": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "heading": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "highlight": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "horizontal-rule": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "id-block": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "inline-advanced": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "inline-formatting": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "keyboard": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "line-continuation": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "links-and-images": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "listing-block": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "literal-block": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "object-attributes": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "object-fallbacks": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "object-macros": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "ordered-list": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "page-break": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "paragraphs": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "passthrough": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "reference-list": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "sidebar-block": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "smart-quotes": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "steps": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "subscript": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "superscript": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "table": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "tabs": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "tooltip": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "typographic-symbols": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "unordered-list": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "verse": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "video": {
+      "php": true,
+      "go": true,
+      "ts": true
+    }
+  }
+}

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Concepts · Remarkd</title>
+  <meta name="description" content="How Remarkd works: the document model, block titles and roles, document attributes, conditionals, object macros, and references.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="content" data-page="concepts">
+  <section class="hero">
+    <p class="eyebrow">Concepts</p>
+    <h1>How Remarkd thinks about a document.</h1>
+    <p class="lead">
+      Remarkd starts from Markdown's readability and adds a small set of structural ideas borrowed from
+      AsciiDoc. Once you know how blocks, attributes, and macros fit together, the
+      <a href="reference.html">feature reference</a> reads as variations on a few patterns.
+    </p>
+  </section>
+
+  <section id="philosophy">
+    <h2>Human-first by design</h2>
+    <p>
+      The guiding rule is that the source should be pleasant to read on its own. A note is the word
+      <code>NOTE:</code> in front of a sentence. A quote is text between two underscore rules. A tab group is a
+      few lines each introduced by a short marker. Nothing requires you to open an angle bracket, and a
+      reviewer reading the raw <code>.remarkd</code> file in a pull request can still follow the document.
+    </p>
+    <p>
+      Because the format is plain text, it diffs cleanly, pastes anywhere, and never depends on a build step
+      to stay legible. Rendering to HTML is a convenience, not a prerequisite for understanding.
+    </p>
+  </section>
+
+  <section id="model">
+    <h2>The document model</h2>
+    <p>
+      A parse produces one <strong>section</strong> wrapper —
+      <code>&lt;div class="remarkd-section section--level0 …"&gt;</code> — containing the rendered blocks. Everything
+      inside is either a <strong>block</strong> or <strong>inline</strong> content:
+    </p>
+    <ul>
+      <li><strong>Blocks</strong> are paragraph-level structures separated by blank lines: paragraphs,
+        headings, lists, tables, quotes, code fences, containers. A block often owns a region delimited by a
+        fence (for example <code>____</code> for a quote or <code>|===</code> for a table).</li>
+      <li><strong>Inline</strong> content is the formatting that lives inside a block's text: strong, emphasis,
+        links, code spans, keyboard keys, footnotes, and so on. Inline rules run inside paragraphs, list
+        items, table cells, and admonitions.</li>
+    </ul>
+    <p>
+      Blank lines are the primary separator. A line on its own that begins a fence opens a block; the matching
+      fence closes it. This is why most Remarkd blocks are <em>symmetrical</em> — the same marker opens and
+      closes them.
+    </p>
+  </section>
+
+  <section id="titles-roles">
+    <h2>Block titles, roles, and attributes</h2>
+    <p>
+      Two one-line prefixes decorate the block that follows them:
+    </p>
+    <ul>
+      <li>A line starting with a dot, like <code>.Release Matrix</code>, gives the next block a
+        <strong>title</strong>.</li>
+      <li>A bracketed line, like <code>[.lead]</code>, attaches a <strong>role</strong> (a CSS class) or other
+        block attributes to the next block.</li>
+    </ul>
+    <p>
+      They compose: a <code>.Title</code> line followed by a <code>[.role]</code> line followed by a paragraph
+      produces a titled, classed paragraph. Tables, images, and containers use the same title mechanism. See
+      <a href="reference.html#attributes-title">Block title &amp; roles</a> and the
+      <a href="reference.html#table">table</a> for worked examples.
+    </p>
+  </section>
+
+  <section id="attributes">
+    <h2>Document attributes &amp; substitution</h2>
+    <p>
+      An attribute line defines a named value for the rest of the document:
+    </p>
+    <pre><code>:product: Remarkd
+:version: 1.0
+
+{product} {version} keeps text readable.</code></pre>
+    <p>
+      A reference like <code>{product}</code> is replaced with its value during parsing. Attributes are useful
+      for product names, URLs, and version numbers you would otherwise repeat. In
+      <a href="https://github.com/packaged/remarkd#readme" rel="noopener">document-header mode</a> (a developer option) the parser also reads attributes
+      from the leading header block. See <a href="reference.html#document-attributes">Document attributes</a>.
+    </p>
+  </section>
+
+  <section id="conditionals">
+    <h2>Conditionals</h2>
+    <p>
+      The PHP parser supports AsciiDoc-style conditional directives that include or drop content based on
+      document attributes. They are driven by the same attributes described above:
+    </p>
+    <pre><code>:flag:
+
+ifdef::flag[]
+Shown only when "flag" is defined.
+endif::[]
+
+ifndef::flag[Shown inline only when "flag" is NOT defined.]</code></pre>
+    <p>
+      The validators are <code>ifdef</code> (defined), <code>ifndef</code> (not defined), <code>iftrue</code>,
+      <code>iffalse</code>, <code>ifempty</code>, and <code>ifnempty</code> (not empty); <code>ifeval</code>
+      evaluates a simple comparison. Conditions combine with <code>+</code> (and) and <code>,</code> (or), and a
+      single-line form carries its content inside the brackets: <code>ifdef::flag[inline content]</code>. Close
+      a block form with <code>endif::[]</code>.
+    </p>
+    <p class="note-callout">
+      Conditionals are covered by the shared fixture suite and behave the same way in the PHP, Go, and
+      TypeScript parsers.
+    </p>
+  </section>
+
+  <section id="macros">
+    <h2>Object macros</h2>
+    <p>
+      Where inline syntax stops, <strong>object macros</strong> take over. A macro is written
+      <code>{{name …attributes}}</code> and expands to a self-contained piece of HTML. The built-in objects
+      cover links, line breaks, anchors, progress meters, images, and video:
+    </p>
+    <pre><code>{{link:https://example.com text=Example target=_blank}}
+{{anchor name=top}}
+{{meter id=p min=0 max=10 value=7 text=7/10 label=Progress}}
+{{video:dQw4w9WgXcQ source=youtube aspect=16:9}}</code></pre>
+    <p>
+      Macros accept positional values (after the colon), named attributes (<code>key=value</code>), and role
+      hints (<code>.class</code>). The <a href="reference.html#object-macros">object macros</a> and
+      <a href="reference.html#object-attributes">object macro attributes</a> entries show the exact output,
+      and <a href="reference.html#video">video</a> demonstrates aspect ratios and timing.
+    </p>
+  </section>
+
+  <section id="references">
+    <h2>Source-backed references</h2>
+    <p>
+      Remarkd has first-class support for footnote-style references, which is handy for fact-checked or cited
+      content. Mark a fact with <code>{{ref content=… code=…}}</code> and emit the numbered list anywhere with
+      <code>{{reflist}}</code>:
+    </p>
+    <pre><code>The sky is blue{{ref content=Rayleigh scattering code=sky}}.
+
+# Sources
+
+{{reflist}}</code></pre>
+    <p>
+      Each reference becomes a superscript link tied to a numbered list item, with anchors connecting the two
+      directions. See <a href="reference.html#reference-list">References</a> for the rendered result.
+    </p>
+  </section>
+
+  <section id="composing">
+    <h2>Composing a document</h2>
+    <p>
+      These pieces stack. A typical guide opens with a title and a lead paragraph, defines a couple of
+      attributes, explains concepts in prose with the occasional <code>NOTE:</code>, walks through a procedure
+      as <a href="reference.html#steps">steps</a> or <a href="reference.html#tabs">tabs</a>, shows commands in
+      <a href="reference.html#code-fence">code fences</a>, and closes with a
+      <a href="reference.html#reference-list">reference list</a>. None of it requires HTML, and all of it stays
+      readable in the source.
+    </p>
+    <div class="next-steps">
+      <a class="card" href="reference.html"><strong>Reference</strong>See every feature with a live preview.</a>
+      <a class="card" href="playground.html"><strong>Playground</strong>Compose a document and watch it render.</a>
+      <a class="card" href="getting-started.html"><strong>Getting Started</strong>Call the parser from your language.</a>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Remarkd — a human-first text format</title>
+  <meta name="description" content="Remarkd is a Markdown-inspired text format with AsciiDoc-style blocks, document attributes, and object macros. Guide, syntax reference, playground, and cross-language conformance.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="content" data-page="home">
+  <section class="hero">
+    <p class="eyebrow">Remarkd language guide</p>
+    <h1>Write structured documents in readable plain text.</h1>
+    <p class="lead">
+      Remarkd is a Markdown-inspired format with practical blocks for guides, product docs,
+      references, tabbed instructions, callouts, tables, video, and source-backed notes. It stays
+      legible as plain text and renders to clean HTML — with matching parsers in PHP, Go, and TypeScript.
+    </p>
+    <div class="hero-actions">
+      <a class="button primary" href="getting-started.html">Get started</a>
+      <a class="button" href="playground.html">Open the playground</a>
+      <a class="button" href="reference.html">Browse the reference</a>
+    </div>
+  </section>
+
+  <section class="quick-panels" aria-label="Highlights">
+    <article><h2>Human first</h2><p>Source stays readable before and after rendering. No tag soup, no required tooling.</p></article>
+    <article><h2>Guide ready</h2><p>Notes, steps, tabs, accordions, tables, video, and references without hand-writing HTML.</p></article>
+    <article><h2>Cross-language</h2><p>PHP, Go, and TypeScript are tested byte-for-byte against one shared fixture suite.</p></article>
+  </section>
+
+  <section id="start">
+    <h2>Start here</h2>
+    <p>Pick the path that matches what you need right now.</p>
+    <div class="next-steps">
+      <a class="card" href="getting-started.html"><strong>Getting Started</strong>Install and call the parser from PHP, Go, or TypeScript.</a>
+      <a class="card" href="concepts.html"><strong>Concepts</strong>How blocks, attributes, conditionals, and macros fit together.</a>
+      <a class="card" href="reference.html"><strong>Feature Reference</strong>Every syntax feature with a live preview and the exact HTML.</a>
+      <a class="card" href="playground.html"><strong>Playground</strong>Type Remarkd and watch it render in your browser.</a>
+      <a class="card" href="conformance.html"><strong>Conformance</strong>The shared fixture suite and how the three parsers stay aligned.</a>
+      <a class="card" href="https://github.com/packaged/remarkd" rel="noopener"><strong>Source</strong>Read the parsers and contribute fixtures on GitHub.</a>
+    </div>
+  </section>
+
+  <section id="taste">
+    <h2>A quick taste</h2>
+    <p>A Remarkd document reads like notes and renders like a guide.</p>
+    <div class="example-pair">
+      <div>
+        <h3>Remarkd</h3>
+        <pre><code>.Welcome
+[.lead]
+Remarkd keeps the source readable.
+
+NOTE: Use notes for reader-critical details.
+
+_|_#install [name=Install]
+Run the installer.
+_|_#configure [name=Configure]
+Set the required values.</code></pre>
+      </div>
+      <div>
+        <h3>What you get</h3>
+        <p>A titled lead paragraph, a styled note, and a two-tab instruction switcher — all from plain text.
+        See it run on the <a href="playground.html">playground</a>, or find each piece in the
+        <a href="reference.html">reference</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="cheatsheet">
+    <h2>Cheat sheet</h2>
+    <p>The patterns you reach for most. Full details live in the <a href="reference.html">reference</a>.</p>
+    <div class="cheat-grid">
+      <div><strong>Heading</strong><code># Heading</code></div>
+      <div><strong>Paragraph</strong><code>Text on one or more lines</code></div>
+      <div><strong>Strong</strong><code>**important**</code></div>
+      <div><strong>Emphasis</strong><code>__emphasis__</code></div>
+      <div><strong>Inline code</strong><code>`code`</code></div>
+      <div><strong>Underline</strong><code>___underlined___</code></div>
+      <div><strong>Deleted</strong><code>~~deleted~~</code></div>
+      <div><strong>Link</strong><code>[Label](https://example.com)</code></div>
+      <div><strong>Autolink</strong><code>https://example.com/docs[Docs]</code></div>
+      <div><strong>Inline image</strong><code>![Alt](image.png "Title")</code></div>
+      <div><strong>Block image</strong><code>image::diagram.png[Alt,640,480]</code></div>
+      <div><strong>Unordered list</strong><code>- Item</code></div>
+      <div><strong>Task item</strong><code>- [x] Done</code></div>
+      <div><strong>Definition</strong><code>Term:: Meaning</code></div>
+      <div><strong>Quote block</strong><code>____
+Quoted text
+____</code></div>
+      <div><strong>Code block</strong><code>```
+code
+```</code></div>
+      <div><strong>Table</strong><code>|===
+|Name |Value
+
+|A |1
+|===</code></div>
+      <div><strong>Note</strong><code>NOTE: Remember this</code></div>
+      <div><strong>Tabs</strong><code>_|_#first [name=First]</code></div>
+      <div><strong>Accordion</strong><code>_-_#one [name=One]</code></div>
+      <div><strong>Attribute</strong><code>:product: Remarkd</code></div>
+      <div><strong>Reference</strong><code>Fact{{ref content=Source}}</code></div>
+    </div>
+  </section>
+
+  <section id="implementations">
+    <h2>Three implementations, one spec</h2>
+    <p>
+      Every feature on this site is backed by a fixture in <code>requirements/features</code>: an
+      <code>input.remarkd</code> source and the exact <code>expected.html</code> output. The PHP, Go, and
+      TypeScript parsers all assert against the same fixtures, so behaviour cannot quietly diverge between
+      languages. The <a href="conformance.html">conformance page</a> renders every fixture and checks the
+      TypeScript parser live in your browser.
+    </p>
+  </section>
+</main>
+
+<script type="module" src="assets/site.js"></script>
+</body>
+</html>

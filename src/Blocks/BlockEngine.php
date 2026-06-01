@@ -76,7 +76,7 @@ class BlockEngine
     return preg_replace('/^ {0,' . $maxLength . '}/', '', $line);
   }
 
-  public function addLine($line, string $title = null, ?Attributes $attribute = null)
+  public function addLine($line, ?string $title = null, ?Attributes $attribute = null)
   {
     $append = false;
     $block = $this->_activeRoot;
@@ -99,7 +99,7 @@ class BlockEngine
   }
 
   protected function _addLine(
-    $line, ?Block $block, $appendBlock = false, string $title = null, ?Attributes $attribute = null
+    $line, ?Block $block, $appendBlock = false, ?string $title = null, ?Attributes $attribute = null
   )
   {
     if($block === null)

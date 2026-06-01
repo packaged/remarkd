@@ -1,0 +1,33 @@
+:truth:
+:lie!:
+:left:
+
+ifdef::truth+left[]
+AND shown
+endif::[]
+
+ifdef::missing,truth[]
+OR shown
+endif::[]
+
+iftrue::truth[True inline]
+
+iffalse::lie[False inline]
+
+ifempty::missing[Empty missing inline]
+
+ifnempty::truth[Nonempty inline]
+
+ifeval::[5 > 3]
+Eval greater shown
+endif::[]
+
+ifeval::[a in a,b]
+Eval in shown
+endif::[]
+
+ifdef::missing[]
+Hidden parent
+ifdef::truth[Hidden nested inline]
+endif::[]
+endif::[]
