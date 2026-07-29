@@ -430,15 +430,15 @@ class Parser {
   private inline(input: string): string {
     let text = input;
     const passthrough: string[] = [];
-    text = text.replace(/\bpass:\[([^\]]*)]/gs, (_m, raw) => {
+    // tokens are inert to every inline rule; also used to shield generated
+    // URLs/attributes (which may contain ~ _ ^ #) from later formatting rules
+    const protect = (raw: string): string => {
       const token = `\u001aRMDPASS${passthrough.length}\u001a`;
       passthrough.push(raw);
       return token;
-    }).replace(/\+\+\+(.+?)\+\+\+/gs, (_m, raw) => {
-      const token = `\u001aRMDPASS${passthrough.length}\u001a`;
-      passthrough.push(raw);
-      return token;
-    });
+    };
+    text = text.replace(/\bpass:\[([^\]]*)]/gs, (_m, raw) => protect(raw))
+      .replace(/\+\+\+(.+?)\+\+\+/gs, (_m, raw) => protect(raw));
     text = text.replace(/{{([^}: ]+)(?::([^ }]+))?([^}]*)}}/g, (_m, type, key = "", raw = "") => this.renderObject(type, key, parseAttrs(raw)));
     text = text.replace(/"`([^`]+)`"/g, "&ldquo;$1&rdquo;");
     text = text.replace(/``([^`]+)``/g, (_m, code) => `<span class="monospace">${escapeHtml(code)}</span>`);
@@ -449,14 +449,14 @@ class Parser {
     text = text.replace(/kbd:\[([^\]]+)]/g, "<kbd>$1</kbd>");
     text = text.replace(/[^#&]#([^#]+)#/g, '<mark class="highlight">$1</mark>');
     text = text.replace(/{(.*?)}\((.*?)\)/g, '<span class="tooltip" title="$2">$1</span>');
-    text = text.replace(/!\[([^\]]*)]\((.*?)\s*"([^"]+)"\s*\)/g, '<img src="$2" alt="$1" title="$3"/>');
-    text = text.replace(/!\[([^\]]*)]\(([^)]*)\)/g, (_m, alt, src) => alt ? `<img src="${src}" alt="${alt}"/>` : `<img src="${src}"/>`);
+    text = text.replace(/!\[([^\]]*)]\((.*?)\s*"([^"]+)"\s*\)/g, (_m, alt, src, title) => `<img src="${protect(src)}" alt="${protect(alt)}" title="${protect(title)}"/>`);
+    text = text.replace(/!\[([^\]]*)]\(([^)]*)\)/g, (_m, alt, src) => alt ? `<img src="${protect(src)}" alt="${protect(alt)}"/>` : `<img src="${protect(src)}"/>`);
     text = text.replace(/image::([^\[]+)\[([^\]]*)]/g, (_m, src, raw) => {
       const [alt, width, height] = raw.split(",").map((part: string) => part.trim());
-      return `<img class="block" src="${src}"${alt ? ` alt="${alt}"` : ""}${width ? ` width="${width}"` : ""}${height ? ` height="${height}"` : ""}/>`;
+      return `<img class="block" src="${protect(src)}"${alt ? ` alt="${protect(alt)}"` : ""}${width ? ` width="${width}"` : ""}${height ? ` height="${height}"` : ""}/>`;
     });
-    text = text.replace(/\[([^\]]*)]\(([^)]*)\)/g, '<a href="$2">$1</a>');
-    text = text.replace(/([^="(])((?:http|ftp|https|mailto):\/\/[\w_-]+(?:(?:\.[\w_-]+)+)[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])(?:\[([^\]\n]+)])?/g, (_m, lead, href, label) => `${lead}<a href="${href}">${label || href}</a>`);
+    text = text.replace(/\[([^\]]*)]\(([^)]*)\)/g, (_m, label, href) => `<a href="${protect(href)}">${label}</a>`);
+    text = text.replace(/([^="(])((?:http|ftp|https|mailto):\/\/[\w_-]+(?:(?:\.[\w_-]+)+)[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])(?:\[([^\]\n]+)])?/g, (_m, lead, href, label) => `${lead}<a href="${protect(href)}">${label || protect(href)}</a>`);
     text = text.replace(/<<([\w\-_]+)(,([^>]+))?>>/g, (_m, id, _label, label) => `<a href="#${id.replace(/^_/, "").replace(/_/g, "-")}">${label || titleize(id)}</a>`);
     text = text.replace(/footnote:\[([^\]]+)]/g, '<sup class="footnote">$1</sup>');
     text = text.replace(/\*\*([^*]+?)\*\*/g, "<strong>$1</strong>");
