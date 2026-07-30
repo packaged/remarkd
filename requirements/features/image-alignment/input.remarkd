@@ -1,0 +1,6 @@
+[.align-center]
+image::diagram.png[Diagram,640,480]
+
+.This is a caption
+[.align-right]
+image::photo.png[Photo,,200]

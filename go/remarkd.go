@@ -408,7 +408,8 @@ func (p *parser) parseParagraph(first, title string, attr *attrs) string {
 	}
 	content := ""
 	if title != "" {
-		content += `<div class="title">` + title + `</div>`
+		// span: a div inside <p> is invalid HTML and gets split apart by browsers
+		content += `<span class="title">` + title + `</span>`
 	}
 	joiner := "\n"
 	if hardbreaks || explicitBreaks {

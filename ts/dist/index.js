@@ -223,7 +223,7 @@ var Parser = class _Parser {
     }
     const klass = attrs?.pos[0]?.startsWith(".") ? ` class="${attrs.pos[0].slice(1)}"` : "";
     const joiner = hardbreaks || first.endsWith(" +") || lines.includes("") ? "\n<br />\n" : "\n";
-    const content = `${title ? `<div class="title">${title}</div>` : ""}${this.inline(lines.join(joiner))}`;
+    const content = `${title ? `<span class="title">${title}</span>` : ""}${this.inline(lines.join(joiner))}`;
     return `<p${klass}>${content}</p>`;
   }
   parseSection(line, attrs) {
