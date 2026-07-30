@@ -3,6 +3,7 @@ namespace Packaged\Remarkd\Blocks;
 
 use Packaged\Glimpse\Core\AbstractContainerTag;
 use Packaged\Glimpse\Tags\Div;
+use Packaged\Glimpse\Tags\Span;
 use Packaged\Helpers\Arrays;
 use Packaged\Remarkd\Attributes;
 use Packaged\Remarkd\RemarkdContext;
@@ -198,7 +199,8 @@ class BasicBlock implements ISafeHtmlProducer, Block
     }
     if($this->_title)
     {
-      $content = [Div::create($this->_title)->addClass('title'), $content];
+      // span: a div inside <p> is invalid HTML and gets split apart by browsers
+      $content = [Span::create($this->_title)->addClass('title'), $content];
     }
 
     if($this->_tag)

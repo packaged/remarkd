@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T20:10:22.434Z",
+  "generatedAt": "2026-07-30T13:48:09.989Z",
   "available": {
     "php": true,
     "go": true,
@@ -141,6 +141,11 @@
       "go": true,
       "ts": true
     },
+    "image-alignment": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
     "include": {
       "php": true,
       "go": true,
@@ -277,6 +282,11 @@
       "ts": true
     },
     "unordered-list": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "url-formatting-chars": {
       "php": true,
       "go": true,
       "ts": true

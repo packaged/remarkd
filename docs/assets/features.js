@@ -534,6 +534,19 @@ Content
     expected: `<div class="remarkd-section section--level0 section--with-content"><p><img class="block" src="diagram.png" alt="Diagram" width="640" height="480"/></p></div>`,
   },
   {
+    slug: "image-alignment",
+    title: "Image alignment",
+    group: "media",
+    desc: "[.align-center] or [.align-right] before a block image aligns it; a .Caption line adds a title.",
+    source: `[.align-center]
+image::diagram.png[Diagram,640,480]
+
+.This is a caption
+[.align-right]
+image::photo.png[Photo,,200]`,
+    expected: `<div class="remarkd-section section--level0 section--with-content"><p class="align-center"><img class="block" src="diagram.png" alt="Diagram" width="640" height="480"/></p><p class="align-right"><span class="title">This is a caption</span><img class="block" src="photo.png" alt="Photo" height="200"/></p></div>`,
+  },
+  {
     slug: "video",
     title: "Video",
     group: "media",
@@ -565,7 +578,7 @@ Nested`,
     source: `.Intro
 [.lead]
 Intro paragraph`,
-    expected: `<div class="remarkd-section section--level0 section--with-content"><p class="lead"><div class="title">Intro</div>Intro paragraph</p></div>`,
+    expected: `<div class="remarkd-section section--level0 section--with-content"><p class="lead"><span class="title">Intro</span>Intro paragraph</p></div>`,
   },
   {
     slug: "document-attributes",

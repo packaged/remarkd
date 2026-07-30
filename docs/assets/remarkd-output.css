@@ -354,6 +354,7 @@
 }
 
 .remarkd-rendered .title {
+  display: block;
   font-weight: 700;
   color: var(--rmd-muted);
   margin-bottom: 6px;
@@ -542,6 +543,25 @@
 .remarkd-rendered img.block {
   display: block;
   margin: 0 0 12px;
+}
+
+/* Block alignment roles ([.align-center], [.align-right]) */
+.remarkd-rendered .align-center {
+  text-align: center;
+}
+
+.remarkd-rendered .align-right {
+  text-align: right;
+}
+
+/* img.block is display:block, so text-align alone cannot move it */
+.remarkd-rendered .align-center img.block {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.remarkd-rendered .align-right img.block {
+  margin-left: auto;
 }
 
 .remarkd-rendered .video-container {
