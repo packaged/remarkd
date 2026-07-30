@@ -411,3 +411,31 @@
 .remarkd .accordion-container .accordion.active:after {
   content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
+
+.remarkd img {
+  max-width: 100%;
+}
+
+.remarkd img.block {
+  display: block;
+  margin: 0 0 12px;
+}
+
+/* Block alignment roles ([.align-center], [.align-right]) */
+.remarkd .align-center {
+  text-align: center;
+}
+
+.remarkd .align-right {
+  text-align: right;
+}
+
+/* img.block is display:block, so text-align alone cannot move it */
+.remarkd .align-center img.block {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.remarkd .align-right img.block {
+  margin-left: auto;
+}
