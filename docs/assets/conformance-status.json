@@ -1,303 +1,303 @@
 {
-  "generatedAt": "2026-07-30T12:48:19.854Z",
+  "generatedAt": "2026-07-30T13:48:09.989Z",
   "available": {
-    "php": false,
+    "php": true,
     "go": true,
     "ts": true
   },
   "features": {
     "accordion": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "admonition": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "asciidoc-image": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "asciidoc-section": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "attributes-title": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "autolink": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "blockquotes": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "button-object": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "callout-block": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "checkboxes": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "code-fence": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "comments": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "conditionals": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "conditionals-advanced": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "cross-reference": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "curly-bang-passthrough": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "definition-list": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "document-attributes": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "emoji-aliases": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "example-block": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "footnote": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "generic-container": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "hardbreaks": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "heading": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "highlight": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "horizontal-rule": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "id-block": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "image-alignment": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "include": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "inline-advanced": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "inline-formatting": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "keyboard": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "line-continuation": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "links-and-images": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "listing-block": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "literal-block": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "object-attributes": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "object-fallbacks": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "object-macros": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "ordered-list": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "page-break": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "paragraphs": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "partial": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "passthrough": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "pros-cons": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "reference-list": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "sidebar-block": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "smart-quotes": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "steps": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "subscript": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "superscript": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "table": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "tabs": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "tooltip": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "typographic-symbols": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "unordered-list": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "url-formatting-chars": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "verse": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     },
     "video": {
-      "php": null,
+      "php": true,
       "go": true,
       "ts": true
     }

@@ -35,9 +35,23 @@ class RuleEngine
     $passthrough = [];
     $text = $this->_extractPassthrough($text, $passthrough);
 
+    $protect = function (string $raw) use (&$passthrough): string {
+      $token = "\x1ARMDPASS" . count($passthrough) . "\x1A";
+      $passthrough[$token] = $raw;
+      return $token;
+    };
+
     foreach($this->_rules as $rule)
     {
+      if($rule instanceof ProtectorAware)
+      {
+        $rule->setProtector($protect);
+      }
       $text = $rule->apply($text);
+      if($rule instanceof ProtectorAware)
+      {
+        $rule->setProtector(null);
+      }
     }
     return strtr($text, $passthrough);
   }
