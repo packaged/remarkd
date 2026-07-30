@@ -752,22 +752,40 @@ func (p *parser) parseFragment(markdown string) string {
 
 func (p *parser) inline(input string) string {
 	passes := []string{}
-	text := regexp.MustCompile(`\bpass:\[([^\]]*)]`).ReplaceAllStringFunc(input, func(m string) string {
-		raw := regexp.MustCompile(`\bpass:\[([^\]]*)]`).FindStringSubmatch(m)[1]
+	// tokens are inert to every inline rule; also used to shield generated
+	// URLs/attributes (which may contain ~ _ ^ #) from later formatting rules
+	protect := func(raw string) string {
 		token := "\x1aRMDPASS" + itoa(len(passes)) + "\x1a"
 		passes = append(passes, raw)
 		return token
+	}
+	text := regexp.MustCompile(`\bpass:\[([^\]]*)]`).ReplaceAllStringFunc(input, func(m string) string {
+		return protect(regexp.MustCompile(`\bpass:\[([^\]]*)]`).FindStringSubmatch(m)[1])
 	})
 	text = regexp.MustCompile(`\+\+\+(.+?)\+\+\+`).ReplaceAllStringFunc(text, func(m string) string {
-		raw := regexp.MustCompile(`\+\+\+(.+?)\+\+\+`).FindStringSubmatch(m)[1]
-		token := "\x1aRMDPASS" + itoa(len(passes)) + "\x1a"
-		passes = append(passes, raw)
-		return token
+		return protect(regexp.MustCompile(`\+\+\+(.+?)\+\+\+`).FindStringSubmatch(m)[1])
 	})
 	text = regexp.MustCompile(`{{([^}: ]+)(:([^ }]+))?([^}]*)}}`).ReplaceAllStringFunc(text, func(m string) string {
 		match := regexp.MustCompile(`{{([^}: ]+)(:([^ }]+))?([^}]*)}}`).FindStringSubmatch(m)
 		return p.renderObject(match[1], match[3], parseAttrs(match[4]))
 	})
+	imgTitleRe := regexp.MustCompile(`!\[([^\]]*)]\((.*?)\s*"([^"]+)"\s*\)`)
+	imgRe := regexp.MustCompile(`!\[([^\]]*)]\(([^)]*)\)`)
+	linkRe := regexp.MustCompile(`\[([^\]]*)]\(([^)]*)\)`)
+	urlRepls := func(text string) string {
+		text = imgTitleRe.ReplaceAllStringFunc(text, func(m string) string {
+			match := imgTitleRe.FindStringSubmatch(m)
+			return `<img src="` + protect(match[2]) + `" alt="` + protect(match[1]) + `" title="` + protect(match[3]) + `"/>`
+		})
+		text = imgRe.ReplaceAllStringFunc(text, func(m string) string {
+			match := imgRe.FindStringSubmatch(m)
+			return `<img src="` + protect(match[2]) + `" alt="` + protect(match[1]) + `"/>`
+		})
+		return linkRe.ReplaceAllStringFunc(text, func(m string) string {
+			match := linkRe.FindStringSubmatch(m)
+			return `<a href="` + protect(match[2]) + `">` + match[1] + `</a>`
+		})
+	}
 	repls := [][2]string{
 		{`"` + "`" + `([^` + "`" + `]+)` + "`" + `"`, `&ldquo;$1&rdquo;`},
 		{"``([^`]+)``", `<span class="monospace">$1</span>`},
@@ -776,9 +794,7 @@ func (p *parser) inline(input string) string {
 		{`kbd:\[([^\]]+)]`, `<kbd>$1</kbd>`},
 		{`[^#&]#([^#]+)#`, `<mark class="highlight">$1</mark>`},
 		{`{(.*?)}\((.*?)\)`, `<span class="tooltip" title="$2">$1</span>`},
-		{`!\[([^\]]*)]\((.*?)\s*"([^"]+)"\s*\)`, `<img src="$2" alt="$1" title="$3"/>`},
-		{`!\[([^\]]*)]\(([^)]*)\)`, `<img src="$2" alt="$1"/>`},
-		{`\[([^\]]*)]\(([^)]*)\)`, `<a href="$2">$1</a>`},
+		{"\x1aRMDURLS\x1a", ""},
 		{`footnote:\[([^\]]+)]`, `<sup class="footnote">$1</sup>`},
 		{`\*\*([^*]+?)\*\*`, `<strong>$1</strong>`},
 		{`__([^_]+?)__`, `<em>$1</em>`},
@@ -795,9 +811,9 @@ func (p *parser) inline(input string) string {
 		for i := range parts {
 			parts[i] = strings.TrimSpace(parts[i])
 		}
-		out := `<img class="block" src="` + match[1] + `"`
+		out := `<img class="block" src="` + protect(match[1]) + `"`
 		if len(parts) > 0 && parts[0] != "" {
-			out += ` alt="` + parts[0] + `"`
+			out += ` alt="` + protect(parts[0]) + `"`
 		}
 		if len(parts) > 1 && parts[1] != "" {
 			out += ` width="` + parts[1] + `"`
@@ -807,8 +823,20 @@ func (p *parser) inline(input string) string {
 		}
 		return out + `/>`
 	})
-	text = regexp.MustCompile(`([^="(])((http|ftp|https|mailto)://[\w_-]+(?:(?:\.[\w_-]+)+)[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])(\[([^\]\n]+)])?`).ReplaceAllString(text, `$1<a href="$2">$5</a>`)
+	autolinkRe := regexp.MustCompile(`([^="(])((http|ftp|https|mailto)://[\w_-]+(?:(?:\.[\w_-]+)+)[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])(\[([^\]\n]+)])?`)
+	text = autolinkRe.ReplaceAllStringFunc(text, func(m string) string {
+		match := autolinkRe.FindStringSubmatch(m)
+		label := match[5]
+		if label == "" {
+			label = protect(match[2])
+		}
+		return match[1] + `<a href="` + protect(match[2]) + `">` + label + `</a>`
+	})
 	for _, repl := range repls {
+		if repl[0] == "\x1aRMDURLS\x1a" {
+			text = urlRepls(text)
+			continue
+		}
 		text = regexp.MustCompile(repl[0]).ReplaceAllString(text, repl[1])
 	}
 	text = regexp.MustCompile(`<<([\w\-_]+)(,([^>]+))?>>`).ReplaceAllStringFunc(text, func(m string) string {
