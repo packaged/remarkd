@@ -38,6 +38,29 @@ func TestSharedRequirements(t *testing.T) {
 	}
 }
 
+func TestOptionAttributes(t *testing.T) {
+	options := Options{Attributes: map[string]string{"product": "Remarkd", "beta": "1"}}
+
+	tests := map[string]struct{ input, want string }{
+		"substituted inline": {"This is {product}.",
+			`<div class="remarkd-section section--level0 section--with-content"><p>This is Remarkd.</p></div>`},
+		"read by conditionals": {"iftrue::beta[]\nBeta only.\nendif::[]",
+			`<div class="remarkd-section section--level0 section--with-content"><p>Beta only.</p></div>`},
+		"available under a document title": {"= Document Title\n\nThis is {product}.",
+			`<div class="remarkd-section section--level0 section--with-content"><p>This is Remarkd.</p></div>`},
+		"overridden by the document": {":product: Overridden\n\nThis is {product}.",
+			`<div class="remarkd-section section--level0 section--with-content"><p>This is Overridden.</p></div>`},
+	}
+
+	for name, test := range tests {
+		t.Run(name, func(t *testing.T) {
+			if got := ParseWithOptions(test.input, options, true); got != test.want {
+				t.Fatalf("unexpected html\nwant: %s\n got: %s", test.want, got)
+			}
+		})
+	}
+}
+
 func TestDocumentHeaderAttributes(t *testing.T) {
 	tests := map[string]string{
 		"attributes after title":               "= Document Title\n:product: Remarkd\n\nThis is {product}.",

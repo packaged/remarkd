@@ -13,6 +13,8 @@ type Remarkd struct{}
 
 type Options struct {
 	ProjectRoot string
+	// Attributes seeds the document attributes; a definition in the document wins.
+	Attributes map[string]string
 }
 
 type attrs struct {
@@ -85,9 +87,13 @@ func newParser(markdown string, options ...Options) *parser {
 		parserOptions = options[0]
 	}
 	lines := preprocessMarkdown(markdown)
+	attributes := map[string]string{"plus": "+"}
+	for name, value := range parserOptions.Attributes {
+		attributes[name] = value
+	}
 	return &parser{
 		lines:       preprocessPartials(lines, parserOptions.ProjectRoot, 0),
-		attrs:       map[string]string{"plus": "+"},
+		attrs:       attributes,
 		projectRoot: parserOptions.ProjectRoot,
 	}
 }
