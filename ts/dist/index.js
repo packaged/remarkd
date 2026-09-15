@@ -326,14 +326,7 @@ var Parser = class _Parser {
       items.push((this.lines[this.index] ?? "").replace(/^((\d*\.)+) /, ""));
       this.index++;
     }
-    const nested = (i) => {
-      if (i >= items.length)
-        return "";
-      const child = nested(i + 1);
-      return `<ol><li><p>${this.inline(items[i])}</p>${child ? `
-${child}` : ""}</li></ol>`;
-    };
-    return nested(0);
+    return `<ol>${items.map((item) => `<li><p>${this.inline(item)}</p></li>`).join("\n")}</ol>`;
   }
   parseTable(title, attrs) {
     this.index++;

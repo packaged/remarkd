@@ -13,6 +13,8 @@ class ListItemBlock extends BasicBlock implements BlockMatcher
   const OL_MATCH = '/^((\d*\.)+) (.*)/';
   const UL_MATCH = '/^((\*|\-){1,10}) (.*)/';
 
+  protected $_marker = '';
+
   public function match($line, ?Block $parent): ?Block
   {
     if(!($parent instanceof ListBlock))
@@ -24,6 +26,7 @@ class ListItemBlock extends BasicBlock implements BlockMatcher
     if($matches)
     {
       $block = clone $this;
+      $block->_marker = $matches[1];
       $block->_setSubstrim($matches[1] . ' ');
       return $block;
     }
@@ -47,13 +50,14 @@ class ListItemBlock extends BasicBlock implements BlockMatcher
 
   public function allowLine(string $line): ?bool
   {
-    if(substr($line, 0, $this->trimLeftLength()) == $this->trimLeftStr())
+    $matches = $this->_allowLine($line);
+    if($matches)
     {
-      return empty($this->children());
-    }
+      if($this->_isSameLevel($matches[1]))
+      {
+        return empty($this->children());
+      }
 
-    if($this->_allowLine($line))
-    {
       foreach($this->children() as $child)
       {
         if($child instanceof Block && !($child instanceof ListBlock))
@@ -64,5 +68,21 @@ class ListItemBlock extends BasicBlock implements BlockMatcher
     }
 
     return $line !== '';
+  }
+
+  protected function _isSameLevel(string $marker): bool
+  {
+    return self::_isOrdered($marker) === self::_isOrdered($this->_marker)
+      && self::_markerDepth($marker) <= self::_markerDepth($this->_marker);
+  }
+
+  private static function _isOrdered(string $marker): bool
+  {
+    return $marker !== '' && $marker[0] !== '*' && $marker[0] !== '-';
+  }
+
+  private static function _markerDepth(string $marker): int
+  {
+    return self::_isOrdered($marker) ? substr_count($marker, '.') : strlen($marker);
   }
 }

@@ -292,9 +292,9 @@ Line two</p></div>`,
     source: `1. First item
 2. Second item
 3. Third item`,
-    expected: `<div class="remarkd-section section--level0 section--with-content"><ol><li><p>First item</p>
-<ol><li><p>Second item</p>
-<ol><li><p>Third item</p></li></ol></li></ol></li></ol></div>`,
+    expected: `<div class="remarkd-section section--level0 section--with-content"><ol><li><p>First item</p></li>
+<li><p>Second item</p></li>
+<li><p>Third item</p></li></ol></div>`,
   },
   {
     slug: "checkboxes",

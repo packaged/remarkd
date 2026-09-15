@@ -576,19 +576,11 @@ func (p *parser) parseOrderedList() string {
 		items = append(items, re.ReplaceAllString(p.lines[p.index], ""))
 		p.index++
 	}
-	var nested func(int) string
-	nested = func(i int) string {
-		if i >= len(items) {
-			return ""
-		}
-		child := nested(i + 1)
-		sep := ""
-		if child != "" {
-			sep = "\n"
-		}
-		return "<ol><li><p>" + p.inline(items[i]) + "</p>" + sep + child + "</li></ol>"
+	out := []string{}
+	for _, item := range items {
+		out = append(out, "<li><p>"+p.inline(item)+"</p></li>")
 	}
-	return nested(0)
+	return "<ol>" + strings.Join(out, "\n") + "</ol>"
 }
 
 func (p *parser) parseTable(title string, attr *attrs) string {
