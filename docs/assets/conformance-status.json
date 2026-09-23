@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T14:00:37.778Z",
+  "generatedAt": "2026-09-23T16:31:42.938Z",
   "available": {
     "php": true,
     "go": true,
@@ -182,6 +182,11 @@
       "ts": true
     },
     "literal-block": {
+      "php": true,
+      "go": true,
+      "ts": true
+    },
+    "nested-list": {
       "php": true,
       "go": true,
       "ts": true

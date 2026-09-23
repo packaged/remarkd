@@ -348,10 +348,8 @@ func (p *parser) parseBlock(line, title string, attr *attrs) string {
 	case strings.TrimSpace(line) == "---":
 		p.index++
 		return "<p><hr /></p>"
-	case regexp.MustCompile(`^((\*|-){1,10}) `).MatchString(line):
-		return p.parseUnorderedList()
-	case regexp.MustCompile(`^((\d*\.)+) `).MatchString(line):
-		return p.parseOrderedList()
+	case unorderedListRe.MatchString(line) || orderedListRe.MatchString(line):
+		return p.parseList(nil)
 	case strings.HasPrefix(line, "{{") || strings.Contains(line, "{{ref") || strings.Contains(line, "{{reflist"):
 		p.index++
 		return p.inline(line)
@@ -555,32 +553,56 @@ func (p *parser) parseID(line string) string {
 	return `<div id="` + id + `"><p>` + p.inline(strings.Join(lines, "\n")) + `</p></div>`
 }
 
-func (p *parser) parseUnorderedList() string {
-	items := []string{}
-	re := regexp.MustCompile(`^((\*|-){1,10}) `)
-	for p.index < len(p.lines) && re.MatchString(p.lines[p.index]) {
-		items = append(items, re.ReplaceAllString(p.lines[p.index], ""))
-		p.index++
-	}
-	out := []string{}
-	for _, item := range items {
-		out = append(out, "<li><p>"+p.inline(item)+"</p></li>")
-	}
-	return "<ul>" + strings.Join(out, "\n") + "</ul>"
+var (
+	orderedListRe   = regexp.MustCompile(`^((\d*\.)+) (.*)`)
+	unorderedListRe = regexp.MustCompile(`^((\*|-){1,10}) (.*)`)
+)
+
+type listLevel struct {
+	ordered bool
+	depth   int
 }
 
-func (p *parser) parseOrderedList() string {
+func listItem(line string) (listLevel, string, bool) {
+	if m := orderedListRe.FindStringSubmatch(line); m != nil {
+		return listLevel{true, strings.Count(m[1], ".")}, m[3], true
+	}
+	if m := unorderedListRe.FindStringSubmatch(line); m != nil {
+		return listLevel{false, len(m[1])}, m[3], true
+	}
+	return listLevel{}, "", false
+}
+
+func (p *parser) parseList(parents []listLevel) string {
+	level, _, _ := listItem(p.lines[p.index])
+	chain := append(append([]listLevel{}, parents...), level)
 	items := []string{}
-	re := regexp.MustCompile(`^((\d*\.)+) `)
-	for p.index < len(p.lines) && re.MatchString(p.lines[p.index]) {
-		items = append(items, re.ReplaceAllString(p.lines[p.index], ""))
-		p.index++
+	for p.index < len(p.lines) {
+		l, text, ok := listItem(p.lines[p.index])
+		if !ok || closesList(l, parents) {
+			break
+		}
+		if l.ordered == level.ordered && l.depth <= level.depth {
+			items = append(items, "<li><p>"+p.inline(text)+"</p>")
+			p.index++
+			continue
+		}
+		items[len(items)-1] += "\n" + p.parseList(chain)
 	}
-	out := []string{}
-	for _, item := range items {
-		out = append(out, "<li><p>"+p.inline(item)+"</p></li>")
+	tag := "ul"
+	if level.ordered {
+		tag = "ol"
 	}
-	return "<ol>" + strings.Join(out, "\n") + "</ol>"
+	return "<" + tag + ">" + strings.Join(items, "</li>\n") + "</li></" + tag + ">"
+}
+
+func closesList(l listLevel, parents []listLevel) bool {
+	for _, parent := range parents {
+		if l.ordered == parent.ordered && l.depth <= parent.depth {
+			return true
+		}
+	}
+	return false
 }
 
 func (p *parser) parseTable(title string, attr *attrs) string {

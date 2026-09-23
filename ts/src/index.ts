@@ -17,6 +17,20 @@ export function parse(markdown: string, detectHeaders = false, options: RemarkdO
   return parser.parse();
 }
 
+type ListLevel = { ordered: boolean; depth: number };
+
+function listItem(line: string): [ListLevel, string] | null {
+  const ordered = line.match(/^((\d*\.)+) (.*)/);
+  if (ordered) return [{ ordered: true, depth: ordered[1].split(".").length - 1 }, ordered[3]];
+  const unordered = line.match(/^((\*|-){1,10}) (.*)/);
+  if (unordered) return [{ ordered: false, depth: unordered[1].length }, unordered[3]];
+  return null;
+}
+
+function closesList(level: ListLevel, parents: ListLevel[]): boolean {
+  return parents.some((parent) => level.ordered === parent.ordered && level.depth <= parent.depth);
+}
+
 class Parser {
   private readonly lines: string[];
   private index = 0;
@@ -181,8 +195,7 @@ class Parser {
       this.index++;
       return "<p><hr /></p>";
     }
-    if (/^((\*|-){1,10}) /.test(line)) return this.parseUnorderedList();
-    if (/^((\d*\.)+) /.test(line)) return this.parseOrderedList();
+    if (listItem(line)) return this.parseList();
     if (/^{{/.test(line) || /{{ref\b/.test(line) || /{{reflist\b/.test(line)) {
       this.index++;
       return this.inline(line);
@@ -313,22 +326,23 @@ class Parser {
     return `<div id="${id}"><p>${this.inline(lines.join("\n"))}</p></div>`;
   }
 
-  private parseUnorderedList(): string {
+  private parseList(parents: ListLevel[] = []): string {
+    const [level] = listItem(this.lines[this.index] ?? "")!;
+    const chain = [...parents, level];
     const items: string[] = [];
-    while (this.index < this.lines.length && /^((\*|-){1,10}) /.test(this.lines[this.index] ?? "")) {
-      items.push((this.lines[this.index] ?? "").replace(/^((\*|-){1,10}) /, ""));
-      this.index++;
+    while (this.index < this.lines.length) {
+      const item = listItem(this.lines[this.index] ?? "");
+      if (!item || closesList(item[0], parents)) break;
+      const [l, text] = item;
+      if (l.ordered === level.ordered && l.depth <= level.depth) {
+        items.push(`<li><p>${this.inline(text)}</p>`);
+        this.index++;
+        continue;
+      }
+      items[items.length - 1] += `\n${this.parseList(chain)}`;
     }
-    return `<ul>${items.map((item) => `<li><p>${this.inline(item)}</p></li>`).join("\n")}</ul>`;
-  }
-
-  private parseOrderedList(): string {
-    const items: string[] = [];
-    while (this.index < this.lines.length && /^((\d*\.)+) /.test(this.lines[this.index] ?? "")) {
-      items.push((this.lines[this.index] ?? "").replace(/^((\d*\.)+) /, ""));
-      this.index++;
-    }
-    return `<ol>${items.map((item) => `<li><p>${this.inline(item)}</p></li>`).join("\n")}</ol>`;
+    const tag = level.ordered ? "ol" : "ul";
+    return `<${tag}>${items.join("</li>\n")}</li></${tag}>`;
   }
 
   private parseTable(title: string | null, attrs: Attrs | null): string {
