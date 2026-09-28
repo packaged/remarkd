@@ -14,7 +14,7 @@
     }
   },
   "suggest": {
-    "packaged/dispatch": "^2.0"
+    "packaged/dispatch": "^2.22.0"
   },
   "require": {
     "packaged/map": "^0.4",
@@ -24,6 +24,6 @@
     "phpunit/phpunit": "^13.0",
     "cubex/framework": "4.*",
     "packaged/glimpse": "2.*",
-    "packaged/dispatch": "2.*"
+    "packaged/dispatch": "^2.22.0"
   }
 }
