@@ -191,6 +191,25 @@
   margin: 0 0 4px;
 }
 
+/* Nested bullets cycle disc, circle, square; CSS can't loop, so depth is capped at 9. */
+.remarkd-rendered ul,
+.remarkd-rendered ul ul ul ul,
+.remarkd-rendered ul ul ul ul ul ul ul {
+  list-style-type: disc;
+}
+
+.remarkd-rendered ul ul,
+.remarkd-rendered ul ul ul ul ul,
+.remarkd-rendered ul ul ul ul ul ul ul ul {
+  list-style-type: circle;
+}
+
+.remarkd-rendered ul ul ul,
+.remarkd-rendered ul ul ul ul ul ul,
+.remarkd-rendered ul ul ul ul ul ul ul ul ul {
+  list-style-type: square;
+}
+
 /* Nested ordered items number as an outline: 2.1., 2.1.1. */
 .remarkd-rendered ol:not(.reference) {
   counter-reset: remarkd-item;
