@@ -100,11 +100,11 @@ func newParser(markdown string, options ...Options) *parser {
 
 func preprocessMarkdown(markdown string) []string {
 	markdown = strings.TrimRight(strings.ReplaceAll(markdown, "\r\n", "\n"), "\n")
-	rawLines := []string{}
+	var rawLines []string
 	if markdown != "" {
 		rawLines = strings.Split(markdown, "\n")
 	}
-	lines := []string{}
+	var lines []string
 	re := regexp.MustCompile(`{!(.*)!}`)
 	for _, raw := range rawLines {
 		line := re.ReplaceAllString(raw, "$1")
@@ -121,7 +121,7 @@ func preprocessPartials(lines []string, projectRoot string, depth int) []string 
 	if depth > 10 {
 		return lines
 	}
-	out := []string{}
+	var out []string
 	for _, line := range lines {
 		m := regexp.MustCompile(`^t::partial::(.*)$`).FindStringSubmatch(line)
 		if len(m) == 0 {
@@ -237,7 +237,7 @@ func (p *parser) processDocumentHeader() {
 }
 
 func (p *parser) parseBlocks(stop string, stopSectionLevel int) string {
-	parts := []string{}
+	var parts []string
 	var pendingTitle string
 	var pendingAttrs *attrs
 	for p.index < len(p.lines) {
@@ -448,7 +448,7 @@ func (p *parser) parseSection(line string, attr *attrs) string {
 
 func (p *parser) parseVerbatim(closer, tag string) string {
 	p.index++
-	lines := []string{}
+	var lines []string
 	for p.index < len(p.lines) && p.lines[p.index] != closer {
 		lines = append(lines, html.EscapeString(p.lines[p.index]))
 		p.index++
@@ -461,7 +461,7 @@ func (p *parser) parseVerbatim(closer, tag string) string {
 
 func (p *parser) parseListing(closer string) string {
 	p.index++
-	lines := []string{}
+	var lines []string
 	for p.index < len(p.lines) && p.lines[p.index] != closer {
 		lines = append(lines, html.EscapeString(p.lines[p.index]))
 		p.index++
@@ -479,7 +479,7 @@ func (p *parser) parseCompound(closer, class string) string {
 
 func (p *parser) parseDelimited(attr *attrs) string {
 	p.index++
-	lines := []string{}
+	var lines []string
 	for p.index < len(p.lines) && p.lines[p.index] != "____" {
 		lines = append(lines, p.lines[p.index])
 		p.index++
@@ -497,7 +497,7 @@ func (p *parser) parseDelimited(attr *attrs) string {
 }
 
 func (p *parser) parseDefinitions(first string) string {
-	rows := [][2]string{}
+	var rows [][2]string
 	line := first
 	for p.index < len(p.lines) && regexp.MustCompile(`^([^:]+):: `).MatchString(line) {
 		m := regexp.MustCompile(`^([^:]+):: (.*)$`).FindStringSubmatch(line)
@@ -545,7 +545,7 @@ func (p *parser) parseCalloutBlock(line string) string {
 func (p *parser) parseID(line string) string {
 	id := strings.TrimSuffix(strings.TrimPrefix(line, "!!"), "!!")
 	p.index++
-	lines := []string{}
+	var lines []string
 	for p.index < len(p.lines) {
 		lines = append(lines, p.lines[p.index])
 		p.index++
@@ -576,7 +576,7 @@ func listItem(line string) (listLevel, string, bool) {
 func (p *parser) parseList(parents []listLevel) string {
 	level, _, _ := listItem(p.lines[p.index])
 	chain := append(append([]listLevel{}, parents...), level)
-	items := []string{}
+	var items []string
 	for p.index < len(p.lines) {
 		l, text, ok := listItem(p.lines[p.index])
 		if !ok || closesList(l, parents) {
@@ -607,8 +607,8 @@ func closesList(l listLevel, parents []listLevel) bool {
 
 func (p *parser) parseTable(title string, attr *attrs) string {
 	p.index++
-	rows := [][]string{}
-	row := []string{}
+	var rows [][]string
+	var row []string
 	for p.index < len(p.lines) && p.lines[p.index] != "|===" {
 		line := p.lines[p.index]
 		if line == "" {
@@ -680,11 +680,11 @@ func (p *parser) parseTable(title string, attr *attrs) string {
 
 func (p *parser) parseTabs() string {
 	type tab struct{ id, name, content string }
-	tabs := []tab{}
+	var tabs []tab
 	for p.index < len(p.lines) && strings.HasPrefix(p.lines[p.index], "_|_#") {
 		m := regexp.MustCompile(`^_\|_#([\w-]+)\s*(.*)$`).FindStringSubmatch(p.lines[p.index])
 		p.index++
-		content := []string{}
+		var content []string
 		for p.index < len(p.lines) && !strings.HasPrefix(p.lines[p.index], "_|_#") {
 			content = append(content, p.lines[p.index])
 			p.index++
@@ -696,8 +696,8 @@ func (p *parser) parseTabs() string {
 		}
 		tabs = append(tabs, tab{m[1], name, p.parseFragment(strings.Join(content, "\n"))})
 	}
-	headers := []string{}
-	bodies := []string{}
+	var headers []string
+	var bodies []string
 	for i, t := range tabs {
 		class := ""
 		if i == 0 {
@@ -711,11 +711,11 @@ func (p *parser) parseTabs() string {
 
 func (p *parser) parseAccordion() string {
 	type panel struct{ name, content string }
-	panels := []panel{}
+	var panels []panel
 	for p.index < len(p.lines) && strings.HasPrefix(p.lines[p.index], "_-_#") {
 		m := regexp.MustCompile(`^_-_#([\w-]+)\s*(.*)$`).FindStringSubmatch(p.lines[p.index])
 		p.index++
-		content := []string{}
+		var content []string
 		for p.index < len(p.lines) && !strings.HasPrefix(p.lines[p.index], "_-_#") {
 			content = append(content, p.lines[p.index])
 			p.index++
@@ -727,7 +727,7 @@ func (p *parser) parseAccordion() string {
 		}
 		panels = append(panels, panel{name, p.parseFragment(strings.Join(content, "\n"))})
 	}
-	out := []string{}
+	var out []string
 	for _, panel := range panels {
 		out = append(out, `<button class="accordion">`+panel.name+`</button><div class="panel">`+panel.content+`</div>`)
 	}
@@ -736,11 +736,11 @@ func (p *parser) parseAccordion() string {
 
 func (p *parser) parseSteps() string {
 	type step struct{ title, image, content string }
-	steps := []step{}
+	var steps []step
 	for p.index < len(p.lines) && strings.HasPrefix(p.lines[p.index], "_|- ") {
 		m := regexp.MustCompile(`^_\|- (.*?)(\[.*\])?\s*$`).FindStringSubmatch(p.lines[p.index])
 		p.index++
-		content := []string{}
+		var content []string
 		for p.index < len(p.lines) && !strings.HasPrefix(p.lines[p.index], "_|- ") {
 			content = append(content, p.lines[p.index])
 			p.index++
@@ -751,7 +751,7 @@ func (p *parser) parseSteps() string {
 		}
 		steps = append(steps, step{m[1], attr.named["img"], p.parseFragment(strings.Join(content, "\n"))})
 	}
-	out := []string{}
+	var out []string
 	for _, s := range steps {
 		img := ""
 		if s.image != "" {
@@ -772,7 +772,7 @@ func (p *parser) parseFragment(markdown string) string {
 }
 
 func (p *parser) inline(input string) string {
-	passes := []string{}
+	var passes []string
 	// tokens are inert to every inline rule; also used to shield generated
 	// URLs/attributes (which may contain ~ _ ^ #) from later formatting rules
 	protect := func(raw string) string {
@@ -949,7 +949,7 @@ func (p *parser) renderObject(kind, key string, attr attrs) string {
 		if attr.named["source"] == "self" {
 			return `<div class="video-container" style="padding-top: ` + padding + `%"><video controls><source src="` + key + `" type="` + first(attr.named["type"], "video/mp4") + `"></video></div>`
 		}
-		opts := []string{}
+		var opts []string
 		if attr.named["start"] != "" {
 			opts = append(opts, "start="+attr.named["start"])
 		}
@@ -966,7 +966,7 @@ func (p *parser) renderObject(kind, key string, attr attrs) string {
 		if len(p.references) == 0 {
 			return ""
 		}
-		items := []string{}
+		var items []string
 		for _, ref := range p.references {
 			items = append(items, `<li id="rmdref-ft-`+ref.code+`"><a href="#rmdref-bdy-`+ref.code+`" class="reference-tobody">^</a> `+p.inline(ref.content)+`</li>`)
 		}
@@ -981,7 +981,7 @@ func (p *parser) renderObject(kind, key string, attr attrs) string {
 			out += ` alt="` + attr.named["alt"] + `"`
 		}
 		out += ` style="` + style + `"`
-		classes := []string{}
+		var classes []string
 		for _, pos := range attr.pos {
 			if strings.HasPrefix(pos, ".") && len(pos) > 1 {
 				classes = append(classes, pos[1:])
@@ -1243,7 +1243,7 @@ func itoa(v int) string {
 	if v == 0 {
 		return "0"
 	}
-	digits := []byte{}
+	var digits []byte
 	for v > 0 {
 		digits = append([]byte{byte('0' + v%10)}, digits...)
 		v /= 10
