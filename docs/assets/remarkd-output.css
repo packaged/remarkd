@@ -191,6 +191,19 @@
   margin: 0 0 4px;
 }
 
+/* Nested ordered items number as an outline: 2.1., 2.1.1. */
+.remarkd-rendered ol:not(.reference) {
+  counter-reset: remarkd-item;
+}
+
+.remarkd-rendered ol:not(.reference) > li {
+  counter-increment: remarkd-item;
+}
+
+.remarkd-rendered ol:not(.reference) > li::marker {
+  content: counters(remarkd-item, ".") ". ";
+}
+
 .remarkd-rendered input[type="checkbox"] {
   margin-right: 4px;
   vertical-align: middle;
