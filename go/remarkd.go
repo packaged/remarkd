@@ -632,7 +632,7 @@ func (p *parser) parseTable(title string, attr *attrs) string {
 	if p.index < len(p.lines) {
 		p.index++
 	}
-	head := ""
+	var head strings.Builder
 	prosCons := isProsCons(attr)
 	if len(rows) > 0 {
 		for idx, cell := range rows[0] {
@@ -640,7 +640,7 @@ func (p *parser) parseTable(title string, attr *attrs) string {
 			if prosCons && enabled(attr, "header-icons", true) {
 				content = prosConsIcon(attr, idx) + " " + cell
 			}
-			head += "<th" + prosConsCellClass(prosCons, idx) + ">" + content + "</th>"
+			head.WriteString("<th" + prosConsCellClass(prosCons, idx) + ">" + content + "</th>")
 		}
 	}
 	body := ""
@@ -667,7 +667,7 @@ func (p *parser) parseTable(title string, attr *attrs) string {
 			tableClass += " pros-cons-table--header-icons"
 		}
 	}
-	table := `<table class="` + tableClass + `"><thead><tr>` + head + `</tr></thead><tbody>` + body + `</tbody></table>`
+	table := `<table class="` + tableClass + `"><thead><tr>` + head.String() + `</tr></thead><tbody>` + body + `</tbody></table>`
 	if title != "" {
 		blockClass := "table-block"
 		if prosCons {
