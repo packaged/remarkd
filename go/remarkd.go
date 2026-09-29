@@ -643,13 +643,13 @@ func (p *parser) parseTable(title string, attr *attrs) string {
 			head.WriteString("<th" + prosConsCellClass(prosCons, idx) + ">" + content + "</th>")
 		}
 	}
-	body := ""
+	var body strings.Builder
 	for _, row := range rows[1:] {
-		body += "<tr>"
+		body.WriteString("<tr>")
 		for idx, cell := range row {
-			body += "<td" + prosConsCellClass(prosCons, idx) + ">" + cell + "</td>"
+			body.WriteString("<td" + prosConsCellClass(prosCons, idx) + ">" + cell + "</td>")
 		}
-		body += "</tr>"
+		body.WriteString("</tr>")
 	}
 	tableClass := "remarkd-table"
 	if enabled(attr, "striped", false) {
@@ -667,7 +667,7 @@ func (p *parser) parseTable(title string, attr *attrs) string {
 			tableClass += " pros-cons-table--header-icons"
 		}
 	}
-	table := `<table class="` + tableClass + `"><thead><tr>` + head.String() + `</tr></thead><tbody>` + body + `</tbody></table>`
+	table := `<table class="` + tableClass + `"><thead><tr>` + head.String() + `</tr></thead><tbody>` + body.String() + `</tbody></table>`
 	if title != "" {
 		blockClass := "table-block"
 		if prosCons {
