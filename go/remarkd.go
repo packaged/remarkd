@@ -616,8 +616,8 @@ func (p *parser) parseTable(title string, attr *attrs) string {
 				rows = append(rows, row)
 			}
 			row = []string{}
-		} else if strings.HasPrefix(line, "|") {
-			for _, cell := range regexp.MustCompile(`\s+\|`).Split(strings.TrimPrefix(line, "|"), -1) {
+		} else if after, ok := strings.CutPrefix(line, "|"); ok {
+			for _, cell := range regexp.MustCompile(`\s+\|`).Split(after, -1) {
 				cell = strings.TrimSpace(cell)
 				if cell != "" {
 					row = append(row, p.inline(cell))
