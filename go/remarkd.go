@@ -555,7 +555,7 @@ func (p *parser) parseID(line string) string {
 
 var (
 	orderedListRe   = regexp.MustCompile(`^((\d*\.)+) (.*)`)
-	unorderedListRe = regexp.MustCompile(`^((\*|-){1,10}) (.*)`)
+	unorderedListRe = regexp.MustCompile(`^(([*\-]){1,10}) (.*)`)
 )
 
 type listLevel struct {
